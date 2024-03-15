@@ -1,0 +1,90 @@
+name: Build Pipeline
+
+on: 
+  push:
+    branches: [ 'main' ]
+
+env:
+  GODOT_VERSION: 4.2.1
+  VERSION_FILE: project.godot
+  VERSION_REGEX: config\/version=\"\K[0-9.\-A-z]*
+  VERSION: 0.0.0
+
+jobs:
+  build_game:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    name: Build Game
+    steps:
+    - name: Checkout current branch
+      uses: actions/checkout@v4
+
+    - name: Extract version number
+      shell: bash
+      run: |
+        VERSION_NUMBER_NEW=`grep -Po "${{ env.VERSION_REGEX }}" ./${{ env.VERSION_FILE }}`
+        echo "VERSION=$VERSION_NUMBER_NEW" >> "$GITHUB_ENV"
+        echo "Version number: $VERSION_NUMBER_NEW"
+
+    - name: Export game
+      id: export
+      uses: firebelley/godot-export@v5.2.1
+      with:
+        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
+        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
+        relative_project_path: ./
+        archive_output: true
+
+    - name: Upload web build
+      uses: actions/upload-artifact@v4
+      with:
+        name: web-zip
+        path: ${{ steps.export.outputs.archive_directory }}/Web.zip
+
+    - name: Create release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        generateReleaseNotes: true
+        tag: v${{ env.VERSION }}
+        artifacts: ${{ steps.export.outputs.archive_directory }}/*
+
+  publish_game:
+    runs-on: ubuntu-latest
+    name: Publish to Pages
+    needs: build_game
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout current branch
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      shell: bash
+      run: |
+        sudo apt-get update && sudo apt-get install -y rsync unzip
+    
+    - name: Download web zip
+      uses: actions/download-artifact@v4
+      with:
+        name: web-zip
+    
+    - name: Unzip
+      shell: bash
+      run: |
+        unzip Web.zip -d ./build-web/
+        ls -al
+
+    - name: Add coi-service-worker
+      shell: bash
+      run: |
+        git clone https://github.com/gzuidhof/coi-serviceworker.git
+        mv coi-serviceworker/coi-serviceworker.js ./build-web/coi-serviceworker.js
+        sed -i '3 i <script src="coi-serviceworker.js"></script>' ./build-web/index.html
+        ls -al ./build-web/
+
+    - name: Deploy to Github Pages 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: ./build-web/
+        branch: gh-pages
+    
