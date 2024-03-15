@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bwburnc1m5nsx"]
+[gd_scene load_steps=13 format=3 uid="uid://bwburnc1m5nsx"]
 
 [ext_resource type="Script" path="res://maggot_enemy.gd" id="1_bugcs"]
 [ext_resource type="Texture2D" uid="uid://nxqmi1n1byms" path="res://assets/AIEA_Maggot/MaggotWalk.png" id="1_ebaft"]
@@ -51,7 +51,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_p1r7f")
 }],
 "loop": true,
-"name": &"Walk-50",
+"name": &"WalkLeft",
 "speed": 5.0
 }, {
 "frames": [{
@@ -68,33 +68,22 @@ animations = [{
 "texture": SubResource("AtlasTexture_6ju7a")
 }],
 "loop": true,
-"name": &"Walk50",
+"name": &"WalkRight",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxma5"]
 size = Vector2(21, 10)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nyhy7"]
-size = Vector2(20, 10)
-
 [node name="Maggot_enemy" type="CharacterBody2D"]
-collision_layer = 0
 script = ExtResource("1_bugcs")
 
 [node name="Maggot_walk" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xoywe")
-animation = &"Walk50"
-autoplay = "Walk-50"
-frame_progress = 0.13172
+animation = &"WalkRight"
+autoplay = "WalkLeft"
+frame_progress = 0.202917
 
 [node name="Maggot_Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 10)
 shape = SubResource("RectangleShape2D_bxma5")
-
-[node name="Maggot_Hitbox" type="Area2D" parent="."]
-
-[node name="Hitbox_Collision" type="CollisionShape2D" parent="Maggot_Hitbox"]
-position = Vector2(1, 11)
-shape = SubResource("RectangleShape2D_nyhy7")
-debug_color = Color(0.831373, 0.364706, 0.403922, 0.419608)

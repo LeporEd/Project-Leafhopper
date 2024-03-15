@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=4 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
+[ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
+size = Vector2(78, 661)
 
 [node name="World" type="Node2D"]
 
@@ -8,3 +12,16 @@
 position = Vector2(577, 322.5)
 scale = Vector2(14.35, 3.6875)
 texture = ExtResource("1_2sdmk")
+
+[node name="Maggot_enemy" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(552, 367)
+
+[node name="Walls_TEMP" type="StaticBody2D" parent="."]
+
+[node name="LeftWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
+position = Vector2(-40, 319)
+shape = SubResource("RectangleShape2D_kyx4y")
+
+[node name="RightWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
+position = Vector2(1189, 326)
+shape = SubResource("RectangleShape2D_kyx4y")
