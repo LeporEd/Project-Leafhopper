@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clgep8rx0hmot"
-path="res://.godot/imported/Maggot.png-d0f72d7476c67423e78be1aeca4a94bd.ctex"
+uid="uid://c0t2wpq40mvmi"
+path="res://.godot/imported/BeetleMove.png-c199e4b8f6511d45edb4db0be983d76c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/AIEA_Maggot/Maggot.png"
-dest_files=["res://.godot/imported/Maggot.png-d0f72d7476c67423e78be1aeca4a94bd.ctex"]
+source_file="res://assets/Enemies/AIEA_Beetle/BeetleMove.png"
+dest_files=["res://.godot/imported/BeetleMove.png-c199e4b8f6511d45edb4db0be983d76c.ctex"]
 
 [params]
 

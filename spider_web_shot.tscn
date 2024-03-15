@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://yc255s8gg8m8"]
+
+[ext_resource type="Texture2D" uid="uid://3ichb4f6o0ob" path="res://assets/Enemies/Elthen_Spiders/Spider Web.png" id="1_spf0x"]
+[ext_resource type="Script" path="res://spider_web_shot.gd" id="1_wi1ji"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7if7u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yxt7d"]
+radius = 16.0312
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ovai"]
+radius = 16.0
+
+[node name="Spider_web_shot" type="RigidBody2D"]
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_7if7u")
+gravity_scale = 0.0
+script = ExtResource("1_wi1ji")
+
+[node name="Web_sprite" type="Sprite2D" parent="."]
+position = Vector2(-9, 4)
+scale = Vector2(0.676471, 0.664706)
+texture = ExtResource("1_spf0x")
+
+[node name="Web_shape" type="CollisionShape2D" parent="."]
+position = Vector2(-8, 4)
+shape = SubResource("CircleShape2D_yxt7d")
+
+[node name="Web_hitbox" type="Area2D" parent="."]
+
+[node name="web_collisions" type="CollisionShape2D" parent="Web_hitbox"]
+position = Vector2(-8, 4)
+shape = SubResource("CircleShape2D_4ovai")
+debug_color = Color(0.843137, 0.364706, 0.290196, 0.419608)

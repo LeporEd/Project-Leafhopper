@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://cxr8mc8gcixg5"]
 
-[ext_resource type="Texture2D" uid="uid://c0t2wpq40mvmi" path="res://assets/AIEA_Beetle/BeetleMove.png" id="1_2djlq"]
+[ext_resource type="Texture2D" uid="uid://c0t2wpq40mvmi" path="res://assets/Enemies/AIEA_Beetle/BeetleMove.png" id="1_2djlq"]
 [ext_resource type="Script" path="res://character_body_2d.gd" id="1_j8kmb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q4uyf"]

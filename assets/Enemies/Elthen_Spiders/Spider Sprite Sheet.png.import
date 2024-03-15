@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nxqmi1n1byms"
-path="res://.godot/imported/MaggotWalk.png-245615ba191369abc5e9c49120eb910e.ctex"
+uid="uid://decpqe8hvkhpi"
+path="res://.godot/imported/Spider Sprite Sheet.png-02490ff7bd8466bd9e88c307986fd339.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/AIEA_Maggot/MaggotWalk.png"
-dest_files=["res://.godot/imported/MaggotWalk.png-245615ba191369abc5e9c49120eb910e.ctex"]
+source_file="res://assets/Enemies/Elthen_Spiders/Spider Sprite Sheet.png"
+dest_files=["res://.godot/imported/Spider Sprite Sheet.png-02490ff7bd8466bd9e88c307986fd339.ctex"]
 
 [params]
 

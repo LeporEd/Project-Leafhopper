@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://bwburnc1m5nsx"]
 
 [ext_resource type="Script" path="res://maggot_enemy.gd" id="1_bugcs"]
-[ext_resource type="Texture2D" uid="uid://nxqmi1n1byms" path="res://assets/AIEA_Maggot/MaggotWalk.png" id="1_ebaft"]
+[ext_resource type="Texture2D" uid="uid://nxqmi1n1byms" path="res://assets/Enemies/AIEA_Maggot/MaggotWalk.png" id="1_ebaft"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u4kv0"]
 atlas = ExtResource("1_ebaft")
