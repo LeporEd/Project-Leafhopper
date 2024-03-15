@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
-@onready var attack_timer: Timer = $AttackTimer
+@onready var animation_cooldown_timer: Timer = $AnimationCooldownTimer
+@onready var game_over_timer: Timer = $GameOverTimer
 
 
 const MAX_HEALTH = 100
@@ -14,6 +15,10 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 enum MoveX {LEFT = -1, NONE = 0, RIGHT = 1}
 enum MoveY {FALL = -1, NONE = 0, JUMP = 1}
+
+# can be set any time in the cycle
+# is read at the apropriate position
+var should_take_hit = false
 
 
 var state = {
@@ -28,7 +33,16 @@ var state = {
 }
 
 
+func _ready():
+	PlayerEvents.hit_player.connect(_take_hit)
+
+
 func _physics_process(delta):
+	if state.is_dying:
+		if game_over_timer.time_left <= 0:
+			PlayerEvents.player_died.emit()
+		return
+	
 	_update_state()
 	_face_player()
 	_set_velocity(delta)
@@ -36,8 +50,11 @@ func _physics_process(delta):
 	_handle_animation()
 	_perform_attack()
 	
-	move_and_slide()
+	if should_take_hit:
+		animation_cooldown_timer.start()
+		should_take_hit = false
 	
+	move_and_slide()
 
 
 func _update_state():
@@ -45,7 +62,8 @@ func _update_state():
 	state.move_y = _get_move_y()
 	state.is_running = state.move_x != MoveX.NONE
 	state.attack = _get_attack()
-	
+	state.is_dying = _get_is_dead()
+	state.is_hitted = true if should_take_hit else false
 	
 	if is_on_floor():
 		state.jump_count = 0
@@ -80,6 +98,7 @@ func _get_move_y() -> MoveY:
 
 	return directionY
 
+
 func _get_attack() -> int:
 	var attack = -1
 	
@@ -93,6 +112,15 @@ func _get_attack() -> int:
 		attack = 4
 	
 	return attack
+
+
+func _get_is_dead() -> bool:
+	if state.health <= 0:
+		game_over_timer.start()
+		return true
+	
+	return false
+
 
 func _face_player():
 	if state.move_x == MoveX.NONE:
@@ -125,7 +153,7 @@ func _perform_attack():
 		return
 	
 	PlayerEvents.player_attack.emit(state.attack)
-	attack_timer.start()
+	animation_cooldown_timer.start()
 
 
 func _handle_animation():
@@ -150,12 +178,14 @@ func _handle_animation():
 	if state.is_dying:
 		animation = "death"
 	
-	print(attack_timer.time_left)
+	print(animation_cooldown_timer.time_left)
 	
-	if not attack_timer.time_left > 0:
-		print("Animation:" + animation)
+	if not animation_cooldown_timer.time_left > 0:
 		animation_player.play(animation)
 	
 	
-
+func _take_hit(damage: int):
+	print("Player was hit with", damage, "damage points")
+	state.health -= damage
+	should_take_hit = true
 

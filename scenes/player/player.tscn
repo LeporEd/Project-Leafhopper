@@ -219,7 +219,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_cwufc"]
 resource_name = "attack2"
-length = 4.0
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -490,6 +490,10 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="AttackTimer" type="Timer" parent="."]
+[node name="AnimationCooldownTimer" type="Timer" parent="."]
 wait_time = 0.4
+one_shot = true
+
+[node name="GameOverTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
