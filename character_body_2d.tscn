@@ -1,0 +1,102 @@
+[gd_scene load_steps=14 format=3 uid="uid://cxr8mc8gcixg5"]
+
+[ext_resource type="Texture2D" uid="uid://c0t2wpq40mvmi" path="res://assets/AIEA_Beetle/BeetleMove.png" id="1_2djlq"]
+[ext_resource type="Script" path="res://character_body_2d.gd" id="1_j8kmb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4uyf"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17f11"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34rlx"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rwc3"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fefr"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxtna"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dltj"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1jrx"]
+atlas = ExtResource("1_2djlq")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k5mai"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4uyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17f11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34rlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rwc3")
+}],
+"loop": true,
+"name": &"Charge-200",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fefr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxtna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dltj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1jrx")
+}],
+"loop": true,
+"name": &"Charge200",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o6qjs"]
+radius = 7.0
+height = 14.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2lgy"]
+radius = 6.0
+height = 14.0
+
+[node name="Beetle_enemy" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_j8kmb")
+
+[node name="Beetle_charge" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k5mai")
+animation = &"Charge200"
+autoplay = "Charge-200"
+frame_progress = 0.800648
+
+[node name="Beetle_Collision" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 2)
+shape = SubResource("CapsuleShape2D_o6qjs")
+
+[node name="Beetle_hitbox" type="Area2D" parent="."]
+
+[node name="beetle_collision" type="CollisionShape2D" parent="Beetle_hitbox"]
+position = Vector2(-1, 2)
+shape = SubResource("CapsuleShape2D_g2lgy")
+debug_color = Color(0.843137, 0.345098, 0.439216, 0.419608)

@@ -86,7 +86,7 @@ script = ExtResource("1_bugcs")
 sprite_frames = SubResource("SpriteFrames_xoywe")
 animation = &"Walk50"
 autoplay = "Walk-50"
-frame_progress = 0.13172
+frame_progress = 0.956629
 
 [node name="Maggot_Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 10)
