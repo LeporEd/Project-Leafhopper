@@ -489,3 +489,7 @@ libraries = {
 "": SubResource("AnimationLibrary_nbs5t")
 }
 autoplay = "idle"
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
