@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://deuiyd33gr4ex"]
+
+[ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_6jsfv"]
+[ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="3_k604e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6dpb"]
+size = Vector2(392, 46)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_6jsfv")
+
+[node name="Background_TEMP" type="Sprite2D" parent="."]
+position = Vector2(196, 112.305)
+scale = Vector2(4.9, 1.25915)
+texture = ExtResource("1_2sdmk")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(196, 201)
+shape = SubResource("RectangleShape2D_n6dpb")
+
+[node name="Player" parent="." instance=ExtResource("3_k604e")]
+position = Vector2(156, 135)
