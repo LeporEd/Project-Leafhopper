@@ -15,6 +15,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 enum MoveX {LEFT = -1, NONE = 0, RIGHT = 1}
 enum MoveY {FALL = -1, NONE = 0, JUMP = 1}
+enum Growth {BIG, NORMAL, SMALL}
 
 # can be set any time in the cycle
 # is read at the apropriate position
@@ -29,6 +30,7 @@ var state = {
 	is_dying = false,
 	attack = -1,
 	jump_count = 0,
+	growth = Growth.NORMAL,
 	health = MAX_HEALTH
 }
 
