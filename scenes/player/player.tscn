@@ -641,3 +641,7 @@ one_shot = true
 [node name="GameOverTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="GrowthTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true

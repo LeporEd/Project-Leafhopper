@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_cooldown_timer: Timer = $AnimationCooldownTimer
 @onready var game_over_timer: Timer = $GameOverTimer
+@onready var growth_timer: Timer = $GrowthTimer
 
 
 const MAX_HEALTH = 100
@@ -15,7 +16,16 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 enum MoveX {LEFT = -1, NONE = 0, RIGHT = 1}
 enum MoveY {FALL = -1, NONE = 0, JUMP = 1}
-enum Growth {BIG, NORMAL, SMALL}
+
+enum Growth {SMALL, NORMAL, BIG}
+
+enum GrowthAnimation {
+	NONE,
+	SMALL_TO_NORMAL,
+	NORMAL_TO_BIG,
+	BIG_TO_NORMAL,
+	NORMAL_TO_SMALL	
+}
 
 # can be set any time in the cycle
 # is read at the apropriate position
@@ -31,6 +41,7 @@ var state = {
 	attack = -1,
 	jump_count = 0,
 	growth = Growth.NORMAL,
+	growth_animation = GrowthAnimation.NONE,
 	health = MAX_HEALTH
 }
 
@@ -50,7 +61,9 @@ func _physics_process(delta):
 	_set_velocity(delta)
 	
 	_handle_animation()
+	_perform_size_change()
 	_perform_attack()
+	
 	
 	if should_take_hit:
 		animation_cooldown_timer.start()
@@ -66,6 +79,7 @@ func _update_state():
 	state.attack = _get_attack()
 	state.is_dying = _get_is_dead()
 	state.is_hitted = true if should_take_hit else false
+	state.growth_animation = _get_growth_animation()
 	
 	if is_on_floor():
 		state.jump_count = 0
@@ -124,6 +138,25 @@ func _get_is_dead() -> bool:
 	return false
 
 
+func _get_growth_animation() -> GrowthAnimation:
+	var animation_to_play: GrowthAnimation
+	
+	if Input.is_action_just_pressed("grow"):
+		match state.growth:
+			Growth.SMALL:
+				return GrowthAnimation.SMALL_TO_NORMAL
+			Growth.NORMAL:
+				return GrowthAnimation.NORMAL_TO_BIG
+	elif Input.is_action_just_pressed("shrink"):
+		match state.growth:
+			Growth.BIG:
+				return GrowthAnimation.BIG_TO_NORMAL
+			Growth.NORMAL:
+				return GrowthAnimation.NORMAL_TO_SMALL
+	
+	return GrowthAnimation.NONE
+
+
 func _face_player():
 	if state.move_x == MoveX.NONE:
 		return
@@ -175,17 +208,56 @@ func _handle_animation():
 		animation = "attack3"
 	if state.attack == 4:
 		animation = "attack4"
+	if state.growth_animation != GrowthAnimation.NONE:
+		animation = _get_growth_animation_as_string()
 	if state.is_hitted:
 		animation = "take_hit"
 	if state.is_dying:
 		animation = "death"
 	
-	print(animation_cooldown_timer.time_left)
+	print(growth_timer.time_left)
+#	print(animation_cooldown_timer.time_left)
 	
-	if not animation_cooldown_timer.time_left > 0:
+	if (not animation_cooldown_timer.time_left > 0) and (not growth_timer.time_left > 0):
 		animation_player.play(animation)
+
+
+func _get_growth_animation_as_string() -> String:
+	match state.growth_animation:
+		GrowthAnimation.SMALL_TO_NORMAL:
+			return "small_to_normal"
+		GrowthAnimation.NORMAL_TO_BIG:
+			return "normal_to_big"
+		GrowthAnimation.BIG_TO_NORMAL:
+			return "big_to_normal"
+		GrowthAnimation.NORMAL_TO_SMALL:
+			return "normal_to_small"
+		_:
+			return ""
+
+
+func _perform_size_change():
+	var new_growth = _get_new_growth()
 	
-	
+	if new_growth != state.growth:
+		state.growth = new_growth
+		growth_timer.start()
+
+
+func _get_new_growth() -> Growth:
+	match state.growth_animation:
+		GrowthAnimation.SMALL_TO_NORMAL:
+			return Growth.NORMAL
+		GrowthAnimation.NORMAL_TO_BIG:
+			return Growth.BIG
+		GrowthAnimation.BIG_TO_NORMAL:
+			return Growth.NORMAL
+		GrowthAnimation.NORMAL_TO_SMALL:
+			return Growth.SMALL
+		_:
+			return state.growth
+
+
 func _take_hit(damage: int):
 	print("Player was hit with", damage, "damage points")
 	state.health -= damage
