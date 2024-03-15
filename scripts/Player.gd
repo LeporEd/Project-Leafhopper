@@ -6,110 +6,124 @@ extends CharacterBody2D
 
 const SPEED = 175.0
 const JUMP_VELOCITY = -300.0
+const ALLOWED_JUMPS = 2
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+enum MoveX {LEFT = -1, NONE = 0, RIGHT = 1}
+enum MoveY {FALL = -1, NONE = 0, JUMP = 1}
 
-#func _physics_process(delta):
-#	
-#	# Add the gravity.
-#	if not is_on_floor():
-#		velocity.y += gravity * delta
-#
-#	# Handle jump.
-#	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-#		velocity.y = JUMP_VELOCITY
-#
-#	# Get the input direction and handle the movement/deceleration.
-#	# As good practice, you should replace UI actions with custom gameplay actions.
-#	var direction = Input.get_axis("ui_left", "ui_right")
-#	if direction:
-#		velocity.x = direction * SPEED
-#		animation_player.play("run")
-#	else:
-#		velocity.x = move_toward(velocity.x, 0, SPEED)
-#		animation_player.play("Idle")
-#
-#	move_and_slide()
 
-enum MoveDirection {LEFT = -1, NONE = 0, RIGHT = 1}
+var state = {
+	move_x = MoveX.NONE,
+	move_y = MoveY.NONE,
+	is_running = false,
+	is_hitted = false,
+	is_dying = false,
+	attack = -1,
+	jump_count = 0
+}
 
 
 func _physics_process(delta):
-	var move_direction: MoveDirection = _get_move_direction()
-	
-	var is_running = move_direction != MoveDirection.NONE
-	var is_jumping = Input.is_action_just_pressed("ui_accept") and is_on_floor()
-	var is_falling = false
-	var is_hitted = false
-	var is_dying = false
-	var attack = 0
-	
-	
-	_face_player(move_direction)
-	_set_velocity(move_direction, is_jumping, delta)
-	_handle_animation(is_running, is_jumping, is_falling, is_hitted, is_dying, attack)
+	_update_state()
+	_face_player()
+	_set_velocity(delta)
+	_handle_animation()
 	
 	move_and_slide()
 	
-func _get_move_direction() -> MoveDirection:
-	var direction_as_number: int = Input.get_axis("ui_left", "ui_right")
+
+
+func _update_state():
+	state.move_x = _get_move_x()
+	state.move_y = _get_move_y()
+	state.is_running = state.move_x != MoveX.NONE
 	
-	var direction_as_enum: MoveDirection = MoveDirection.NONE
+	if is_on_floor():
+		state.jump_count = 0
+	
+	if Input.is_action_just_pressed("ui_text_backspace"):
+		state.is_dying = true
+
+
+func _get_move_x() -> MoveX:
+	var direction_as_number: int = Input.get_axis("ui_left", "ui_right")
+	var direction_as_enum: MoveX
 	
 	match direction_as_number:
 		-1: 
-			direction_as_enum = MoveDirection.LEFT
+			direction_as_enum = MoveX.LEFT
 		1: 
-			direction_as_enum = MoveDirection.RIGHT
+			direction_as_enum = MoveX.RIGHT
+		_:
+			direction_as_enum = MoveX.NONE
 		
 	return direction_as_enum
+
+
+func _get_move_y() -> MoveY:
+	var jump_btn_pressed = Input.is_action_just_pressed("ui_accept")
+	var directionY: MoveY = MoveY.NONE
+	var vel_dir = sign(velocity.y)
 	
-	
-	
-func _face_player(move_direction):
-	if move_direction == MoveDirection.NONE:
+	if vel_dir == -1:
+		directionY = MoveY.JUMP
+	elif vel_dir == 1:
+		directionY = MoveY.FALL
+
+	return directionY
+
+
+func _face_player():
+	if state.move_x == MoveX.NONE:
 		return
 	
 	var scale_direction = sign(sprite_2d.scale.x)
 	
-	if (scale_direction != move_direction):
+	if (scale_direction != state.move_x):
 		sprite_2d.scale.x *= -1
-	
-func _set_velocity(move_direction, is_jumping, delta):	
+
+
+func _set_velocity(delta):	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
-	if is_jumping:
-		velocity.y = JUMP_VELOCITY
+	var jump_btn_pressed = Input.is_action_just_pressed("ui_accept")
 	
-	if move_direction != MoveDirection.NONE:
-		velocity.x = move_direction * SPEED
+	if jump_btn_pressed and state.jump_count < ALLOWED_JUMPS:
+		velocity.y = JUMP_VELOCITY
+		state.jump_count += 1
+	
+	if state.move_x != MoveX.NONE:
+		velocity.x = state.move_x * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	
-func _handle_animation(is_running, is_jumping, is_falling, is_hitted, is_dying, attack):
+
+
+func _handle_animation():
 	var animation: String = "idle"
 	
-	if is_running:
+	if state.is_running:
 		animation = "run"
-	if is_falling:
+	if state.move_y == MoveY.FALL:
 		animation = "fall"
-	if is_jumping:
+	if state.move_y == MoveY.JUMP:
 		animation = "jump"
-	if attack == 1:
+	if state.attack == 1:
 		animation = "attack1"
-	if attack == 2:
+	if state.attack == 2:
 		animation = "attack2"
-	if attack == 3:
+	if state.attack == 3:
 		animation = "attack3"
-	if attack == 4:
+	if state.attack == 4:
 		animation = "attack4"
-	if is_hitted:
+	if state.is_hitted:
 		animation = "take_hit"
-	if is_dying:
+	if state.is_dying:
 		animation = "death"
+	
+	print("Animation:" + animation)
 	
 	animation_player.play(animation)
 	
