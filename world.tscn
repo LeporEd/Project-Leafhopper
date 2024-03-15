@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=8 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
 [ext_resource type="PackedScene" uid="uid://cxr8mc8gcixg5" path="res://character_body_2d.tscn" id="3_mfm75"]
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="4_r7kfi"]
+[ext_resource type="PackedScene" uid="uid://08ai5wpiybru" path="res://giant_spider_enemy.tscn" id="5_wggvh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
 size = Vector2(78, 661)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_js4dh"]
+size = Vector2(126, 20)
 
 [node name="World" type="Node2D"]
 
@@ -31,8 +35,15 @@ shape = SubResource("RectangleShape2D_kyx4y")
 position = Vector2(1189, 326)
 shape = SubResource("RectangleShape2D_kyx4y")
 
+[node name="Spider_Test_Wall" type="CollisionShape2D" parent="Walls_TEMP"]
+position = Vector2(736, 232)
+shape = SubResource("RectangleShape2D_js4dh")
+
 [node name="Beetle_enemy" parent="." instance=ExtResource("3_mfm75")]
 position = Vector2(482, 372)
 
 [node name="Shooting_spider_enemy" parent="." instance=ExtResource("4_r7kfi")]
 position = Vector2(636, 372)
+
+[node name="Giant_spider_enemy" parent="." instance=ExtResource("5_wggvh")]
+position = Vector2(728, 301)
