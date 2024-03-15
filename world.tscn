@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://deuiyd33gr4ex"]
+
+[ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
+
+[node name="World" type="Node2D"]
+
+[node name="Background_TEMP" type="Sprite2D" parent="."]
+position = Vector2(577, 322.5)
+scale = Vector2(14.35, 3.6875)
+texture = ExtResource("1_2sdmk")
