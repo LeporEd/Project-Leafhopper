@@ -215,9 +215,6 @@ func _handle_animation():
 	if state.is_dying:
 		animation = "death"
 	
-	print(growth_timer.time_left)
-#	print(animation_cooldown_timer.time_left)
-	
 	if (not animation_cooldown_timer.time_left > 0) and (not growth_timer.time_left > 0):
 		animation_player.play(animation)
 
