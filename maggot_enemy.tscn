@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://bwburnc1m5nsx"]
+
+[ext_resource type="Script" path="res://maggot_enemy.gd" id="1_bugcs"]
+[ext_resource type="Texture2D" uid="uid://nxqmi1n1byms" path="res://assets/AIEA_Maggot/MaggotWalk.png" id="1_ebaft"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4kv0"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_if8i4"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slcl0"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1r7f"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojp8i"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76syw"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1bg1"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ju7a"]
+atlas = ExtResource("1_ebaft")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xoywe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4kv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_if8i4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slcl0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1r7f")
+}],
+"loop": true,
+"name": &"WalkLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojp8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76syw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s1bg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ju7a")
+}],
+"loop": true,
+"name": &"WalkRight",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxma5"]
+size = Vector2(21, 10)
+
+[node name="Maggot_enemy" type="CharacterBody2D"]
+script = ExtResource("1_bugcs")
+
+[node name="Maggot_walk" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xoywe")
+animation = &"WalkLeft"
+autoplay = "WalkLeft"
+frame_progress = 0.694898
+
+[node name="Maggot_Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 10)
+shape = SubResource("RectangleShape2D_bxma5")
