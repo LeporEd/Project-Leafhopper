@@ -188,4 +188,5 @@ func _take_hit(damage: int):
 	print("Player was hit with", damage, "damage points")
 	state.health -= damage
 	should_take_hit = true
+	PlayerEvents.player_took_hit.emit(state.health)
 
