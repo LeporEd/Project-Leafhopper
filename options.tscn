@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx4kh06y0siwm"]
+
+[ext_resource type="Script" path="res://options.gd" id="1_224br"]
+[ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="2_ljdjx"]
+[ext_resource type="PackedScene" uid="uid://b1d1qc7t4u0sk" path="res://music_menu.tscn" id="3_wwagj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ax1oc"]
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_224br")
+
+[node name="Background_TEMP" type="Sprite2D" parent="."]
+position = Vector2(195, 111)
+scale = Vector2(4.9, 1.29545)
+texture = ExtResource("2_ljdjx")
+metadata/_edit_lock_ = true
+
+[node name="Buttons" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -43.0
+offset_right = 96.0
+offset_bottom = -12.0
+grow_vertical = 0
+
+[node name="Button_Back" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Back"
+
+[node name="Master" parent="." instance=ExtResource("3_wwagj")]
+layout_mode = 2
+offset_left = 117.0
+offset_top = 105.0
+offset_right = 285.0
+offset_bottom = 121.0
+bus_name = "Master"
+
+[node name="Label_Master_Volume" type="Label" parent="."]
+layout_mode = 2
+offset_left = 141.0
+offset_top = 78.0
+offset_right = 259.0
+offset_bottom = 101.0
+text = "Master Volume"
+label_settings = SubResource("LabelSettings_ax1oc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Buttons/Button_Back" to="." method="_on_button_back_pressed"]
