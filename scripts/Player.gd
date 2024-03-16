@@ -102,8 +102,18 @@ class State:
 	var sound_hit = false
 	var sound_sword = false
 	
+	func clone() -> State:
+		var clone = State.new()
+		clone.move_x = self.move_x
+		clone.move_y = self.move_y
+		clone.growth = self.growth
+		clone.jump_count = self.jump_count
+		clone.health = self.health
+		clone.is_dead = self.is_dead
+		clone.movement_profile = self.movement_profile
+		clone.is_dead = self.is_dead
 
-		
+		return clone
 
 
 var state: State = State.new()
@@ -189,15 +199,22 @@ func _execute_async_changes():
 		pass
 	if async_changes.should_heal:
 		state.health = MAX_HEALTH
+		async_changes.should_heal = false
 	if async_changes.should_die:
 		state.health = 0
+		async_changes.should_die = false
 		_on_user_death()
 	if async_changes.should_reset:
 		_reset()
+		async_changes.should_reset = false
 	if async_changes.should_grow || async_changes.should_shrink:
 		state.growth = _get_new_growth_and_suggest_animation(async_changes.should_grow, async_changes.should_shrink)
 	if async_changes.should_save:
 		_save_checkpoint()
+		async_changes.should_save = false
+	if async_changes.should_load:
+		_load_last_checkpoint()
+		async_changes.should_load = false
 
 
 func _reset():
@@ -207,7 +224,22 @@ func _reset():
 
 
 func _save_checkpoint():
-	checkpoints.append(Checkpoint.new(position.x, position.y, state.clone()))
+	var checkpoint = Checkpoint.new(position.x, position.y, state.clone())
+	checkpoints.append(checkpoint)
+	print("Checkpoint created:", checkpoint)
+
+
+func _load_last_checkpoint():
+	if checkpoints.size() > 0:
+		var checkpoint = checkpoints[checkpoints.size() - 1]
+		print("Load checkpoint:", checkpoint)
+		
+		position.x = checkpoint.x
+		position.y = checkpoint.y
+		state = checkpoint.state
+	else:
+		print("Player reset")
+		_reset()
 
 
 func _take_hit(damage: int):
