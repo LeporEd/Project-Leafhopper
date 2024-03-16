@@ -752,8 +752,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4aegj"]
-radius = 6.0
-height = 38.0
+radius = 8.0
+height = 42.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4523e"]
 radius = 16.0
