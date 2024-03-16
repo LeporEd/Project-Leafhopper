@@ -16,8 +16,9 @@ func _physics_process(delta):
 		await get_tree().create_timer(3).timeout
 		hurtbox_2_shape.set_deferred("disabled", true)
 		$Giant_spider_animations.animation = "Standstill"
-		speed *= -1
-	if position.y <= starty:
+		speed = -25
+	if position.y <= starty + 300:
+		await get_tree().create_timer(3).timeout
 		speed = 35
 	velocity.y = speed
 	move_and_slide()
