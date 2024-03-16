@@ -9,12 +9,14 @@ var speed = -50
 
 func _ready():
 	maggot_hitbox.body_entered.connect(_on_maggot_hitbox_body_entered)
-	pass
 
 func _physics_process(delta):
 	if is_on_wall ():
 		speed *= -1
-		$Maggot_walk.animation = "Walk" + str(speed)
+		if speed < 0:
+			$Maggot_walk.animation = "WalkLeft"
+		else:
+			$Maggot_walk.animation = "WalkRight"
 	velocity.x = speed
 	move_and_slide()
 

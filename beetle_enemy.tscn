@@ -51,7 +51,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_1rwc3")
 }],
 "loop": true,
-"name": &"Charge-200",
+"name": &"ChargeLeft",
 "speed": 5.0
 }, {
 "frames": [{
@@ -68,7 +68,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_e1jrx")
 }],
 "loop": true,
-"name": &"Charge200",
+"name": &"ChargeRight",
 "speed": 5.0
 }]
 
@@ -86,9 +86,8 @@ script = ExtResource("1_j8kmb")
 
 [node name="Beetle_charge" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k5mai")
-animation = &"Charge200"
-autoplay = "Charge-200"
-frame_progress = 0.800648
+animation = &"ChargeRight"
+autoplay = "ChargeLeft"
 
 [node name="Beetle_Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)

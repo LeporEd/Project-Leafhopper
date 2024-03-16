@@ -15,7 +15,10 @@ func _physics_process(delta):
 	if is_on_wall ():
 		speed *= -1
 		await get_tree().create_timer(2).timeout
-		$Beetle_charge.animation = "Charge" + str(speed)
+		if speed < 0:
+			$Beetle_charge.animation = "ChargeLeft"
+		else:
+			$Beetle_charge.animation = "ChargeRight"
 	velocity.x = speed
 	move_and_slide()
 	
