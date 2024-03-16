@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://r2yfefufj03w"]
+[gd_scene load_steps=32 format=3 uid="uid://r2yfefufj03w"]
 
 [ext_resource type="Texture2D" uid="uid://cpph7pq5weusb" path="res://assets/Player/Sprites/Idle.png" id="1_7dx7d"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_u2in5"]
@@ -78,10 +78,35 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Weapon2D/WeaponShape:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-27, -21)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Weapon2D/WeaponShape:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_270qp"]
 resource_name = "attack1"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -118,10 +143,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Weapon2D/WeaponShape:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-27, -21), Vector2(-15, -30), Vector2(41, -8), Vector2(18, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Weapon2D/WeaponShape:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_cwufc"]
 resource_name = "attack2"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -158,10 +208,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Weapon2D/WeaponShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Weapon2D/WeaponShape:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.29),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-23, -24), Vector2(9, -37), Vector2(50, -1)]
+}
 
 [sub_resource type="Animation" id="Animation_kypet"]
 resource_name = "attack3"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -198,10 +273,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Weapon2D/WeaponShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Weapon2D/WeaponShape:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-16, 1), Vector2(60, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_8xnvk"]
 resource_name = "attack4"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -237,6 +337,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Weapon2D/WeaponShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Weapon2D/WeaponShape:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-19, -25), Vector2(-11, -30), Vector2(29, -30), Vector2(52, 3)]
 }
 
 [sub_resource type="Animation" id="Animation_eld6d"]
@@ -618,6 +742,9 @@ _data = {
 "take_hit": SubResource("Animation_fib4p")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_bljbi"]
+radius = 30.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4aegj"]
 radius = 6.0
 height = 38.0
@@ -655,6 +782,15 @@ one_shot = true
 [node name="GrowthTimer" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
+
+[node name="Weapon2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="WeaponShape" type="CollisionShape2D" parent="Weapon2D"]
+position = Vector2(-27, -21)
+shape = SubResource("CircleShape2D_bljbi")
+debug_color = Color(0.470588, 0.443137, 1, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 0

@@ -15,6 +15,7 @@ const CONFIG = {
 @onready var growth_timer: Timer = $GrowthTimer
 @onready var hurtbox = $Hurtbox
 @onready var item_pickup = $ItemPickup
+@onready var weapon_shape = $Weapon2D/WeaponShape
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -83,6 +84,8 @@ var state = {
 
 
 func _ready():
+	weapon_shape.disabled = true
+	
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 	item_pickup.body_entered.connect(_on_item_pickup_body_entered)
 	
