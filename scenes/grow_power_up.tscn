@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnp3jbx170l1w"]
+
+[ext_resource type="Script" path="res://scripts/grow_power_up.gd" id="1_ve5jw"]
+[ext_resource type="Texture2D" uid="uid://b5nqk6xfilh6t" path="res://assets/PowerUps/Sunflower.png" id="1_y1ws3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8quvf"]
+radius = 6.0
+
+[sub_resource type="Animation" id="Animation_y5p2r"]
+resource_name = "GrowPowerUpAnimation"
+length = 1.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_jci8b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_675sa"]
+_data = {
+"GrowPowerUpAnimation": SubResource("Animation_y5p2r"),
+"RESET": SubResource("Animation_jci8b")
+}
+
+[sub_resource type="Gradient" id="Gradient_yjdn7"]
+offsets = PackedFloat32Array(0, 0.681818)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6xorh"]
+gradient = SubResource("Gradient_yjdn7")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="GrowPowerUp" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_ve5jw")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="GrowPowerUp"]
+texture = ExtResource("1_y1ws3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrowPowerUp"]
+shape = SubResource("CapsuleShape2D_8quvf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GrowPowerUp"]
+libraries = {
+"": SubResource("AnimationLibrary_675sa")
+}
+autoplay = "GrowPowerUpAnimation"
+
+[node name="PointLight2D" type="PointLight2D" parent="GrowPowerUp"]
+color = Color(1, 1, 0.27451, 1)
+texture = SubResource("GradientTexture2D_6xorh")
+
+[connection signal="body_entered" from="GrowPowerUp" to="GrowPowerUp" method="_on_body_entered"]
