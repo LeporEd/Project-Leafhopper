@@ -110,7 +110,7 @@ script = ExtResource("1_j8kmb")
 sprite_frames = SubResource("SpriteFrames_k5mai")
 animation = &"DamageRight"
 autoplay = "ChargeLeft"
-frame_progress = 0.324366
+frame_progress = 0.0284152
 
 [node name="Beetle_Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
