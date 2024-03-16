@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgw5msso7xfco"]
+
+[ext_resource type="Script" path="res://credits.gd" id="1_ergwn"]
+[ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_lpey2"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ergwn")
+
+[node name="Background_TEMP" type="Sprite2D" parent="."]
+position = Vector2(193, 108.5)
+scale = Vector2(4.9, 1.25568)
+texture = ExtResource("1_lpey2")
+metadata/_edit_lock_ = true
+
+[node name="Buttons" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -43.0
+offset_right = 96.0
+offset_bottom = -12.0
+grow_vertical = 0
+
+[node name="Button_Back" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Back"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 10.0
+offset_right = 380.0
+offset_bottom = 205.0
+text = "Text about contribs goes here."
+
+[connection signal="pressed" from="Buttons/Button_Back" to="." method="_on_button_back_pressed"]

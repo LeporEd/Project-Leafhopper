@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://be6eilm3el8qq"]
+
+[ext_resource type="AudioStream" uid="uid://bua41q0favxjw" path="res://music/Main_menu_theme.wav" id="1_c8tup"]
+[ext_resource type="Script" path="res://main_theme.gd" id="1_mra43"]
+
+[node name="Main_theme" type="Node"]
+script = ExtResource("1_mra43")
+
+[node name="Main_theme_player" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_c8tup")
+autoplay = true

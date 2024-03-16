@@ -2,7 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_cjjey"]
 [ext_resource type="Script" path="res://main_menu.gd" id="1_gk856"]
-[ext_resource type="AudioStream" uid="uid://bua41q0favxjw" path="res://music/Main_menu_theme.wav" id="3_f4vcg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j88fi"]
+font_size = 18
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
 
 [node name="Main_Menu" type="Control"]
 layout_mode = 3
@@ -32,6 +37,8 @@ offset_right = 69.0
 offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 0
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="Button_Start" type="Button" parent="Buttons"]
 layout_mode = 2
@@ -56,11 +63,8 @@ offset_top = 43.0
 offset_right = 334.0
 offset_bottom = 76.0
 text = "PROJECT LEAFHOPPER"
+label_settings = SubResource("LabelSettings_j88fi")
 horizontal_alignment = 1
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_f4vcg")
-autoplay = true
 
 [connection signal="pressed" from="Buttons/Button_Start" to="." method="_on_button_start_pressed"]
 [connection signal="pressed" from="Buttons/Button_Options" to="." method="_on_button_options_pressed"]
