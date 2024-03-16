@@ -8,7 +8,7 @@ const DEFAULT_RECEIVING_DAMAGE = 25
 
 const MOVEMENT_SMALL = { SPEED = 100.0, JUMP_VELOCITY = -225.0, ALLOWED_JUMPS = 3 }
 const MOVEMENT_NORMAL = { SPEED = 175.0, JUMP_VELOCITY = -275.0, ALLOWED_JUMPS = 2 }
-const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -200.0, ALLOWED_JUMPS = 1 }
+const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 }
 
 
 @onready var sprite_2d = $Sprite2D
@@ -82,6 +82,7 @@ var state = {
 	move_x = MoveX.NONE,
 	move_y = MoveY.NONE,
 	should_jump = false,
+	should_go_down = false,
 	should_attack = PlayerAttack,
 	should_start_animation_cooldown_timer = 0.0,
 	growth = Growth.NORMAL,
@@ -133,12 +134,13 @@ func _run_cicle(delta):
 			return
 		else:
 			print("RESTART")
-			#todo
+			_reset()
 	
 	_reset_next_animation()
 	_execute_async_changes()
 	_update_state_with_user_input()
 	_update_next_animation_and_sound()
+	_perform_go_down()
 	_perform_attack()
 	_perform_side_change()
 	_update_velocity(delta)
@@ -157,7 +159,32 @@ func _execute_async_changes():
 		async_changes.should_take_hit = false
 	if async_changes.should_pickup_item:
 		pass
+	if async_changes.should_heal:
+		state.health = MAX_HEALTH
+	if async_changes.should_die:
+		state.health = 0
+		_on_user_death()
+	if async_changes.should_reset:
+		_reset()
+	if async_changes.should_grow || async_changes.should_shrink:
+		state.growth = _get_new_growth_and_suggest_animation(async_changes.should_grow, async_changes.should_shrink)
 
+
+func _reset():
+	state.health = MAX_HEALTH
+	state.is_dead = false
+	state.growth = Growth.NORMAL
+	state.jump_count = 0
+	state.health = 100
+	state.next_animation = PlayerAnimation.idle
+	state.is_dead = false
+	state.movement_profile = MOVEMENT_NORMAL
+	state.sound_running = false
+	state.sound_death = false
+	state.sound_jump = false
+	state.sound_land = false
+	state.sound_hit = false
+	state.sound_sword = false
 
 func _take_hit(damage: int):
 	print("User was hit")
@@ -187,6 +214,7 @@ func _update_state_with_user_input():
 	state.move_x = _convert_to_move_x(user_input.x)
 	state.move_y = _convert_to_move_y()
 	state.should_jump = user_input.jump
+	state.should_go_down = user_input.go_down
 	state.jump_count = 0 if is_on_floor() else state.jump_count
 	state.should_attack = _convert_to_attack(user_input)
 	state.growth = _get_new_growth_and_suggest_animation(user_input.grow, user_input.shrink)
@@ -197,6 +225,7 @@ func _get_user_input():
 	return {
 		x = Input.get_axis("move_left", "move_right"),
 		jump = Input.is_action_just_pressed("jump"),
+		go_down = Input.is_action_just_pressed("go_down"),
 		grow = Input.is_action_just_pressed("grow"),
 		shrink = Input.is_action_just_pressed("shrink"),
 		attack1 = Input.is_action_just_pressed("attack1"),
@@ -311,6 +340,11 @@ func _suggest_next_animation(animation: PlayerAnimation):
 		state.next_animation = animation
 
 
+func _perform_go_down():
+	if state.should_go_down:
+		position.y += 1
+
+
 func _perform_attack():
 	if state.should_attack == PlayerAttack.NONE:
 		return
@@ -382,6 +416,7 @@ func _clean_state():
 	state.sound_running = false
 	state.sound_death = false
 	state.sound_jump = false
+	state.should_go_down = false
 	state.sound_land = false
 	state.sound_hit = false
 	state.sound_sword = false
