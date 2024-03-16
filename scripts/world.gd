@@ -1,12 +1,16 @@
 extends Node2D
 
+@onready var game_theme = $Game_theme
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	game_theme.finished.connect(_on_loop_sound)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 
 	pass
+
+func _on_loop_sound():
+	game_theme.stream_paused = false
+	game_theme.play()
