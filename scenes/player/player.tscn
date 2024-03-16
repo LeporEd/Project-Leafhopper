@@ -823,3 +823,8 @@ stream = ExtResource("16_7w01d")
 
 [node name="AudioSword" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_uiv6l")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_top_margin = 0.5
