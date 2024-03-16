@@ -1,24 +1,24 @@
-[gd_scene load_steps=8 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=11 format=3 uid="uid://deuiyd33gr4ex"]
 
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
 [ext_resource type="PackedScene" uid="uid://cxr8mc8gcixg5" path="res://character_body_2d.tscn" id="3_mfm75"]
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="4_r7kfi"]
 [ext_resource type="PackedScene" uid="uid://08ai5wpiybru" path="res://giant_spider_enemy.tscn" id="5_wggvh"]
+[ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="7_trce4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7af2p"]
+size = Vector2(523, 134)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
-size = Vector2(78, 661)
+size = Vector2(78, 256.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_js4dh"]
 size = Vector2(126, 20)
-[ext_resource type="Script" path="res://scripts/world.gd" id="1_6jsfv"]
-[ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="3_k604e"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6dpb"]
-size = Vector2(392, 46)
 
 [node name="World" type="Node2D"]
-script = ExtResource("1_6jsfv")
+script = ExtResource("1_1ssj1")
 
 [node name="Background_TEMP" type="Sprite2D" parent="."]
 position = Vector2(196, 112.305)
@@ -30,15 +30,17 @@ metadata/_edit_lock_ = true
 position = Vector2(552, 367)
 
 [node name="Walls_TEMP" type="StaticBody2D" parent="."]
-metadata/_edit_lock_ = true
-metadata/_edit_group_ = true
+
+[node name="FloorTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
+position = Vector2(202, 243)
+shape = SubResource("RectangleShape2D_7af2p")
 
 [node name="LeftWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
-position = Vector2(-40, 319)
+position = Vector2(-39, 109)
 shape = SubResource("RectangleShape2D_kyx4y")
 
 [node name="RightWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
-position = Vector2(1189, 326)
+position = Vector2(431, 113)
 shape = SubResource("RectangleShape2D_kyx4y")
 
 [node name="Spider_Test_Wall" type="CollisionShape2D" parent="Walls_TEMP"]
@@ -54,11 +56,5 @@ position = Vector2(636, 372)
 [node name="Giant_spider_enemy" parent="." instance=ExtResource("5_wggvh")]
 position = Vector2(728, 301)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(196, 201)
-shape = SubResource("RectangleShape2D_n6dpb")
-
-[node name="Player" parent="." instance=ExtResource("3_k604e")]
-position = Vector2(156, 135)
+[node name="Player" parent="." instance=ExtResource("7_trce4")]
+position = Vector2(67, 99)
