@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://r2yfefufj03w"]
+[gd_scene load_steps=38 format=3 uid="uid://r2yfefufj03w"]
 
 [ext_resource type="Texture2D" uid="uid://cpph7pq5weusb" path="res://assets/Player/Sprites/Idle.png" id="1_7dx7d"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_u2in5"]
@@ -11,10 +11,19 @@
 [ext_resource type="Texture2D" uid="uid://bhl2c7covvt38" path="res://assets/Player/Sprites/Attack4.png" id="9_jb18w"]
 [ext_resource type="Texture2D" uid="uid://ccyv5jr36xpht" path="res://assets/Player/Sprites/Fall.png" id="10_axajh"]
 [ext_resource type="Texture2D" uid="uid://dn04w6j5jtsgk" path="res://assets/Player/Sprites/Take Hit - white silhouette.png" id="11_u0kgm"]
+[ext_resource type="AudioStream" uid="uid://pnlfkp42gc61" path="res://sounds/running.mp3" id="12_t7cg4"]
+[ext_resource type="AudioStream" uid="uid://f0mmpryv8744" path="res://sounds/jump.mp3" id="13_a6rcj"]
+[ext_resource type="AudioStream" uid="uid://uf25to8qbvmg" path="res://sounds/death.mp3" id="13_kn6cs"]
+[ext_resource type="AudioStream" uid="uid://cfdab8caw5ogv" path="res://sounds/land.mp3" id="15_lvphb"]
+[ext_resource type="AudioStream" uid="uid://cg8pyumgkkdec" path="res://sounds/hit.mp3" id="16_7w01d"]
+[ext_resource type="AudioStream" uid="uid://bcsh1dm4g7n7d" path="res://sounds/sword.mp3" id="17_uiv6l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
 radius = 7.0
 height = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bljbi"]
+radius = 30.0
 
 [sub_resource type="Animation" id="Animation_ucfe5"]
 length = 0.001
@@ -78,10 +87,35 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WeaponShape:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-27, -21)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("WeaponShape:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_270qp"]
 resource_name = "attack1"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -118,10 +152,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WeaponShape:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-27, -21), Vector2(-15, -30), Vector2(41, -8), Vector2(18, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponShape:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_cwufc"]
 resource_name = "attack2"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -158,10 +217,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WeaponShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponShape:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.29),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-23, -24), Vector2(9, -37), Vector2(50, -1)]
+}
 
 [sub_resource type="Animation" id="Animation_kypet"]
 resource_name = "attack3"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -198,10 +282,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WeaponShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponShape:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-14, -7), Vector2(60, -9)]
+}
 
 [sub_resource type="Animation" id="Animation_8xnvk"]
 resource_name = "attack4"
 length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -237,6 +346,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WeaponShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.38),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponShape:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-19, -25), Vector2(-11, -30), Vector2(29, -30), Vector2(52, 3)]
 }
 
 [sub_resource type="Animation" id="Animation_eld6d"]
@@ -619,8 +752,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4aegj"]
-radius = 6.0
-height = 38.0
+radius = 8.0
+height = 42.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4523e"]
 radius = 16.0
@@ -628,7 +761,7 @@ height = 48.0
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(1, -40)
-collision_layer = 2
+collision_layer = 6
 script = ExtResource("1_u2in5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -637,6 +770,11 @@ hframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_w7ysk")
+
+[node name="WeaponShape" type="CollisionShape2D" parent="."]
+position = Vector2(-27, -21)
+shape = SubResource("CircleShape2D_bljbi")
+debug_color = Color(0.470588, 0.443137, 1, 0.419608)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -650,10 +788,6 @@ one_shot = true
 
 [node name="GameOverTimer" type="Timer" parent="."]
 wait_time = 2.0
-one_shot = true
-
-[node name="GrowthTimer" type="Timer" parent="."]
-wait_time = 0.4
 one_shot = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
@@ -671,3 +805,21 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickup"]
 shape = SubResource("CapsuleShape2D_4523e")
 debug_color = Color(0.552941, 0.560784, 0.0470588, 0.419608)
+
+[node name="AudioRunning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_t7cg4")
+
+[node name="AudioDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_kn6cs")
+
+[node name="AudioJump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_a6rcj")
+
+[node name="AudioLand" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_lvphb")
+
+[node name="AudioHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_7w01d")
+
+[node name="AudioSword" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_uiv6l")
