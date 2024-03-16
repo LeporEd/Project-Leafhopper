@@ -81,7 +81,7 @@ radius = 6.0
 height = 14.0
 
 [node name="Beetle_enemy" type="CharacterBody2D"]
-collision_layer = 0
+collision_layer = 8
 script = ExtResource("1_j8kmb")
 
 [node name="Beetle_charge" type="AnimatedSprite2D" parent="."]
@@ -95,6 +95,7 @@ position = Vector2(-1, 2)
 shape = SubResource("CapsuleShape2D_o6qjs")
 
 [node name="Beetle_hitbox" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="beetle_collision" type="CollisionShape2D" parent="Beetle_hitbox"]
 position = Vector2(-1, 2)

@@ -79,7 +79,7 @@ size = Vector2(21, 10)
 size = Vector2(20, 10)
 
 [node name="Maggot_enemy" type="CharacterBody2D"]
-collision_layer = 0
+collision_layer = 8
 script = ExtResource("1_bugcs")
 
 [node name="Maggot_walk" type="AnimatedSprite2D" parent="."]
@@ -93,6 +93,7 @@ position = Vector2(0.5, 10)
 shape = SubResource("RectangleShape2D_bxma5")
 
 [node name="Maggot_Hitbox" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="Hitbox_Collision" type="CollisionShape2D" parent="Maggot_Hitbox"]
 position = Vector2(1, 11)
