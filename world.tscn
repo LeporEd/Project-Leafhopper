@@ -27,7 +27,7 @@ texture = ExtResource("1_2sdmk")
 metadata/_edit_lock_ = true
 
 [node name="Maggot_enemy" parent="." instance=ExtResource("2_uko7g")]
-position = Vector2(552, 367)
+position = Vector2(304, 145)
 
 [node name="Walls_TEMP" type="StaticBody2D" parent="."]
 
@@ -48,7 +48,7 @@ position = Vector2(736, 232)
 shape = SubResource("RectangleShape2D_js4dh")
 
 [node name="Beetle_enemy" parent="." instance=ExtResource("3_mfm75")]
-position = Vector2(482, 372)
+position = Vector2(344, 126)
 
 [node name="Shooting_spider_enemy" parent="." instance=ExtResource("4_r7kfi")]
 position = Vector2(636, 372)
