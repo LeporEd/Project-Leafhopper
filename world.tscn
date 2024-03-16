@@ -11,12 +11,18 @@ size = Vector2(78, 661)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_js4dh"]
 size = Vector2(126, 20)
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_6jsfv"]
+[ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="3_k604e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6dpb"]
+size = Vector2(392, 46)
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_6jsfv")
 
 [node name="Background_TEMP" type="Sprite2D" parent="."]
-position = Vector2(577, 322.5)
-scale = Vector2(14.35, 3.6875)
+position = Vector2(196, 112.305)
+scale = Vector2(4.9, 1.25915)
 texture = ExtResource("1_2sdmk")
 metadata/_edit_lock_ = true
 
@@ -47,3 +53,12 @@ position = Vector2(636, 372)
 
 [node name="Giant_spider_enemy" parent="." instance=ExtResource("5_wggvh")]
 position = Vector2(728, 301)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(196, 201)
+shape = SubResource("RectangleShape2D_n6dpb")
+
+[node name="Player" parent="." instance=ExtResource("3_k604e")]
+position = Vector2(156, 135)
