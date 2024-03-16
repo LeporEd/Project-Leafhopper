@@ -9,14 +9,13 @@ const CONFIG = {
 }
 
 @onready var sprite_2d = $Sprite2D
-@onready var weapon_2d = $Weapon2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_cooldown_timer: Timer = $AnimationCooldownTimer
 @onready var game_over_timer: Timer = $GameOverTimer
 @onready var growth_timer: Timer = $GrowthTimer
 @onready var hurtbox = $Hurtbox
 @onready var item_pickup = $ItemPickup
-@onready var weapon_shape = $Weapon2D/WeaponShape
+@onready var weapon_shape = $WeaponShape
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -297,7 +296,7 @@ func _perform_side_change():
 	
 	if (scale_direction != state.move_x):
 		sprite_2d.scale.x *= -1
-		weapon_2d.scale.x *= -1
+		weapon_shape.position.x *= -1
 
 
 func _update_velocity(delta):
