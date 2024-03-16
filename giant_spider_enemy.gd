@@ -8,6 +8,7 @@ extends CharacterBody2D
 const DeathParticles = preload("res://death_explosion.tscn")
 
 var speed = 35
+var health = 10
 var starty = position.y
 
 func _ready():
@@ -30,7 +31,17 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _on_giant_spider_hitbox_body_entered():
-	pass
+	###Damage calc goes here
+	if health > 0:
+		var temp = speed
+		speed = 0
+		hurtbox_2_shape.set_deferred("disabled", true)
+		$Giant_spider_animations.animation = "Damage"
+		await get_tree().create_timer(1).timeout
+		$Giant_spider_animations.animation = "Standstill"
+		speed = temp
+	else:
+		_die()
 
 func _die():
 	var particles = DeathParticles.instantiate()
