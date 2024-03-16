@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dw7wr5dstchoq"]
+[gd_scene load_steps=4 format=3 uid="uid://dw7wr5dstchoq"]
 
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_cjjey"]
 [ext_resource type="Script" path="res://main_menu.gd" id="1_gk856"]
+[ext_resource type="AudioStream" uid="uid://bua41q0favxjw" path="res://music/Main_menu_theme.wav" id="3_f4vcg"]
 
 [node name="Main_Menu" type="Control"]
 layout_mode = 3
@@ -58,6 +59,7 @@ text = "PROJECT LEAFHOPPER"
 horizontal_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_f4vcg")
 autoplay = true
 
 [connection signal="pressed" from="Buttons/Button_Start" to="." method="_on_button_start_pressed"]
