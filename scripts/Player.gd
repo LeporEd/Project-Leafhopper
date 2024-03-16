@@ -13,6 +13,8 @@ const CONFIG = {
 @onready var animation_cooldown_timer: Timer = $AnimationCooldownTimer
 @onready var game_over_timer: Timer = $GameOverTimer
 @onready var growth_timer: Timer = $GrowthTimer
+@onready var hurtbox = $Hurtbox
+@onready var item_pickup = $ItemPickup
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -62,7 +64,8 @@ var async_changes = {
 	should_heal = false,
 	should_die = false,
 	should_grow = false,
-	should_shrink = false
+	should_shrink = false,
+	should_pickup_item = false
 }
 
 var state = {
@@ -79,7 +82,17 @@ var state = {
 
 
 func _ready():
-	pass
+	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
+	item_pickup.body_entered.connect(_on_item_pickup_body_entered)
+
+
+func _on_hurtbox_body_entered():
+	async_changes.should_take_hit = true
+
+
+func _on_item_pickup_body_entered():
+	async_changes.should_pickup_item = true
+
 
 func _physics_process(delta):
 	_run_cicle(delta)
