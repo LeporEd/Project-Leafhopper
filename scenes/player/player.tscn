@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://r2yfefufj03w"]
+[gd_scene load_steps=38 format=3 uid="uid://r2yfefufj03w"]
 
 [ext_resource type="Texture2D" uid="uid://cpph7pq5weusb" path="res://assets/Player/Sprites/Idle.png" id="1_7dx7d"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_u2in5"]
@@ -11,6 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://bhl2c7covvt38" path="res://assets/Player/Sprites/Attack4.png" id="9_jb18w"]
 [ext_resource type="Texture2D" uid="uid://ccyv5jr36xpht" path="res://assets/Player/Sprites/Fall.png" id="10_axajh"]
 [ext_resource type="Texture2D" uid="uid://dn04w6j5jtsgk" path="res://assets/Player/Sprites/Take Hit - white silhouette.png" id="11_u0kgm"]
+[ext_resource type="AudioStream" uid="uid://pnlfkp42gc61" path="res://sounds/running.mp3" id="12_t7cg4"]
+[ext_resource type="AudioStream" uid="uid://f0mmpryv8744" path="res://sounds/jump.mp3" id="13_a6rcj"]
+[ext_resource type="AudioStream" uid="uid://uf25to8qbvmg" path="res://sounds/death.mp3" id="13_kn6cs"]
+[ext_resource type="AudioStream" uid="uid://cfdab8caw5ogv" path="res://sounds/land.mp3" id="15_lvphb"]
+[ext_resource type="AudioStream" uid="uid://cg8pyumgkkdec" path="res://sounds/hit.mp3" id="16_7w01d"]
+[ext_resource type="AudioStream" uid="uid://bcsh1dm4g7n7d" path="res://sounds/sword.mp3" id="17_uiv6l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
 radius = 7.0
@@ -784,10 +790,6 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
-[node name="GrowthTimer" type="Timer" parent="."]
-wait_time = 0.4
-one_shot = true
-
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 8
@@ -803,3 +805,21 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickup"]
 shape = SubResource("CapsuleShape2D_4523e")
 debug_color = Color(0.552941, 0.560784, 0.0470588, 0.419608)
+
+[node name="AudioRunning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_t7cg4")
+
+[node name="AudioDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_kn6cs")
+
+[node name="AudioJump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_a6rcj")
+
+[node name="AudioLand" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_lvphb")
+
+[node name="AudioHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_7w01d")
+
+[node name="AudioSword" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_uiv6l")

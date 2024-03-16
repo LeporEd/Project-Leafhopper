@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
+# Sound Effect by UNIVERSFIELD from Pixabay (Death sound)
+# Sound Effect by Pixabay
 
 const MAX_HEALTH = 100
 const DEFAULT_RECEIVING_DAMAGE = 25
-
 
 const MOVEMENT_SMALL = { SPEED = 100.0, JUMP_VELOCITY = -225.0, ALLOWED_JUMPS = 3 }
 const MOVEMENT_NORMAL = { SPEED = 175.0, JUMP_VELOCITY = -275.0, ALLOWED_JUMPS = 2 }
@@ -14,10 +15,16 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -200.0, ALLOWED_JUMPS = 1 
 @onready var animation_player = $AnimationPlayer
 @onready var animation_cooldown_timer: Timer = $AnimationCooldownTimer
 @onready var game_over_timer: Timer = $GameOverTimer
-@onready var growth_timer: Timer = $GrowthTimer
 @onready var hurtbox = $Hurtbox
 @onready var item_pickup = $ItemPickup
 @onready var weapon_shape = $WeaponShape
+@onready var audio_running = $AudioRunning
+@onready var audio_death = $AudioDeath
+@onready var audio_jump = $AudioJump
+@onready var audio_land = $AudioLand
+@onready var audio_hit = $AudioHit
+@onready var audio_sword = $AudioSword
+
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -82,7 +89,13 @@ var state = {
 	health = 100,
 	next_animation = PlayerAnimation.idle,
 	is_dead = false,
-	movement_profile = MOVEMENT_NORMAL
+	movement_profile = MOVEMENT_NORMAL,
+	sound_running = false,
+	sound_death = false,
+	sound_jump = false,
+	sound_land = false,
+	sound_hit = false,
+	sound_sword = false
 }
 
 
@@ -125,11 +138,12 @@ func _run_cicle(delta):
 	_reset_next_animation()
 	_execute_async_changes()
 	_update_state_with_user_input()
-	_update_next_animation()
+	_update_next_animation_and_sound()
 	_perform_attack()
 	_perform_side_change()
 	_update_velocity(delta)
 	_play_animation()
+	_play_audio()
 	_clean_state()
 
 
@@ -154,11 +168,14 @@ func _take_hit(damage: int):
 		_on_user_death()
 	else:
 		_suggest_next_animation(PlayerAnimation.take_hit)
+		state.sound_hit = true
+		print(state.sound_hit)
 		state.should_start_animation_cooldown_timer = 0.4
 	
 
 func _on_user_death():
 	_suggest_next_animation(PlayerAnimation.death)
+	state.sound_death = true
 	state.is_dead = true
 	PlayerEvents.on_player_died.emit()
 	game_over_timer.start()
@@ -274,17 +291,19 @@ func _get_movement_profile():
 			return MOVEMENT_NORMAL
 
 
-func _update_next_animation():
+func _update_next_animation_and_sound():
 	if state.move_x != MoveX.NONE:
 		_suggest_next_animation(PlayerAnimation.run)
 	if state.move_y == MoveY.JUMP:
 		_suggest_next_animation(PlayerAnimation.jump)
+		state.sound_jump = true
 	if state.move_y == MoveY.FALL:
 		_suggest_next_animation(PlayerAnimation.fall)
 	if state.should_attack != PlayerAttack.NONE:
 		var attack = PlayerAttack.keys()[state.should_attack]
 		var attack_animation = PlayerAnimation[attack]
 		_suggest_next_animation(attack_animation)
+		state.sound_sword = true
 
 
 func _suggest_next_animation(animation: PlayerAnimation):
@@ -338,8 +357,32 @@ func _play_animation():
 		animation_cooldown_timer.start(state.should_start_animation_cooldown_timer)
 
 
+func _play_audio():
+	if state.move_x == MoveX.NONE || not is_on_floor():
+		audio_running.stop()
+	elif not audio_running.playing:
+		audio_running.play()
+	
+	if not audio_death.playing and state.sound_death:
+		audio_death.play()
+	if not audio_hit.playing and state.sound_hit:
+		audio_hit.play()
+	if not audio_jump.playing and state.sound_jump:
+		audio_jump.play()
+	if not audio_land.playing and state.sound_land:
+		audio_land.play()
+	if not audio_sword.playing and state.sound_sword:
+		audio_sword.play()
+
+
 func _clean_state():
 	state.should_jump = false
 	state.should_attack = PlayerAttack.NONE
 	state.should_start_animation_cooldown_timer = 0.0
+	state.sound_running = false
+	state.sound_death = false
+	state.sound_jump = false
+	state.sound_land = false
+	state.sound_hit = false
+	state.sound_sword = false
 
