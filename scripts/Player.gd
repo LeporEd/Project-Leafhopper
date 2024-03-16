@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
-# Sound Effect by UNIVERSFIELD from Pixabay (Death sound)
-# Sound Effect by Pixabay
+const INITIAL_POSITION = {
+	X = 60,
+	Y = 100
+}
 
 const MAX_HEALTH = 100
 const DEFAULT_RECEIVING_DAMAGE = 25
@@ -75,29 +77,50 @@ var async_changes = {
 	should_die = false,
 	should_grow = false,
 	should_shrink = false,
-	should_pickup_item = false
+	should_pickup_item = false,
+	should_save = false,
+	should_load = false
 }
 
-var state = {
-	move_x = MoveX.NONE,
-	move_y = MoveY.NONE,
-	should_jump = false,
-	should_go_down = false,
-	should_attack = PlayerAttack,
-	should_start_animation_cooldown_timer = 0.0,
-	growth = Growth.NORMAL,
-	jump_count = 0,
-	health = 100,
-	next_animation = PlayerAnimation.idle,
-	is_dead = false,
-	movement_profile = MOVEMENT_NORMAL,
-	sound_running = false,
-	sound_death = false,
-	sound_jump = false,
-	sound_land = false,
-	sound_hit = false,
-	sound_sword = false
-}
+class State:
+	var move_x = MoveX.NONE
+	var move_y = MoveY.NONE
+	var should_jump = false
+	var should_go_down = false
+	var should_attack = PlayerAttack
+	var should_start_animation_cooldown_timer = 0.0
+	var growth = Growth.NORMAL
+	var jump_count = 0
+	var health = 100
+	var next_animation = PlayerAnimation.idle
+	var is_dead = false
+	var movement_profile = MOVEMENT_NORMAL
+	var sound_running = false
+	var sound_death = false
+	var sound_jump = false
+	var sound_land = false
+	var sound_hit = false
+	var sound_sword = false
+	
+
+		
+
+
+var state: State = State.new()
+
+
+class Checkpoint:
+	var x: float
+	var y: float
+	var state: State
+	
+	func _init(x: float, y: float, state: State):
+		self.x = x
+		self.y = y
+		self.state = state
+
+
+var checkpoints = []
 
 
 func _ready():
@@ -112,6 +135,11 @@ func _ready():
 	PlayerEvents.player_kill.connect(func(): async_changes.should_die = true)
 	PlayerEvents.player_grow.connect(func(): async_changes.should_grow = true)
 	PlayerEvents.player_shrink.connect(func(): async_changes.should_shrink = true)
+	PlayerEvents.player_save.connect(func(): async_changes.should_save = true)
+	PlayerEvents.player_load.connect(func(): async_changes.should_load = true)
+	
+	position.x = INITIAL_POSITION.X
+	position.y = INITIAL_POSITION.Y
 
 
 func _on_hurtbox_body_entered(argument):
@@ -168,23 +196,19 @@ func _execute_async_changes():
 		_reset()
 	if async_changes.should_grow || async_changes.should_shrink:
 		state.growth = _get_new_growth_and_suggest_animation(async_changes.should_grow, async_changes.should_shrink)
+	if async_changes.should_save:
+		_save_checkpoint()
 
 
 func _reset():
-	state.health = MAX_HEALTH
-	state.is_dead = false
-	state.growth = Growth.NORMAL
-	state.jump_count = 0
-	state.health = 100
-	state.next_animation = PlayerAnimation.idle
-	state.is_dead = false
-	state.movement_profile = MOVEMENT_NORMAL
-	state.sound_running = false
-	state.sound_death = false
-	state.sound_jump = false
-	state.sound_land = false
-	state.sound_hit = false
-	state.sound_sword = false
+	state = State.new()
+	position.x = INITIAL_POSITION.X
+	position.y = INITIAL_POSITION.Y
+
+
+func _save_checkpoint():
+	checkpoints.append(Checkpoint.new(position.x, position.y, state.clone()))
+
 
 func _take_hit(damage: int):
 	print("User was hit")
