@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://biu4nu0buccn5"]
+
+[ext_resource type="Texture2D" uid="uid://bnu2fpgfurrub" path="res://assets/Particles/Explosion_Sheet.png" id="1_4xme1"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_np7al"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pp6rs"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 0.8
+scale_max = 0.8
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="Death_Explosion" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_np7al")
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_pp6rs")
+texture = ExtResource("1_4xme1")
+one_shot = true
