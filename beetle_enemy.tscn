@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cxr8mc8gcixg5"]
+[gd_scene load_steps=17 format=3 uid="uid://cxr8mc8gcixg5"]
 
 [ext_resource type="Texture2D" uid="uid://c0t2wpq40mvmi" path="res://assets/Enemies/AIEA_Beetle/BeetleMove.png" id="1_2djlq"]
 [ext_resource type="Script" path="res://beetle_enemy.gd" id="1_j8kmb"]
+[ext_resource type="Texture2D" uid="uid://c6gd31yypdb2y" path="res://assets/Enemies/AIEA_Beetle/Beetle_dmg_left.png" id="3_60lus"]
+[ext_resource type="Texture2D" uid="uid://b2drxxhmviigs" path="res://assets/Enemies/AIEA_Beetle/Beetle_dmg_right.png" id="4_1m8qh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q4uyf"]
 atlas = ExtResource("1_2djlq")
@@ -34,6 +36,10 @@ region = Rect2(64, 64, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1jrx"]
 atlas = ExtResource("1_2djlq")
 region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb81k"]
+atlas = ExtResource("3_60lus")
+region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k5mai"]
 animations = [{
@@ -70,6 +76,22 @@ animations = [{
 "loop": true,
 "name": &"ChargeRight",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nb81k")
+}],
+"loop": true,
+"name": &"DamageLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_1m8qh")
+}],
+"loop": true,
+"name": &"DamageRight",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o6qjs"]
@@ -86,8 +108,9 @@ script = ExtResource("1_j8kmb")
 
 [node name="Beetle_charge" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k5mai")
-animation = &"ChargeRight"
+animation = &"DamageRight"
 autoplay = "ChargeLeft"
+frame_progress = 0.324366
 
 [node name="Beetle_Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
