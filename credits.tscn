@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_lpey2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4266u"]
-font_size = 11
+font_size = 10
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
@@ -40,10 +40,10 @@ text = "Back"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 120.0
+offset_left = 151.0
 offset_top = 10.0
-offset_right = 380.0
-offset_bottom = 205.0
+offset_right = 381.0
+offset_bottom = 211.0
 text = "Created by Vibezig Wizards
 
 Assets:
@@ -54,7 +54,8 @@ Spider - Elthen
 Giant Spider - raccoontruck
 Beetle and Maggot - Cheshire
 Character - Luizmelo
-Dirt and Background - MamaNeZakon"
+Dirt and Background - MamaNeZakon
+Wood - iPixl"
 label_settings = SubResource("LabelSettings_4266u")
 
 [connection signal="pressed" from="Buttons/Button_Back" to="." method="_on_button_back_pressed"]
