@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Project Leafhopper"
-config/version="0.0.1"
+config/version="0.0.2"
 run/main_scene="res://world.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -95,6 +95,10 @@ shrink={
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":4,"axis_value":1.0,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="World"
 
 [rendering]
 

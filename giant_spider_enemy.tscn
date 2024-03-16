@@ -1,0 +1,105 @@
+[gd_scene load_steps=14 format=3 uid="uid://08ai5wpiybru"]
+
+[ext_resource type="Script" path="res://giant_spider_enemy.gd" id="1_pves6"]
+[ext_resource type="Texture2D" uid="uid://uc1gyriycrb2" path="res://assets/Enemies/Raccoontruck_Giant_Spider/Arigopeaurantia2.png" id="1_y7bdw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50q2j"]
+atlas = ExtResource("1_y7bdw")
+region = Rect2(0, 0, 266, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58gj5"]
+atlas = ExtResource("1_y7bdw")
+region = Rect2(266, 0, 266, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1poo8"]
+atlas = ExtResource("1_y7bdw")
+region = Rect2(532, 0, 266, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_og30w"]
+atlas = ExtResource("1_y7bdw")
+region = Rect2(0, 176, 266, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxocb"]
+atlas = ExtResource("1_y7bdw")
+region = Rect2(266, 176, 266, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vf8t"]
+atlas = ExtResource("1_y7bdw")
+region = Rect2(0, 0, 266, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhe8o"]
+atlas = ExtResource("1_y7bdw")
+region = Rect2(266, 0, 266, 176)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_51phk"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_50q2j")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_58gj5")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_1poo8")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_og30w")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_bxocb")
+}],
+"loop": true,
+"name": &"Eat",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vf8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhe8o")
+}],
+"loop": true,
+"name": &"Standstill",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7yvgk"]
+radius = 31.0
+height = 92.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j2nut"]
+radius = 12.0
+height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_awyqq"]
+radius = 18.0
+height = 36.0
+
+[node name="Giant_spider_enemy" type="CharacterBody2D"]
+script = ExtResource("1_pves6")
+
+[node name="Giant_spider_animations" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_51phk")
+animation = &"Eat"
+autoplay = "Standstill"
+frame_progress = 0.238945
+
+[node name="Giant_spider_collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("CapsuleShape2D_7yvgk")
+
+[node name="Giant_spider_hurtbox_1" type="Area2D" parent="."]
+
+[node name="Hurtbox_1_shape" type="CollisionShape2D" parent="Giant_spider_hurtbox_1"]
+position = Vector2(-1, 33)
+shape = SubResource("CapsuleShape2D_j2nut")
+debug_color = Color(0.85098, 0.356863, 0.282353, 0.419608)
+
+[node name="Giant_spider_hurtbox_2" type="Area2D" parent="."]
+
+[node name="Hurtbox_2_shape" type="CollisionShape2D" parent="Giant_spider_hurtbox_2"]
+position = Vector2(-2, 35)
+shape = SubResource("CapsuleShape2D_awyqq")
+debug_color = Color(0.662745, 0.509804, 0.12549, 0.419608)
