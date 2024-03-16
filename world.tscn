@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=12 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="4_r7kfi"]
 [ext_resource type="PackedScene" uid="uid://08ai5wpiybru" path="res://giant_spider_enemy.tscn" id="5_wggvh"]
 [ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="7_trce4"]
+[ext_resource type="PackedScene" uid="uid://bnp3jbx170l1w" path="res://scenes/grow_power_up.tscn" id="9_wx0s3"]
+[ext_resource type="AudioStream" uid="uid://dtn3l120ydsjy" path="res://music/Game_theme.wav" id="8_eoxof"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7af2p"]
 size = Vector2(523, 134)
@@ -58,3 +60,10 @@ position = Vector2(728, 301)
 
 [node name="Player" parent="." instance=ExtResource("7_trce4")]
 position = Vector2(67, 99)
+
+[node name="GrowPowerUp" parent="." instance=ExtResource("9_wx0s3")]
+position = Vector2(359, 156)
+
+[node name="Game_theme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_eoxof")
+autoplay = true

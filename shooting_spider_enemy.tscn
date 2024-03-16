@@ -125,7 +125,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_r1guj")
 }],
 "loop": true,
-"name": &"Walk-75",
+"name": &"WalkLeft",
 "speed": 5.0
 }, {
 "frames": [{
@@ -148,7 +148,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_orvy1")
 }],
 "loop": true,
-"name": &"Walk75",
+"name": &"WalkRight",
 "speed": 5.0
 }]
 
@@ -164,8 +164,8 @@ script = ExtResource("1_26cgy")
 
 [node name="Spider_Animations" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a8gii")
-animation = &"ShootRight"
-autoplay = "Walk-75"
+animation = &"WalkRight"
+autoplay = "WalkLeft"
 
 [node name="Spider_collisions" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 11)

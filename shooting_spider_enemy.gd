@@ -16,7 +16,7 @@ func _ready():
 func _physics_process(delta):
 	if is_on_wall ():
 		speed *= -1
-		$Spider_Animations.animation = "Walk" + str(speed)
+		_spider_set_walk()
 	velocity.x = speed
 	move_and_slide()
 
@@ -33,10 +33,16 @@ func _on_timer_timeout():
 	SpiderWeb.linear_velocity = Vector2(temp * 3, 0.0)
 	get_tree().current_scene.add_child(SpiderWeb)
 	speed = temp
-	$Spider_Animations.animation = "Walk" + str(speed)
+	_spider_set_walk()
 
 func _on_spider_hitbox_body_entered (body):
 	_die()
+
+func _spider_set_walk ():
+	if speed < 0:
+		$Spider_Animations.animation = "WalkLeft"
+	else:
+		$Spider_Animations.animation = "WalkRight"
 
 func _die():
 	var particles = DeathParticles.instantiate()
