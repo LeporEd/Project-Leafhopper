@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://bucaslp8231jh"]
+
+[ext_resource type="Texture2D" uid="uid://b8u71yi50pgei" path="res://assets/PowerUps/Lavender.png" id="1_ai75c"]
+[ext_resource type="Script" path="res://scripts/shrink_power_up.gd" id="1_dw0hv"]
+
+[sub_resource type="Animation" id="Animation_5vta2"]
+resource_name = "ShrinkPowerUpAnimation"
+length = 1.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_oympg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xg6wn"]
+_data = {
+"RESET": SubResource("Animation_oympg"),
+"ShrinkPowerUpAnimation": SubResource("Animation_5vta2")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q2nxf"]
+radius = 4.0
+
+[sub_resource type="Gradient" id="Gradient_8c33n"]
+offsets = PackedFloat32Array(0, 0.681818)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f8qyk"]
+gradient = SubResource("Gradient_8c33n")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ShrinkPowerUp" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_dw0hv")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ShrinkPowerUp"]
+texture = ExtResource("1_ai75c")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ShrinkPowerUp"]
+libraries = {
+"": SubResource("AnimationLibrary_xg6wn")
+}
+autoplay = "ShrinkPowerUpAnimation"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkPowerUp"]
+shape = SubResource("CapsuleShape2D_q2nxf")
+
+[node name="PointLight2D" type="PointLight2D" parent="ShrinkPowerUp"]
+color = Color(1, 0.219608, 1, 1)
+texture = SubResource("GradientTexture2D_f8qyk")
+
+[connection signal="body_entered" from="ShrinkPowerUp" to="ShrinkPowerUp" method="_on_body_entered"]
