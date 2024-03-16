@@ -1,10 +1,16 @@
 extends Node
 
-# Emitted from Player
-signal player_attack(weapon: int)
-signal player_took_hit(new_health: int)
-signal player_died()
+# From Player
+signal on_player_took_hit(new_health: int)
+signal on_player_died()
+signal on_player_attack()
+signal on_player_grow()
+signal on_player_shrink()
 
-# Emitted from external
-signal hit_player(damage: int)
-
+# Send To Player
+signal player_reset()
+signal player_take_hit()
+signal player_heal()
+signal player_kill()
+signal player_grow()
+signal player_shrink()
