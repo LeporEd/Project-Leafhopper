@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1d1qc7t4u0sk"]
+
+[ext_resource type="Script" path="res://music_menu.gd" id="1_rmquo"]
+
+[node name="Music_Menu" type="HSlider"]
+offset_right = 8.0
+offset_bottom = 16.0
+max_value = 1.0
+step = 0.001
+script = ExtResource("1_rmquo")

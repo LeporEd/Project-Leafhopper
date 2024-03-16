@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 PlayerEvents="*res://events/player_events.gd"
+MainTheme="*res://main_theme.tscn"
 
 [display]
 
