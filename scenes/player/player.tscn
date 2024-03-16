@@ -19,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://bcsh1dm4g7n7d" path="res://sounds/sword.mp3" id="17_uiv6l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
-radius = 7.0
+radius = 6.0
 height = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bljbi"]
@@ -752,8 +752,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4aegj"]
-radius = 8.0
-height = 42.0
+radius = 7.0
+height = 40.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4523e"]
 radius = 16.0

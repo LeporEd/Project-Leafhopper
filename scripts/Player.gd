@@ -133,7 +133,7 @@ func _run_cicle(delta):
 			return
 		else:
 			print("RESTART")
-			#todo
+			_reset()
 	
 	_reset_next_animation()
 	_execute_async_changes()
@@ -157,7 +157,32 @@ func _execute_async_changes():
 		async_changes.should_take_hit = false
 	if async_changes.should_pickup_item:
 		pass
+	if async_changes.should_heal:
+		state.health = MAX_HEALTH
+	if async_changes.should_die:
+		state.health = 0
+		_on_user_death()
+	if async_changes.should_reset:
+		_reset()
+	if async_changes.should_grow || async_changes.should_shrink:
+		state.growth = _get_new_growth_and_suggest_animation(async_changes.should_grow, async_changes.should_shrink)
 
+
+func _reset():
+	state.health = MAX_HEALTH
+	state.is_dead = false
+	state.growth = Growth.NORMAL
+	state.jump_count = 0
+	state.health = 100
+	state.next_animation = PlayerAnimation.idle
+	state.is_dead = false
+	state.movement_profile = MOVEMENT_NORMAL
+	state.sound_running = false
+	state.sound_death = false
+	state.sound_jump = false
+	state.sound_land = false
+	state.sound_hit = false
+	state.sound_sword = false
 
 func _take_hit(damage: int):
 	print("User was hit")
