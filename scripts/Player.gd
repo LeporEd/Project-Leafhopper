@@ -77,16 +77,25 @@ var state = {
 	growth = Growth.NORMAL,
 	jump_count = 0,
 	health = 100,
-	next_animation = PlayerAnimation.idle
+	next_animation = PlayerAnimation.idle,
+	is_dead = false
 }
 
 
 func _ready():
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 	item_pickup.body_entered.connect(_on_item_pickup_body_entered)
+	
+	PlayerEvents.player_reset.connect(func(): async_changes.should_reset = true)
+	PlayerEvents.player_take_hit.connect(func(): async_changes.should_take_hit = true)
+	PlayerEvents.player_heal.connect(func(): async_changes.should_heal = true)
+	PlayerEvents.player_kill.connect(func(): async_changes.should_die = true)
+	PlayerEvents.player_grow.connect(func(): async_changes.should_grow = true)
+	PlayerEvents.player_shrink.connect(func(): async_changes.should_shrink = true)
 
 
-func _on_hurtbox_body_entered():
+func _on_hurtbox_body_entered(argument):
+	print(argument)
 	async_changes.should_take_hit = true
 
 
@@ -94,12 +103,19 @@ func _on_item_pickup_body_entered():
 	async_changes.should_pickup_item = true
 
 
-func _physics_process(delta):
+func _physics_process(delta):	
 	_run_cicle(delta)
 	move_and_slide()
 
 
 func _run_cicle(delta):
+	if state.is_dead:
+		if game_over_timer.time_left > 0:
+			return
+		else:
+			print("RESTART")
+			#todo
+	
 	_reset_next_animation()
 	_execute_async_changes()
 	_update_state_with_user_input()
@@ -116,7 +132,31 @@ func _reset_next_animation():
 
 
 func _execute_async_changes():
-	pass
+	if async_changes.should_take_hit:
+		_take_hit(CONFIG.DEFAULT_RECEIVING_DAMAGE)
+		async_changes.should_take_hit = false
+	if async_changes.should_pickup_item:
+		pass
+
+
+func _take_hit(damage: int):
+	print("User was hit")
+	state.health -= damage
+	PlayerEvents.on_player_took_hit.emit(state.health)
+	
+	if state.health <= 0:
+		_on_user_death()
+	else:
+		_suggest_next_animation(PlayerAnimation.take_hit)
+		state.should_start_animation_cooldown_timer = 0.4
+	
+
+func _on_user_death():
+	_suggest_next_animation(PlayerAnimation.death)
+	state.is_dead = true
+	PlayerEvents.on_player_died.emit()
+	game_over_timer.start()
+	print("Player died")
 
 
 func _update_state_with_user_input():
@@ -189,9 +229,11 @@ func _get_new_growth_and_suggest_animation(grow: bool, shrink: bool) -> Growth:
 			Growth.SMALL:
 				next_growth = Growth.NORMAL
 				growth_transition = GrowthTransition.small_to_normal
+				PlayerEvents.on_player_grow.emit()
 			Growth.NORMAL:
 				next_growth = Growth.BIG
 				growth_transition = GrowthTransition.normal_to_big
+				PlayerEvents.on_player_grow.emit()
 			_:
 				return state.growth
 	elif shrink:
@@ -199,9 +241,11 @@ func _get_new_growth_and_suggest_animation(grow: bool, shrink: bool) -> Growth:
 			Growth.BIG:
 				next_growth = Growth.NORMAL
 				growth_transition = GrowthTransition.big_to_normal
+				PlayerEvents.on_player_shrink.emit()
 			Growth.NORMAL:
 				next_growth = Growth.SMALL
 				growth_transition = GrowthTransition.normal_to_small
+				PlayerEvents.on_player_shrink.emit()
 			_:
 				return state.growth
 	else:
@@ -236,6 +280,7 @@ func _perform_attack():
 		return
 	
 	state.should_start_animation_cooldown_timer = 0.5
+	PlayerEvents.on_player_attack.emit()
 	
 	#todo waffen hitboxen prüfen
 
