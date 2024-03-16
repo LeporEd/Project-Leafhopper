@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
-[ext_resource type="PackedScene" uid="uid://cxr8mc8gcixg5" path="res://character_body_2d.tscn" id="3_mfm75"]
+[ext_resource type="PackedScene" uid="uid://cxr8mc8gcixg5" path="res://beetle_enemy.tscn" id="3_mfm75"]
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="4_r7kfi"]
 [ext_resource type="PackedScene" uid="uid://08ai5wpiybru" path="res://giant_spider_enemy.tscn" id="5_wggvh"]
 [ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="7_trce4"]

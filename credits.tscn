@@ -13,8 +13,8 @@ grow_vertical = 2
 script = ExtResource("1_ergwn")
 
 [node name="Background_TEMP" type="Sprite2D" parent="."]
-position = Vector2(193, 108.5)
-scale = Vector2(4.9, 1.25568)
+position = Vector2(195, 111)
+scale = Vector2(4.9, 1.29545)
 texture = ExtResource("1_lpey2")
 metadata/_edit_lock_ = true
 
