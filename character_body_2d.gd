@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var beetle_charge_animation: AnimatedSprite2D = $Beetle_charge
 @onready var beetle_hitbox: Area2D = $Beetle_hitbox
 
+const DeathParticles = preload("res://death_explosion.tscn")
+
 var speed = -200
 
 func _ready():
@@ -18,3 +20,10 @@ func _physics_process(delta):
 	move_and_slide()
 	
 ####func _on_Beetle_hitbox_body_entered (body)   ######## Damage against Player
+
+func _die():
+	var particles = DeathParticles.instantiate()
+	particles.position = position
+	particles.restart()
+	get_tree().current_scene.add_child(particles)
+	queue_free()

@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var spider_timer = $Spider_Timer
 
 const WebScene = preload("res://spider_web_shot.tscn")
+const DeathParticles = preload("res://death_explosion.tscn")
 
 var speed = -75
 
@@ -35,3 +36,10 @@ func _on_timer_timeout():
 	$Spider_Animations.animation = "Walk" + str(speed)
 
 ####func _on_spider_hitbox_body_entered (body)   ######## Damage against Player
+
+func _die():
+	var particles = DeathParticles.instantiate()
+	particles.position = position
+	particles.restart()
+	get_tree().current_scene.add_child(particles)
+	queue_free()

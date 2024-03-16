@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var giant_spider_animations = $Giant_spider_animations
 @onready var hurtbox_2_shape = $Giant_spider_hurtbox_2/Hurtbox_2_shape
 
+const DeathParticles = preload("res://death_explosion.tscn")
+
 var speed = 35
 var starty = position.y
 
@@ -22,3 +24,10 @@ func _physics_process(delta):
 		speed = 35
 	velocity.y = speed
 	move_and_slide()
+
+func _die():
+	var particles = DeathParticles.instantiate()
+	particles.position = position
+	particles.restart()
+	get_tree().current_scene.add_child(particles)
+	queue_free()
