@@ -10,7 +10,7 @@ const DeathParticles = preload("res://death_explosion.tscn")
 var speed = -75
 
 func _ready():
-	#spider_hitbox.body_entered.connect(_on_Spider_hitbox_body_entered)
+	spider_hitbox.body_entered.connect(_on_spider_hitbox_body_entered)
 	spider_timer.timeout.connect(_on_timer_timeout)
 
 func _physics_process(delta):
@@ -35,7 +35,8 @@ func _on_timer_timeout():
 	speed = temp
 	$Spider_Animations.animation = "Walk" + str(speed)
 
-####func _on_spider_hitbox_body_entered (body)   ######## Damage against Player
+func _on_spider_hitbox_body_entered (body):
+	_die()
 
 func _die():
 	var particles = DeathParticles.instantiate()

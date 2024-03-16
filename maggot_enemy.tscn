@@ -94,6 +94,7 @@ shape = SubResource("RectangleShape2D_bxma5")
 
 [node name="Maggot_Hitbox" type="Area2D" parent="."]
 collision_layer = 8
+collision_mask = 4
 
 [node name="Hitbox_Collision" type="CollisionShape2D" parent="Maggot_Hitbox"]
 position = Vector2(1, 11)

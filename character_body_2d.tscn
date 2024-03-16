@@ -96,6 +96,7 @@ shape = SubResource("CapsuleShape2D_o6qjs")
 
 [node name="Beetle_hitbox" type="Area2D" parent="."]
 collision_layer = 8
+collision_mask = 4
 
 [node name="beetle_collision" type="CollisionShape2D" parent="Beetle_hitbox"]
 position = Vector2(-1, 2)
