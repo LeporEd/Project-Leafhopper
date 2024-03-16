@@ -19,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://bcsh1dm4g7n7d" path="res://sounds/sword.mp3" id="17_uiv6l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
-radius = 7.0
+radius = 6.0
 height = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bljbi"]
@@ -110,6 +110,18 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Camera2D:zoom")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_270qp"]
@@ -400,6 +412,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(2, 2), Vector2(1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_8snmd"]
 resource_name = "death"
@@ -592,6 +616,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(2, 2)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.75, 0.75)]
+}
 
 [sub_resource type="Animation" id="Animation_mvcl1"]
 resource_name = "normal_to_small"
@@ -620,6 +656,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(0.35, 0.35)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.25, 1.25)]
 }
 
 [sub_resource type="Animation" id="Animation_nk72k"]
@@ -691,6 +739,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0.35, 0.35), Vector2(1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.25, 1.25), Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_fib4p"]
 resource_name = "take_hit"
@@ -752,8 +812,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4aegj"]
-radius = 8.0
-height = 42.0
+radius = 7.0
+height = 40.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4523e"]
 radius = 16.0
@@ -823,3 +883,8 @@ stream = ExtResource("16_7w01d")
 
 [node name="AudioSword" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_uiv6l")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_top_margin = 0.5
