@@ -37,5 +37,6 @@ debug_color = Color(0.843137, 0.364706, 0.290196, 0.419608)
 
 [node name="Death_timer" type="Timer" parent="."]
 wait_time = 5.0
+autostart = true
 
 [connection signal="timeout" from="Death_timer" to="." method="_on_timer_timeout"]

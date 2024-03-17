@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=35 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
@@ -17,9 +17,11 @@
 [ext_resource type="PackedScene" uid="uid://bucaslp8231jh" path="res://scenes/shrink_power_up.tscn" id="14_nnkfg"]
 [ext_resource type="PackedScene" uid="uid://cxcaifvcfgod0" path="res://scenes/one_way_plattform.tscn" id="15_8onha"]
 [ext_resource type="PackedScene" uid="uid://dctv6cmwp1vbu" path="res://scenes/level_templates/platform_left_edge.tscn" id="17_gr3p7"]
-[ext_resource type="PackedScene" uid="uid://bdj8g0woflh1q" path="res://scenes/dungeonteleport.tscn" id="18_lmk8d"]
+[ext_resource type="PackedScene" uid="uid://sv2jejna8sf4" path="res://scenes/dungeonteleport.tscn" id="18_lmk8d"]
 [ext_resource type="PackedScene" uid="uid://72ll0nvsxvul" path="res://scenes/level_templates/dirtblock_no_grass.tscn" id="19_n4dga"]
 [ext_resource type="PackedScene" uid="uid://08ai5wpiybru" path="res://giant_spider_enemy.tscn" id="20_qph20"]
+[ext_resource type="PackedScene" uid="uid://xxjf376504n8" path="res://scenes/level_templates/dirtblock_grassy.tscn" id="21_me6l2"]
+[ext_resource type="PackedScene" uid="uid://4alx3his7h8p" path="res://scenes/level_templates/platform_right_edge.tscn" id="22_orbjg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
 size = Vector2(78, 256.5)
@@ -44,6 +46,23 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3lamx"]
 size = Vector2(14, 24.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1nwa0"]
+size = Vector2(21, 33)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pmdow"]
+font_size = 10
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8jf5"]
+size = Vector2(33, 41)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qwhgs"]
+size = Vector2(26, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_73f40"]
+size = Vector2(31, 42)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_1ssj1")
@@ -312,3 +331,203 @@ position = Vector2(3758, 18)
 
 [node name="Platform_full7" parent="." instance=ExtResource("11_7abt5")]
 position = Vector2(3710, 248)
+
+[node name="Maggot_enemy8" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(3879, 236)
+
+[node name="OneWayPlatform3" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(4009, 279)
+
+[node name="OneWayPlatform4" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(4009, 213)
+
+[node name="OneWayPlatform5" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(4011, 152)
+
+[node name="Platform_left_Edge3" parent="." instance=ExtResource("17_gr3p7")]
+position = Vector2(4074, 111)
+
+[node name="Platform_middle9" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(4130, 112)
+
+[node name="Platform_middle10" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(4182, 112)
+
+[node name="dirtblock_grassy" parent="." instance=ExtResource("21_me6l2")]
+position = Vector2(4240, 65)
+
+[node name="dirtblock_grassy2" parent="." instance=ExtResource("21_me6l2")]
+position = Vector2(4241, -8)
+
+[node name="Node2D7" parent="." instance=ExtResource("9_wx0s3")]
+position = Vector2(4158, 97)
+
+[node name="Shooting_spider_enemy5" parent="." instance=ExtResource("4_r7kfi")]
+position = Vector2(4119, 98)
+
+[node name="Shooting_spider_enemy6" parent="." instance=ExtResource("4_r7kfi")]
+position = Vector2(4178, 97)
+
+[node name="Dirtblock_large12" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(4093, 268)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large12"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large12/StaticBody2D"]
+position = Vector2(-7.5, -14.5)
+shape = SubResource("RectangleShape2D_1nwa0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Dirtblock_large12/StaticBody2D"]
+position = Vector2(171, -12)
+shape = SubResource("RectangleShape2D_1nwa0")
+
+[node name="Maggot_enemy9" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(4138, 252)
+
+[node name="Maggot_enemy10" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(4234, 251)
+
+[node name="Platform_left_Edge4" parent="." instance=ExtResource("17_gr3p7")]
+position = Vector2(4216, 61)
+
+[node name="Maggot_enemy11" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(4236, 51)
+
+[node name="OneWayPlatform6" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(4391, 91)
+
+[node name="Platform_full8" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(4296, 233)
+
+[node name="Beetle_enemy3" parent="." instance=ExtResource("3_mfm75")]
+position = Vector2(4330, 227)
+
+[node name="Dirtblock_large13" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(4574, 278)
+
+[node name="SavePoint3" parent="." instance=ExtResource("10_0660o")]
+position = Vector2(4630, 235)
+
+[node name="Attacks_tutorial" type="Label" parent="."]
+offset_left = 11.0
+offset_top = 94.0
+offset_right = 148.0
+offset_bottom = 125.0
+text = "Use your Different Weapons
+with the 1 - 4 Keys!"
+label_settings = SubResource("LabelSettings_pmdow")
+
+[node name="Dirtblock_large14" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(4784, 279)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large14"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large14/StaticBody2D"]
+position = Vector2(-14, -15)
+shape = SubResource("RectangleShape2D_u8jf5")
+
+[node name="Dirtblock_large15" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(4929, 279)
+
+[node name="Dirtblock_large16" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(5086, 280)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large16"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large16/StaticBody2D"]
+position = Vector2(171, -20)
+shape = SubResource("RectangleShape2D_qwhgs")
+
+[node name="dirtblock_large_halved6" parent="." instance=ExtResource("13_xmj0y")]
+z_index = -2
+position = Vector2(4967, 249)
+
+[node name="Giant_spider_enemy2" parent="." instance=ExtResource("20_qph20")]
+position = Vector2(5011, 15)
+
+[node name="Beetle_enemy4" parent="." instance=ExtResource("3_mfm75")]
+position = Vector2(4818, 264)
+
+[node name="Beetle_enemy5" parent="." instance=ExtResource("3_mfm75")]
+position = Vector2(5102, 260)
+
+[node name="Node2D8" parent="." instance=ExtResource("14_nnkfg")]
+position = Vector2(5020, 226)
+
+[node name="Platform_full9" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(5287, 256)
+
+[node name="Shooting_spider_enemy7" parent="." instance=ExtResource("4_r7kfi")]
+position = Vector2(5342, 243)
+
+[node name="Maggot_enemy12" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(5406, 244)
+
+[node name="Node2D9" parent="." instance=ExtResource("13_ff7j4")]
+position = Vector2(5585, 292)
+
+[node name="Dirtblock_large17" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(5803, 249)
+
+[node name="Platform_full10" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(6004, 269)
+
+[node name="Maggot_enemy13" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(6046, 255)
+
+[node name="Maggot_enemy14" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(6194, 257)
+
+[node name="Node2D10" parent="." instance=ExtResource("13_ff7j4")]
+position = Vector2(6084, 194)
+
+[node name="Node2D11" parent="." instance=ExtResource("9_wx0s3")]
+position = Vector2(6208, 156)
+
+[node name="Platform_full11" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(6291, 299)
+
+[node name="OneWayPlatform7" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(6604, 354)
+
+[node name="OneWayPlatform8" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(6746, 352)
+
+[node name="Platform_left_Edge5" parent="." instance=ExtResource("17_gr3p7")]
+position = Vector2(6621, 269)
+
+[node name="Platform_right_edge" parent="." instance=ExtResource("22_orbjg")]
+position = Vector2(6676, 270)
+
+[node name="Shooting_spider_enemy8" parent="." instance=ExtResource("4_r7kfi")]
+position = Vector2(6654, 258)
+
+[node name="Dirtblock_large18" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(6829, 294)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large18"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large18/StaticBody2D"]
+position = Vector2(-13, -15)
+shape = SubResource("RectangleShape2D_73f40")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Dirtblock_large18/StaticBody2D"]
+position = Vector2(174, -15)
+shape = SubResource("RectangleShape2D_73f40")
+
+[node name="Dirtblock_large19" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(7068, 320)
+
+[node name="SavePoint4" parent="." instance=ExtResource("10_0660o")]
+position = Vector2(7159, 281)
+
+[node name="Maggot_enemy15" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(6933, 276)

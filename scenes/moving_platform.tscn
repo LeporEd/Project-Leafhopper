@@ -44,6 +44,7 @@ _data = {
 size = Vector2(93, 24)
 
 [node name="Node2D" type="Node2D"]
+metadata/_edit_horizontal_guides_ = [-88.0]
 
 [node name="MovingPlatform" type="AnimatableBody2D" parent="."]
 metadata/_edit_group_ = true
