@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_vjhi2")
 
 [node name="Box_Container" type="MarginContainer" parent="."]
+z_index = 250
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

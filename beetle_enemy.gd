@@ -5,7 +5,7 @@ extends CharacterBody2D
 
 const DeathParticles = preload("res://death_explosion.tscn")
 
-var speed = -200
+var speed = -150
 var health = 2
 
 func _ready():

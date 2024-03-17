@@ -2,14 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://dm7kqu0u4uayp" path="res://assets/Forest Tileset/Templates/Platform_right_edge.png" id="1_bisx6"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_33gxo"]
+size = Vector2(23, 29)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7sem"]
 size = Vector2(45.5, 23.5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_33gxo"]
-size = Vector2(25, 33)
-
 [node name="Platform_right_edge" type="StaticBody2D"]
 collision_mask = 0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(61.5, -9.5)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_33gxo")
 
 [node name="platform_sprite" type="Sprite2D" parent="."]
 position = Vector2(33, 15)
@@ -19,12 +27,3 @@ texture = ExtResource("1_bisx6")
 [node name="platform_collision" type="CollisionShape2D" parent="."]
 position = Vector2(29.75, 15.75)
 shape = SubResource("RectangleShape2D_g7sem")
-
-[node name="enemy_detection" type="Area2D" parent="."]
-position = Vector2(11, 11)
-collision_layer = 32
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_detection"]
-position = Vector2(51.5, -22.5)
-shape = SubResource("RectangleShape2D_33gxo")
