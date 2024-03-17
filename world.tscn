@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=16 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://dtn3l120ydsjy" path="res://music/Game_theme.wav" id="8_eoxof"]
 [ext_resource type="PackedScene" uid="uid://bnp3jbx170l1w" path="res://scenes/grow_power_up.tscn" id="9_wx0s3"]
 [ext_resource type="PackedScene" uid="uid://qkibtsyml0hm" path="res://scenes/save_point.tscn" id="10_0660o"]
+[ext_resource type="PackedScene" uid="uid://bucaslp8231jh" path="res://scenes/shrink_power_up.tscn" id="11_o4uka"]
+[ext_resource type="PackedScene" uid="uid://bdj8g0woflh1q" path="res://scenes/dungeonteleport.tscn" id="11_usrlc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7af2p"]
 size = Vector2(523, 134)
@@ -71,3 +73,9 @@ autoplay = true
 
 [node name="SavePoint2" parent="." instance=ExtResource("10_0660o")]
 position = Vector2(270, 149)
+
+[node name="Node2D" parent="." instance=ExtResource("11_o4uka")]
+position = Vector2(96, 156)
+
+[node name="dungeonteleport" parent="." instance=ExtResource("11_usrlc")]
+position = Vector2(166, -433)
