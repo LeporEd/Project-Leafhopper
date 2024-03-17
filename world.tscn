@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=14 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="7_trce4"]
 [ext_resource type="AudioStream" uid="uid://dtn3l120ydsjy" path="res://music/Game_theme.wav" id="8_eoxof"]
 [ext_resource type="PackedScene" path="res://scenes/grow_power_up.tscn" id="9_wx0s3"]
+[ext_resource type="PackedScene" uid="uid://qkibtsyml0hm" path="res://scenes/save_point.tscn" id="10_0660o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7af2p"]
 size = Vector2(523, 134)
@@ -67,3 +68,6 @@ position = Vector2(359, 156)
 [node name="Game_theme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_eoxof")
 autoplay = true
+
+[node name="SavePoint" parent="." instance=ExtResource("10_0660o")]
+position = Vector2(140, 152)
