@@ -80,3 +80,27 @@ position = Vector2(2431, 84)
 
 [node name="addTime" parent="." instance=ExtResource("12_ekhns")]
 position = Vector2(2502, 41)
+
+[node name="OneWayPlatform8" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2809, 115)
+
+[node name="OneWayPlatform9" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2809, 246)
+
+[node name="OneWayPlatform10" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2814, 372)
+
+[node name="OneWayPlatform11" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2816, 496)
+
+[node name="OneWayPlatform13" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2813, 723)
+
+[node name="OneWayPlatform14" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2808, 860)
+
+[node name="OneWayPlatform15" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2809, 1002)
+
+[node name="OneWayPlatform12" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2814, 609)
