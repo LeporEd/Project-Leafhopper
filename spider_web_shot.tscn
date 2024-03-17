@@ -9,10 +9,11 @@
 radius = 11.1803
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ovai"]
-radius = 14.0
+radius = 7.0
 
 [node name="Spider_web_shot" type="RigidBody2D"]
 collision_layer = 8
+collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_7if7u")
 gravity_scale = 0.0
 script = ExtResource("1_wi1ji")
