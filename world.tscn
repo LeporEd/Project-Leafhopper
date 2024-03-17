@@ -274,7 +274,7 @@ position = Vector2(3309, 254)
 position = Vector2(3428, 243)
 
 [node name="dungeonteleport" parent="." instance=ExtResource("18_lmk8d")]
-position = Vector2(3521, -370)
+position = Vector2(3515, -966)
 
 [node name="dirtblock_no_grass" parent="." instance=ExtResource("19_n4dga")]
 z_index = -10
@@ -554,4 +554,4 @@ position = Vector2(7880, 255)
 position = Vector2(7109, 310)
 
 [node name="MiniLevel" parent="." instance=ExtResource("17_387ik")]
-position = Vector2(3546, -397)
+position = Vector2(3560, -993)
