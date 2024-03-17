@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcps4alydtv5k"]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_vjhi2"]
+
+[node name="Pause_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vjhi2")
+
+[node name="Box_Container" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -52.0
+offset_right = 48.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons_Box" type="VBoxContainer" parent="Box_Container"]
+layout_mode = 2
+
+[node name="Button_resume" type="Button" parent="Box_Container/Buttons_Box"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Button_main_menu" type="Button" parent="Box_Container/Buttons_Box"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Button_quit" type="Button" parent="Box_Container/Buttons_Box"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="Box_Container/Buttons_Box/Button_resume" to="." method="_on_button_resume_pressed"]
+[connection signal="pressed" from="Box_Container/Buttons_Box/Button_main_menu" to="." method="_on_button_main_menu_pressed"]
+[connection signal="pressed" from="Box_Container/Buttons_Box/Button_quit" to="." method="_on_button_quit_pressed"]
