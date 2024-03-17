@@ -93,7 +93,8 @@ var async_changes = {
 	should_grow = false,
 	should_shrink = false,
 	should_save = false,
-	should_load = false
+	should_load = false,
+	should_teleport = null
 }
 
 var paused = false
@@ -164,6 +165,7 @@ func _ready():
 	PlayerEvents.player_shrink.connect(func(): async_changes.should_shrink = true)
 	PlayerEvents.player_save.connect(func(): async_changes.should_save = true)
 	PlayerEvents.player_load.connect(func(): async_changes.should_load = true)
+	PlayerEvents.player_teleport.connect(func(position): async_changes.should_teleport = position)
 
 
 func _reset():
@@ -239,6 +241,11 @@ func _execute_async_changes():
 	if async_changes.should_take_hit:
 		_take_hit(DEFAULT_RECEIVING_DAMAGE)
 		async_changes.should_take_hit = false
+	if async_changes.should_teleport != null:
+		print("Teleport:", async_changes.should_teleport)
+		position.x = async_changes.should_teleport.x
+		position.y = async_changes.should_teleport.y
+		async_changes.should_teleport = null
 
 
 func _save_checkpoint():
