@@ -68,7 +68,9 @@ text = "Sound Effects:
 Character Sound: - Pixabay
                                  - Universfield
 
-Particles - PlayWithFurcifer"
+Particles - PlayWithFurcifer
+
+Font - datagoblin"
 label_settings = SubResource("LabelSettings_4266u")
 
 [connection signal="pressed" from="Buttons/Button_Back" to="." method="_on_button_back_pressed"]
