@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=38 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
@@ -16,12 +16,15 @@
 [ext_resource type="PackedScene" uid="uid://dv12ohdouhwo5" path="res://scenes/level_templates/platform_middle.tscn" id="13_yl6p3"]
 [ext_resource type="PackedScene" uid="uid://bucaslp8231jh" path="res://scenes/shrink_power_up.tscn" id="14_nnkfg"]
 [ext_resource type="PackedScene" uid="uid://cxcaifvcfgod0" path="res://scenes/one_way_plattform.tscn" id="15_8onha"]
+[ext_resource type="PackedScene" uid="uid://ctetuqflhk2vp" path="res://scenes/mini_level.tscn" id="17_387ik"]
 [ext_resource type="PackedScene" uid="uid://dctv6cmwp1vbu" path="res://scenes/level_templates/platform_left_edge.tscn" id="17_gr3p7"]
-[ext_resource type="PackedScene" uid="uid://sv2jejna8sf4" path="res://scenes/dungeonteleport.tscn" id="18_lmk8d"]
+[ext_resource type="PackedScene" uid="uid://bdj8g0woflh1q" path="res://scenes/dungeonteleport.tscn" id="18_lmk8d"]
 [ext_resource type="PackedScene" uid="uid://72ll0nvsxvul" path="res://scenes/level_templates/dirtblock_no_grass.tscn" id="19_n4dga"]
 [ext_resource type="PackedScene" uid="uid://08ai5wpiybru" path="res://giant_spider_enemy.tscn" id="20_qph20"]
 [ext_resource type="PackedScene" uid="uid://xxjf376504n8" path="res://scenes/level_templates/dirtblock_grassy.tscn" id="21_me6l2"]
 [ext_resource type="PackedScene" uid="uid://4alx3his7h8p" path="res://scenes/level_templates/platform_right_edge.tscn" id="22_orbjg"]
+[ext_resource type="PackedScene" uid="uid://exa8e0dk0n5o" path="res://scenes/frog.tscn" id="23_aap66"]
+[ext_resource type="PackedScene" uid="uid://dudsgc047icdq" path="res://scenes/ending_trigger.tscn" id="24_v2vps"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
 size = Vector2(78, 256.5)
@@ -271,7 +274,7 @@ position = Vector2(3309, 254)
 position = Vector2(3428, 243)
 
 [node name="dungeonteleport" parent="." instance=ExtResource("18_lmk8d")]
-position = Vector2(3521, -370)
+position = Vector2(3515, -966)
 
 [node name="dirtblock_no_grass" parent="." instance=ExtResource("19_n4dga")]
 z_index = -10
@@ -524,10 +527,31 @@ position = Vector2(174, -15)
 shape = SubResource("RectangleShape2D_73f40")
 
 [node name="Dirtblock_large19" parent="." instance=ExtResource("11_uorw8")]
-position = Vector2(7068, 320)
-
-[node name="SavePoint4" parent="." instance=ExtResource("10_0660o")]
-position = Vector2(7159, 281)
+position = Vector2(7074, 320)
 
 [node name="Maggot_enemy15" parent="." instance=ExtResource("2_uko7g")]
 position = Vector2(6933, 276)
+
+[node name="Dirtblock_large20" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(7217, 320)
+
+[node name="Dirtblock_large21" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(7357, 320)
+
+[node name="Dirtblock_large22" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(7500, 320)
+
+[node name="Dirtblock_large23" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(7653, 320)
+
+[node name="Dirtblock_large24" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(7806, 320)
+
+[node name="Frog" parent="." instance=ExtResource("23_aap66")]
+position = Vector2(7880, 255)
+
+[node name="EndingTrigger" parent="." instance=ExtResource("24_v2vps")]
+position = Vector2(7109, 310)
+
+[node name="MiniLevel" parent="." instance=ExtResource("17_387ik")]
+position = Vector2(3560, -993)

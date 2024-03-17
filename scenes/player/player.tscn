@@ -905,6 +905,14 @@ offset_right = 53.3333
 offset_bottom = 53.3333
 texture = ExtResource("21_6yean")
 
+[node name="JumpsLabel" type="Label" parent="PlayerUI"]
+offset_left = 16.6667
+offset_top = 80.0
+offset_right = 112.667
+offset_bottom = 106.0
+theme_override_font_sizes/font_size = 32
+text = "Jumps: 2"
+
 [node name="GameTime" type="Panel" parent="PlayerUI"]
 self_modulate = Color(1, 1, 1, 0.517647)
 offset_left = 1143.33

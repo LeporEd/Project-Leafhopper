@@ -51,10 +51,11 @@ Spider - Elthen
 Giant Spider - raccoontruck
 Beetle and Maggot - Cheshire
 Character - Luizmelo
-Wood - iPixl
-            - brullov
+Wood  - brullov
 Flowers - JennPixel
-Dirt and Background - MamaNeZakon"
+Dirt  - MamaNeZakon
+Frog - Eli Haun
+Hearts - PaperHatLizard"
 label_settings = SubResource("LabelSettings_4266u")
 
 [node name="Credits_2" type="Label" parent="."]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdswa8hnwqu3a"
-path="res://.godot/imported/wood_triangle_right.png-de31224bd85241a1357ff111bca7242f.ctex"
+uid="uid://dlb57k5tpipbq"
+path="res://.godot/imported/frog.png-92a990f588ff7001f0ad57d0e55d04cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Wood Tileset/Templates/wood_triangle_right.png"
-dest_files=["res://.godot/imported/wood_triangle_right.png-de31224bd85241a1357ff111bca7242f.ctex"]
+source_file="res://assets/Frog/frog.png"
+dest_files=["res://.godot/imported/frog.png-92a990f588ff7001f0ad57d0e55d04cb.ctex"]
 
 [params]
 
