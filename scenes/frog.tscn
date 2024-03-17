@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://exa8e0dk0n5o"]
+[gd_scene load_steps=8 format=3 uid="uid://exa8e0dk0n5o"]
 
+[ext_resource type="Script" path="res://scripts/frog.gd" id="1_fn2rl"]
 [ext_resource type="Texture2D" uid="uid://dlb57k5tpipbq" path="res://assets/Frog/frog.png" id="1_nkvx4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5mpen"]
@@ -217,6 +218,7 @@ _data = {
 
 [node name="Frog" type="AnimatableBody2D"]
 scale = Vector2(10, 10)
+script = ExtResource("1_fn2rl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5mpen")
@@ -231,3 +233,9 @@ scale = Vector2(-1, 1)
 texture = ExtResource("1_nkvx4")
 region_enabled = true
 region_rect = Rect2(0, 131, 16, 13)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
