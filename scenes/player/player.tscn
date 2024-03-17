@@ -1086,6 +1086,10 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -1331
+limit_top = -1155
+limit_right = 8369
+limit_bottom = 500
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.5
