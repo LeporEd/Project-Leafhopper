@@ -203,6 +203,8 @@ func _execute_async_changes():
 		async_changes.should_reset = false
 	if async_changes.should_grow || async_changes.should_shrink:
 		state.growth = _get_new_growth_and_suggest_animation(async_changes.should_grow, async_changes.should_shrink)
+		async_changes.should_grow = false
+		async_changes.should_shrink = false
 	if async_changes.should_save:
 		_save_checkpoint()
 		async_changes.should_save = false
