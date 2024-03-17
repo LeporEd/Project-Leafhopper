@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://r2yfefufj03w"]
+[gd_scene load_steps=38 format=3 uid="uid://r2yfefufj03w"]
 
 [ext_resource type="Texture2D" uid="uid://cpph7pq5weusb" path="res://assets/Player/Sprites/Idle.png" id="1_7dx7d"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_u2in5"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://bpdvbha8iaucy" path="res://sounds/land.mp3" id="15_lvphb"]
 [ext_resource type="AudioStream" uid="uid://cdshvsom4xc8b" path="res://sounds/hit.mp3" id="16_7w01d"]
 [ext_resource type="AudioStream" uid="uid://pqws2fbjaub4" path="res://sounds/sword.mp3" id="17_uiv6l"]
+[ext_resource type="PackedScene" uid="uid://bcps4alydtv5k" path="res://scenes/pause_menu.tscn" id="18_48t64"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
 radius = 6.0
@@ -881,6 +882,14 @@ pitch_scale = 1.25
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.5
+
+[node name="Pause_menu" parent="Camera2D" instance=ExtResource("18_48t64")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 
 [node name="GameOverTimer" type="Timer" parent="."]
 wait_time = 2.0
