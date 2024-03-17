@@ -1,5 +1,7 @@
 # Project Leafhopper
 
+![Game screenshot](./assets/screenshot_preview.png)
+
 This game is a submission to the [Mini Jame Gam #28](https://itch.io/jam/mini-jame-gam-28). It's a platformer with a character that can grow and shrink in size by picking up special flowers. Meanwhile, the character has to face a horde of wild enemies.
 
 Play the game directly in the web: [https://lepored.github.io/Project-Leafhopper/](https://lepored.github.io/Project-Leafhopper/)
