@@ -8,7 +8,7 @@ func _ready():
 	animSprite.visible = false
 
 func _on_body_entered(body):
-	#PlayerEvents.player_teleport.emit(position)
+	PlayerEvents.player_teleport.emit(position)
 	teleportAnim.play("teleport_on")
 	secondAnimTimer.start()
 
