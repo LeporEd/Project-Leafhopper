@@ -31,7 +31,6 @@ const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1,
 @onready var audio_hit = $AudioHit
 @onready var audio_sword = $AudioSword
 @onready var pause_menu = $Menu/Pause_menu
-@onready var game_timer = $GameTimer
 @onready var growth_texture_rect = $PlayerUI/GrowthTextureRect
 @onready var weapon_texture_rect = $PlayerUI/WeaponTextureRect
 @onready var health_bar = $PlayerUI/HealthBar
