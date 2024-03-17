@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const INITIAL_POSITION = {
-	X = 6900,
-	Y = 0
+	X = 100,
+	Y = 60
 }
 
 const BOUNDARY_BOTTOM_Y = 600

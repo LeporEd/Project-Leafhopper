@@ -359,7 +359,8 @@ position = Vector2(4182, 112)
 position = Vector2(4240, 65)
 
 [node name="dirtblock_grassy2" parent="." instance=ExtResource("21_me6l2")]
-position = Vector2(4241, -8)
+z_index = -2
+position = Vector2(4241, 12)
 
 [node name="Node2D7" parent="." instance=ExtResource("9_wx0s3")]
 position = Vector2(4158, 97)
