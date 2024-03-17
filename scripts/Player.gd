@@ -27,10 +27,11 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 
 @onready var audio_hit = $AudioHit
 @onready var audio_sword = $AudioSword
 @onready var pause_menu = $Camera2D/Pause_menu
+
+@onready var growth_texture_rect = $PlayerUI/GrowthTextureRect
+@onready var weapon_texture_rect = $PlayerUI/WeaponTextureRect
 @onready var health_bar = $PlayerUI/HealthBar
-@onready var growth_icon = $PlayerUI/GrowthIcon
-@onready var weapon_icon = $PlayerUI/WeaponIcon
-@onready var death_icon = $PlayerUI/DeathIcon
+@onready var death_texture_rect = $PlayerUI/DeathTextureRect
 
 var arrow_up_icon = preload("res://assets/UI/arrow_up.png")
 var arrow_down_icon = preload("res://assets/UI/arrow_down.png")
@@ -57,11 +58,10 @@ enum GrowthTransition {
 }
 
 enum PlayerAttack {
-	NONE = 0,
-	attack1 = 1,
-	attack2 = 2,
-	attack3 = 3,
-	attack4 = 4
+	attack1,
+	attack2,
+	attack3,
+	attack4
 }
 
 # number = priority
@@ -100,9 +100,10 @@ class State:
 	var move_x = MoveX.NONE
 	var move_y = MoveY.NONE
 	var in_air = false
+	var selected_weapon = PlayerAttack.attack1
 	var should_jump = false
 	var should_go_down = false
-	var should_attack = PlayerAttack
+	var should_attack = false
 	var should_start_animation_cooldown_timer = 0.0
 	var growth = Growth.NORMAL
 	var jump_count = 0
@@ -121,6 +122,7 @@ class State:
 		var clone = State.new()
 		clone.move_x = prev_state.move_x
 		clone.move_y = prev_state.move_y
+		clone.selected_weapon = prev_state.selected_weapon
 		clone.growth = prev_state.growth
 		clone.jump_count = prev_state.jump_count
 		clone.health = prev_state.health
@@ -169,9 +171,9 @@ func _reset():
 	
 	weapon_shape.disabled = true
 	health_bar.value = state.health
-	growth_icon.texture = box_icon
-	weapon_icon.texture = weapon1_icon
-	death_icon.visible = false
+	growth_texture_rect.texture = box_icon
+	weapon_texture_rect.texture = weapon1_icon
+	death_texture_rect.visible = false
 	
 
 
@@ -275,7 +277,7 @@ func _on_user_death():
 	_suggest_next_animation(PlayerAnimation.death)
 	state.sound_death = true
 	state.is_dead = true
-	death_icon.visible = true
+	death_texture_rect.visible = true
 	PlayerEvents.on_player_died.emit()
 	game_over_timer.start()
 	print("Player died")
@@ -289,11 +291,13 @@ func _update_state_with_user_input():
 		state.should_jump = user_input.jump
 		state.should_go_down = user_input.go_down
 		state.jump_count = 0 if is_on_floor() else state.jump_count
-		state.should_attack = _convert_to_attack(user_input)
+		state.should_attack = user_input.attack
 		state.growth = _get_new_growth_and_suggest_animation(user_input.grow, user_input.shrink)
 		state.movement_profile = _get_movement_profile()
 		state.sound_land = is_on_floor() && state.in_air
 		state.in_air = not is_on_floor()
+		
+		_update_selected_weapon(user_input)
 
 
 func _get_user_input():
@@ -303,10 +307,11 @@ func _get_user_input():
 		go_down = Input.is_action_just_pressed("go_down"),
 		grow = Input.is_action_just_pressed("grow"),
 		shrink = Input.is_action_just_pressed("shrink"),
-		attack1 = Input.is_action_just_pressed("attack1"),
-		attack2 = Input.is_action_just_pressed("attack2"),
-		attack3 = Input.is_action_just_pressed("attack3"),
-		attack4 = Input.is_action_just_pressed("attack4")
+		attack = Input.is_action_just_pressed("attack"),
+		weapon1 = Input.is_action_just_pressed("weapon1"),
+		weapon2 = Input.is_action_just_pressed("weapon2"),
+		weapon3 = Input.is_action_just_pressed("weapon3"),
+		weapon4 = Input.is_action_just_pressed("weapon4")
 	}
 
 func _process(delta):
@@ -343,16 +348,15 @@ func _convert_to_move_y() -> MoveY:
 		return MoveY.NONE
 
 
-func _convert_to_attack(user_input) -> PlayerAttack:
-	if user_input.attack1:
-		return PlayerAttack.attack1
-	if user_input.attack2:
-		return PlayerAttack.attack2
-	if user_input.attack3:
-		return PlayerAttack.attack3
-	if user_input.attack4:
-		return PlayerAttack.attack4
-	return PlayerAttack.NONE
+func _update_selected_weapon(user_input):
+	if user_input.weapon1:
+		state.selected_weapon = PlayerAttack.attack1
+	if user_input.weapon2:
+		state.selected_weapon = PlayerAttack.attack2
+	if user_input.weapon3:
+		state.selected_weapon = PlayerAttack.attack3
+	if user_input.weapon4:
+		state.selected_weapon = PlayerAttack.attack4
 
 
 func _get_new_growth_and_suggest_animation(grow: bool, shrink: bool) -> Growth:
@@ -415,8 +419,8 @@ func _update_next_animation_and_sound():
 		state.sound_jump = true
 	if state.move_y == MoveY.FALL:
 		_suggest_next_animation(PlayerAnimation.fall)
-	if state.should_attack != PlayerAttack.NONE:
-		var attack = PlayerAttack.keys()[state.should_attack]
+	if state.should_attack:
+		var attack = PlayerAttack.keys()[state.selected_weapon]
 		var attack_animation = PlayerAnimation[attack]
 		_suggest_next_animation(attack_animation)
 		state.sound_sword = true
@@ -430,11 +434,21 @@ func _suggest_next_animation(animation: PlayerAnimation):
 func _update_ui():
 	match state.growth:
 		Growth.SMALL:
-			growth_icon.texture = arrow_down_icon
+			growth_texture_rect.texture = arrow_down_icon
 		Growth.NORMAL:
-			growth_icon.texture = box_icon
+			growth_texture_rect.texture = box_icon
 		Growth.BIG:
-			growth_icon.texture = arrow_up_icon
+			growth_texture_rect.texture = arrow_up_icon
+	
+	match state.selected_weapon:
+		PlayerAttack.attack1:
+			weapon_texture_rect.texture = weapon1_icon
+		PlayerAttack.attack2:
+			weapon_texture_rect.texture = weapon2_icon
+		PlayerAttack.attack3:
+			weapon_texture_rect.texture = weapon3_icon
+		PlayerAttack.attack4:
+			weapon_texture_rect.texture = weapon4_icon
 
 
 func _perform_go_down():
@@ -443,13 +457,11 @@ func _perform_go_down():
 
 
 func _perform_attack():
-	if state.should_attack == PlayerAttack.NONE:
+	if not state.should_attack:
 		return
 	
 	state.should_start_animation_cooldown_timer = 0.5
 	PlayerEvents.on_player_attack.emit()
-	
-	#todo waffen hitboxen prüfen
 
 
 func _perform_side_change():
@@ -510,7 +522,7 @@ func _clean_state():
 	state.move_x = MoveX.NONE
 	state.move_y = MoveY.NONE
 	state.should_jump = false
-	state.should_attack = PlayerAttack.NONE
+	state.should_attack = false
 	state.should_start_animation_cooldown_timer = 0.0
 	state.sound_running = false
 	state.sound_death = false
