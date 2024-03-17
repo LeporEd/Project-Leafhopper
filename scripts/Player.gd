@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const INITIAL_POSITION = {
-	X = 3300,
+	X = 5750,
 	Y = 250
 }
 

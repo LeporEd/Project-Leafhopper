@@ -43,10 +43,10 @@ region = Rect2(266, 0, 266, 176)
 [sub_resource type="SpriteFrames" id="SpriteFrames_51phk"]
 animations = [{
 "frames": [{
-"duration": 0.7,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_mfyin")
 }, {
-"duration": 0.7,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_3n4jp")
 }],
 "loop": true,
@@ -108,9 +108,9 @@ script = ExtResource("1_pves6")
 
 [node name="Giant_spider_animations" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_51phk")
-animation = &"Damage"
+animation = &"Standstill"
 autoplay = "Standstill"
-frame_progress = 0.278003
+frame_progress = 0.0681726
 
 [node name="Giant_spider_collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
@@ -142,3 +142,5 @@ collision_mask = 4
 position = Vector2(2, -8)
 shape = SubResource("CapsuleShape2D_fk0qj")
 debug_color = Color(0.737255, 0.305882, 0.882353, 0.419608)
+
+[connection signal="body_entered" from="Ouchie_area" to="." method="_on_ouchie_area_body_entered"]
