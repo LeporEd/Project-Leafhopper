@@ -5,8 +5,8 @@ const INITIAL_POSITION = {
 	Y = 100
 }
 
-const MAX_HEALTH = 100
-const DEFAULT_RECEIVING_DAMAGE = 25
+const MAX_HEALTH = 3
+const DEFAULT_RECEIVING_DAMAGE = 1
 
 const MOVEMENT_SMALL = { SPEED = 100.0, JUMP_VELOCITY = -225.0, ALLOWED_JUMPS = 3 }
 const MOVEMENT_NORMAL = { SPEED = 175.0, JUMP_VELOCITY = -275.0, ALLOWED_JUMPS = 2 }
@@ -18,7 +18,6 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 
 @onready var animation_cooldown_timer: Timer = $AnimationCooldownTimer
 @onready var game_over_timer: Timer = $GameOverTimer
 @onready var hurtbox = $Hurtbox
-@onready var item_pickup = $ItemPickup
 @onready var weapon = $Weapon
 @onready var weapon_shape = $Weapon/WeaponShape
 @onready var audio_running = $AudioRunning
@@ -28,6 +27,9 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 
 @onready var audio_hit = $AudioHit
 @onready var audio_sword = $AudioSword
 @onready var pause_menu = $Camera2D/Pause_menu
+@onready var health_bar = $PlayerUI/HealthBar
+
+
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -94,7 +96,7 @@ class State:
 	var should_start_animation_cooldown_timer = 0.0
 	var growth = Growth.NORMAL
 	var jump_count = 0
-	var health = 100
+	var health = MAX_HEALTH
 	var next_animation = PlayerAnimation.idle
 	var is_dead = false
 	var movement_profile = MOVEMENT_NORMAL
@@ -245,6 +247,7 @@ func _take_hit(damage: int):
 	print("User was hit")
 	state.health -= damage
 	PlayerEvents.on_player_took_hit.emit(state.health)
+	health_bar.value = state.health
 	
 	if state.health <= 0:
 		_on_user_death()

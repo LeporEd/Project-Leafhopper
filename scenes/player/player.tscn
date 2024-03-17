@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://r2yfefufj03w"]
+[gd_scene load_steps=39 format=3 uid="uid://r2yfefufj03w"]
 
 [ext_resource type="Texture2D" uid="uid://cpph7pq5weusb" path="res://assets/Player/Sprites/Idle.png" id="1_7dx7d"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_u2in5"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://cdshvsom4xc8b" path="res://sounds/hit.mp3" id="16_7w01d"]
 [ext_resource type="AudioStream" uid="uid://pqws2fbjaub4" path="res://sounds/sword.mp3" id="17_uiv6l"]
 [ext_resource type="PackedScene" uid="uid://bcps4alydtv5k" path="res://scenes/pause_menu.tscn" id="18_48t64"]
+[ext_resource type="Texture2D" uid="uid://b8p75dt01aaqr" path="res://assets/UI/hearths.png" id="19_ywcxy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
 radius = 6.0
@@ -898,3 +899,15 @@ one_shot = true
 [node name="AnimationCooldownTimer" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
+
+[node name="PlayerUI" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="TextureProgressBar" parent="PlayerUI"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 108.0
+offset_bottom = 36.0
+scale = Vector2(0.4, 0.4)
+max_value = 3.0
+value = 3.0
+texture_progress = ExtResource("19_ywcxy")
