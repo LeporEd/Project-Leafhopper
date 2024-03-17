@@ -184,3 +184,5 @@ debug_color = Color(0.815686, 0.380392, 0.403922, 0.419608)
 [node name="Spider_Timer" type="Timer" parent="."]
 wait_time = 4.0
 autostart = true
+
+[connection signal="timeout" from="Spider_Timer" to="." method="_on_spider_timer_timeout"]
