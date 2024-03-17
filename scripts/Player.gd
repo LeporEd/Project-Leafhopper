@@ -98,7 +98,9 @@ var async_changes = {
 	should_shrink = false,
 	should_save = false,
 	should_load = false,
-	should_teleport = null
+	should_teleport = null,
+	should_stop_timer = false,
+	should_substract_sec_from_time = 0
 }
 
 var paused = false
@@ -125,6 +127,7 @@ class State:
 	var sound_land = false
 	var sound_hit = false
 	var sound_sword = false
+	var time_active = true
 	
 	static func from(prev_state: State) -> State:
 		var clone = State.new()
@@ -137,6 +140,7 @@ class State:
 		clone.health = prev_state.health
 		clone.is_dead = prev_state.is_dead
 		clone.movement_profile = prev_state.movement_profile
+		clone.time_active = prev_state.time_active
 
 		return clone
 
@@ -174,6 +178,10 @@ func _ready():
 	PlayerEvents.player_save.connect(func(): async_changes.should_save = true)
 	PlayerEvents.player_load.connect(func(): async_changes.should_load = true)
 	PlayerEvents.player_teleport.connect(func(position): async_changes.should_teleport = position)
+	PlayerEvents.stop_timer.connect(func(): async_changes.should_stop_timer = true)
+	PlayerEvents.timer_substract.connect(func(seconds: int): async_changes.should_substract_sec_from_time = seconds)
+	
+	PlayerEvents.on_timer_start.emit()
 
 
 func _reset():
@@ -187,6 +195,7 @@ func _reset():
 	weapon_texture_rect.texture = weapon1_icon
 	death_texture_rect.visible = false
 	
+	time = 0.0
 
 
 func _on_hurtbox_body_entered(argument):
@@ -255,6 +264,13 @@ func _execute_async_changes():
 		position.x = async_changes.should_teleport.x
 		position.y = async_changes.should_teleport.y
 		async_changes.should_teleport = null
+	if async_changes.should_stop_timer:
+		_stop_time()
+		async_changes.should_stop_timer = false
+	if async_changes.should_substract_sec_from_time > 0:
+		_substract_seconds_from_time(async_changes.should_substract_sec_from_time)
+		async_changes.should_substract_sec_from_time = 0
+		pass
 
 
 func _save_checkpoint():
@@ -302,6 +318,15 @@ func _on_user_death():
 	print("Player died")
 
 
+func _stop_time():
+	state.time_active = false
+	PlayerEvents.on_timer_stop.emit()
+
+
+func _substract_seconds_from_time(seconds: int):
+	time -= seconds
+
+
 func _check_player_boundaries():
 	if position.y > BOUNDARY_BOTTOM_Y:
 		state.health = 0
@@ -310,6 +335,9 @@ func _check_player_boundaries():
 
 
 func _update_time(delta: float):
+	if not state.time_active:
+		return
+	
 	time += delta
 	
 	var minutes = fmod(time, 3600) / 60
