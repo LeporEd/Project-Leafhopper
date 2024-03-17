@@ -906,30 +906,39 @@ offset_bottom = 53.3333
 texture = ExtResource("21_6yean")
 
 [node name="GameTime" type="Panel" parent="PlayerUI"]
-offset_left = 1063.0
+self_modulate = Color(1, 1, 1, 0.517647)
+offset_left = 1143.33
 offset_top = 20.0
-offset_right = 1184.0
-offset_bottom = 60.0
+offset_right = 1273.33
+offset_bottom = 57.0
 
 [node name="TimeMilliSec" type="Label" parent="PlayerUI/GameTime"]
-offset_left = 83.0
-offset_right = 116.0
-offset_bottom = 23.0
+layout_mode = 0
+offset_left = 87.0
+offset_top = 3.33333
+offset_right = 123.0
+offset_bottom = 29.3333
+theme_override_font_sizes/font_size = 32
 text = "000"
 horizontal_alignment = 2
 
 [node name="TimeSec" type="Label" parent="PlayerUI/GameTime"]
-offset_left = 56.0
-offset_right = 83.0
-offset_bottom = 23.0
+layout_mode = 0
+offset_left = 50.3332
+offset_top = 3.33333
+offset_right = 86.3332
+offset_bottom = 29.3333
+theme_override_font_sizes/font_size = 32
 text = "00."
 horizontal_alignment = 2
 
 [node name="TimeMin" type="Label" parent="PlayerUI/GameTime"]
 layout_mode = 0
-offset_left = 16.0
-offset_right = 53.0
-offset_bottom = 23.0
+offset_left = 10.3333
+offset_top = 3.33333
+offset_right = 47.3333
+offset_bottom = 29.3333
+theme_override_font_sizes/font_size = 32
 text = "00:"
 horizontal_alignment = 2
 

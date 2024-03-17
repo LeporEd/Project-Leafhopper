@@ -194,8 +194,6 @@ func _reset():
 	growth_texture_rect.texture = box_icon
 	weapon_texture_rect.texture = weapon1_icon
 	death_texture_rect.visible = false
-	
-	time = 0.0
 
 
 func _on_hurtbox_body_entered(argument):
