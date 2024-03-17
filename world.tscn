@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=40 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
@@ -67,6 +67,9 @@ size = Vector2(26, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_73f40"]
 size = Vector2(31, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_adq67"]
+size = Vector2(166, 36.5)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_1ssj1")
@@ -484,28 +487,30 @@ position = Vector2(6046, 255)
 position = Vector2(6194, 257)
 
 [node name="Node2D10" parent="." instance=ExtResource("13_ff7j4")]
-position = Vector2(6084, 194)
+position = Vector2(6124, 151)
+scale = Vector2(0.962933, 0.940625)
 
 [node name="Node2D11" parent="." instance=ExtResource("9_wx0s3")]
-position = Vector2(6208, 156)
+position = Vector2(6148, 119)
 
 [node name="Platform_full11" parent="." instance=ExtResource("11_7abt5")]
 position = Vector2(6291, 299)
 
 [node name="OneWayPlatform7" parent="." instance=ExtResource("15_8onha")]
-position = Vector2(6604, 354)
+position = Vector2(6591, 351)
+scale = Vector2(0.987103, 1.03136)
 
 [node name="OneWayPlatform8" parent="." instance=ExtResource("15_8onha")]
-position = Vector2(6746, 352)
+position = Vector2(6781, 345)
 
 [node name="Platform_left_Edge5" parent="." instance=ExtResource("17_gr3p7")]
-position = Vector2(6622, 301)
+position = Vector2(6621, 295)
 
 [node name="Platform_right_edge" parent="." instance=ExtResource("22_orbjg")]
-position = Vector2(6675, 302)
+position = Vector2(6668, 296)
 
 [node name="Shooting_spider_enemy8" parent="." instance=ExtResource("4_r7kfi")]
-position = Vector2(6649, 288)
+position = Vector2(6653, 281)
 
 [node name="Dirtblock_large18" parent="." instance=ExtResource("11_uorw8")]
 position = Vector2(6829, 294)
@@ -645,3 +650,14 @@ position = Vector2(3452, 260)
 [node name="dirtblock_no_grass6" parent="." instance=ExtResource("19_n4dga")]
 z_index = -1
 position = Vector2(3498, 251)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(807, 153)
+shape = SubResource("RectangleShape2D_adq67")
+
+[node name="OneWayPlatform9" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(6005, 216)
