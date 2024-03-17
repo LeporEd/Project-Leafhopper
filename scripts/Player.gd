@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const INITIAL_POSITION = {
-	X = 60,
-	Y = 100
+	X = 6900,
+	Y = 0
 }
 
 const BOUNDARY_BOTTOM_Y = 600
@@ -76,20 +76,21 @@ enum PlayerAttack {
 # number = priority
 # 0 most important
 enum PlayerAnimation {
-	death = 0,
-	take_hit = 1,
-	small_to_normal = 2,
-	normal_to_big = 3,
-	big_to_normal = 4,
-	normal_to_small = 5,
-	attack1 = 6,
-	attack2 = 7,
-	attack3 = 8,
-	attack4 = 9,
-	fall = 10,
-	jump = 11,
-	run = 12,
-	idle = 13
+	being_eaten = 0,
+	death = 1,
+	take_hit = 2,
+	small_to_normal = 3,
+	normal_to_big = 4,
+	big_to_normal = 5,
+	normal_to_small = 6,
+	attack1 = 7,
+	attack2 = 8,
+	attack3 = 9,
+	attack4 = 10,
+	fall = 11,
+	jump = 12,
+	run = 13,
+	idle = 14
 }
 
 var async_changes = {
@@ -102,12 +103,12 @@ var async_changes = {
 	should_save = false,
 	should_load = false,
 	should_teleport = null,
+	should_deactivate_movement = false,
+	should_activate_movement = false,
+	should_start_endgame_animation = false,
 	should_stop_timer = false,
 	should_substract_sec_from_time = 0
 }
-
-var paused = false
-var time: float = 0.0
 
 class State:
 	var move_x = MoveX.NONE
@@ -144,11 +145,8 @@ class State:
 		clone.is_dead = prev_state.is_dead
 		clone.movement_profile = prev_state.movement_profile
 		clone.time_active = prev_state.time_active
-
+		
 		return clone
-
-
-var state: State = State.new()
 
 
 class Checkpoint:
@@ -164,6 +162,10 @@ class Checkpoint:
 		self.timestamp = timestamp
 
 
+var deactivate_player = false
+var paused = false
+var time: float = 0.0
+var state: State
 var checkpoints = []
 
 
@@ -181,9 +183,9 @@ func _ready():
 	PlayerEvents.player_save.connect(func(): async_changes.should_save = true)
 	PlayerEvents.player_load.connect(func(): async_changes.should_load = true)
 	PlayerEvents.player_teleport.connect(func(position): async_changes.should_teleport = position)
+	PlayerEvents.player_start_endgame_animation.connect(func(): async_changes.should_start_endgame_animation = true)
 	PlayerEvents.stop_timer.connect(func(): async_changes.should_stop_timer = true)
 	PlayerEvents.timer_substract.connect(func(seconds: int): async_changes.should_substract_sec_from_time = seconds)
-	
 	PlayerEvents.on_timer_start.emit()
 
 
@@ -231,6 +233,11 @@ func _physics_process(delta):
 
 
 func _run_cicle(delta):
+	if deactivate_player:
+		velocity.x = 0.0
+		velocity.y = 0.0
+		return
+	
 	if state.is_dead:
 		if game_over_timer.time_left > 0:
 			_clean_state()
@@ -295,6 +302,10 @@ func _execute_async_changes():
 		position.y = async_changes.should_teleport.y
 		async_changes.should_teleport = null
 	
+	if async_changes.should_start_endgame_animation:
+		state.next_animation = PlayerAnimation.being_eaten
+		deactivate_player = true
+	
 	if async_changes.should_stop_timer:
 		_stop_time()
 		async_changes.should_stop_timer = false
@@ -302,7 +313,7 @@ func _execute_async_changes():
 	if async_changes.should_substract_sec_from_time > 0:
 		_substract_seconds_from_time(async_changes.should_substract_sec_from_time)
 		async_changes.should_substract_sec_from_time = 0
-		pass
+		
 
 
 func _save_checkpoint():
