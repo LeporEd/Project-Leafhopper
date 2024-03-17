@@ -85,6 +85,7 @@ var async_changes = {
 class State:
 	var move_x = MoveX.NONE
 	var move_y = MoveY.NONE
+	var in_air = false
 	var should_jump = false
 	var should_go_down = false
 	var should_attack = PlayerAttack
@@ -268,6 +269,8 @@ func _update_state_with_user_input():
 	state.should_attack = _convert_to_attack(user_input)
 	state.growth = _get_new_growth_and_suggest_animation(user_input.grow, user_input.shrink)
 	state.movement_profile = _get_movement_profile()
+	state.sound_land = is_on_floor() && state.in_air
+	state.in_air = not is_on_floor()
 
 
 func _get_user_input():

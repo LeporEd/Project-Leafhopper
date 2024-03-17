@@ -852,21 +852,30 @@ debug_color = Color(0.945098, 0.262745, 0.572549, 0.419608)
 
 [node name="AudioRunning" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_t7cg4")
+pitch_scale = 1.14
 
 [node name="AudioDeath" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_kn6cs")
+pitch_scale = 0.9
 
 [node name="AudioLand" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_lvphb")
+volume_db = -12.181
+pitch_scale = 1.29
 
 [node name="AudioJump" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_a6rcj")
+volume_db = -4.685
+pitch_scale = 1.07
 
 [node name="AudioHit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_7w01d")
+volume_db = -8.917
+pitch_scale = 0.85
 
 [node name="AudioSword" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_uiv6l")
+pitch_scale = 1.25
 
 [node name="Camera2D" type="Camera2D" parent="."]
 drag_horizontal_enabled = true
