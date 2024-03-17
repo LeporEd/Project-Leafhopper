@@ -40,10 +40,10 @@ text = "Back"
 
 [node name="Credits_Art" type="Label" parent="."]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 10.0
-offset_right = 266.0
-offset_bottom = 262.0
+offset_left = 81.0
+offset_top = 18.0
+offset_right = 264.0
+offset_bottom = 270.0
 text = "Created by Vibezig Wizards
 
 Art:
@@ -55,18 +55,19 @@ Wood  - brullov
 Flowers - JennPixel
 Dirt  - MamaNeZakon
 Frog - Eli Haun
-Hearts - PaperHatLizard"
+Hearts - PaperHatLizard
+Grass - para"
 label_settings = SubResource("LabelSettings_4266u")
 
 [node name="Credits_2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 228.0
-offset_top = 46.0
-offset_right = 411.0
-offset_bottom = 298.0
+offset_left = 196.0
+offset_top = 44.0
+offset_right = 379.0
+offset_bottom = 296.0
 text = "Sound Effects:
 Character Sound: - Pixabay
-                                 - Universfield
+                 - Universfield
 
 Particles - PlayWithFurcifer
 
