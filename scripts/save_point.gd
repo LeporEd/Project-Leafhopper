@@ -5,12 +5,8 @@ extends Area2D
 
 var checkpointUsed = false
 
-func _ready():
-	SavedText.visible = false
-
 func _on_body_entered(body):
 	if !checkpointUsed:
-		print("saved")
 		checkpointUsed = true
 		SavedTextTimer.start()
 		SavedText.visible = true

@@ -84,6 +84,7 @@ wait_time = 1.5
 one_shot = true
 
 [node name="SavedText" type="Label" parent="."]
+visible = false
 offset_left = -48.0
 offset_top = -76.0
 offset_right = 48.0
