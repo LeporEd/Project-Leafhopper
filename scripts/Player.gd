@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const INITIAL_POSITION = {
-	X = 5750,
-	Y = 250
+	X = 60,
+	Y = 100
 }
 
 const BOUNDARY_BOTTOM_Y = 600
@@ -28,12 +28,16 @@ const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1 
 @onready var audio_land = $AudioLand
 @onready var audio_hit = $AudioHit
 @onready var audio_sword = $AudioSword
-@onready var pause_menu = $Camera2D/Pause_menu
-
+@onready var pause_menu = $Menu/Pause_menu
+@onready var game_timer = $GameTimer
 @onready var growth_texture_rect = $PlayerUI/GrowthTextureRect
 @onready var weapon_texture_rect = $PlayerUI/WeaponTextureRect
 @onready var health_bar = $PlayerUI/HealthBar
 @onready var death_texture_rect = $PlayerUI/DeathTextureRect
+@onready var time_min = $PlayerUI/GameTime/TimeMin
+@onready var time_sec = $PlayerUI/GameTime/TimeSec
+@onready var time_milli_sec = $PlayerUI/GameTime/TimeMilliSec
+
 
 var arrow_up_icon = preload("res://assets/UI/arrow_up.png")
 var arrow_down_icon = preload("res://assets/UI/arrow_down.png")
@@ -94,10 +98,13 @@ var async_changes = {
 	should_shrink = false,
 	should_save = false,
 	should_load = false,
-	should_teleport = null
+	should_teleport = null,
+	should_stop_timer = false,
+	should_substract_sec_from_time = 0
 }
 
 var paused = false
+var time: float = 0.0
 
 class State:
 	var move_x = MoveX.NONE
@@ -120,9 +127,11 @@ class State:
 	var sound_land = false
 	var sound_hit = false
 	var sound_sword = false
+	var time_active = true
 	
 	static func from(prev_state: State) -> State:
 		var clone = State.new()
+		
 		clone.move_x = prev_state.move_x
 		clone.move_y = prev_state.move_y
 		clone.selected_weapon = prev_state.selected_weapon
@@ -131,6 +140,7 @@ class State:
 		clone.health = prev_state.health
 		clone.is_dead = prev_state.is_dead
 		clone.movement_profile = prev_state.movement_profile
+		clone.time_active = prev_state.time_active
 
 		return clone
 
@@ -142,11 +152,13 @@ class Checkpoint:
 	var x: float
 	var y: float
 	var state: State
+	var timestamp: float
 	
-	func _init(x: float, y: float, state: State):
+	func _init(x: float, y: float, state: State, timestamp: float):
 		self.x = x
 		self.y = y
 		self.state = state
+		self.timestamp = timestamp
 
 
 var checkpoints = []
@@ -166,6 +178,10 @@ func _ready():
 	PlayerEvents.player_save.connect(func(): async_changes.should_save = true)
 	PlayerEvents.player_load.connect(func(): async_changes.should_load = true)
 	PlayerEvents.player_teleport.connect(func(position): async_changes.should_teleport = position)
+	PlayerEvents.stop_timer.connect(func(): async_changes.should_stop_timer = true)
+	PlayerEvents.timer_substract.connect(func(seconds: int): async_changes.should_substract_sec_from_time = seconds)
+	
+	PlayerEvents.on_timer_start.emit()
 
 
 func _reset():
@@ -178,7 +194,6 @@ func _reset():
 	growth_texture_rect.texture = box_icon
 	weapon_texture_rect.texture = weapon1_icon
 	death_texture_rect.visible = false
-	
 
 
 func _on_hurtbox_body_entered(argument):
@@ -201,6 +216,7 @@ func _run_cicle(delta):
 	_reset_next_animation()
 	_execute_async_changes()
 	_check_player_boundaries()
+	_update_time(delta)
 	_update_state_with_user_input()
 	_update_next_animation_and_sound()
 	_update_ui()
@@ -246,10 +262,17 @@ func _execute_async_changes():
 		position.x = async_changes.should_teleport.x
 		position.y = async_changes.should_teleport.y
 		async_changes.should_teleport = null
+	if async_changes.should_stop_timer:
+		_stop_time()
+		async_changes.should_stop_timer = false
+	if async_changes.should_substract_sec_from_time > 0:
+		_substract_seconds_from_time(async_changes.should_substract_sec_from_time)
+		async_changes.should_substract_sec_from_time = 0
+		pass
 
 
 func _save_checkpoint():
-	var checkpoint = Checkpoint.new(position.x, position.y, State.from(state))
+	var checkpoint = Checkpoint.new(position.x, position.y, State.from(state), time)
 	checkpoints.append(checkpoint)
 	print("Checkpoint created:", checkpoint)
 
@@ -264,7 +287,7 @@ func _load_last_checkpoint():
 		
 		position.x = checkpoint.x
 		position.y = checkpoint.y
-		state = checkpoint.state
+		state = State.from(checkpoint.state)
 		health_bar.value = state.health
 		print("Health", state.health)
 
@@ -293,11 +316,35 @@ func _on_user_death():
 	print("Player died")
 
 
+func _stop_time():
+	state.time_active = false
+	PlayerEvents.on_timer_stop.emit()
+
+
+func _substract_seconds_from_time(seconds: int):
+	time -= seconds
+
+
 func _check_player_boundaries():
 	if position.y > BOUNDARY_BOTTOM_Y:
 		state.health = 0
 		health_bar.value = state.health
 		_on_user_death()
+
+
+func _update_time(delta: float):
+	if not state.time_active:
+		return
+	
+	time += delta
+	
+	var minutes = fmod(time, 3600) / 60
+	var seconds = fmod(time, 60)
+	var milli_seconds = fmod(time, 1) * 100
+	
+	time_min.text = "%02d:" % minutes
+	time_sec.text = "%02d." % seconds
+	time_milli_sec.text = "%03d" % milli_seconds
 
 
 func _update_state_with_user_input():
