@@ -16,3 +16,9 @@ func _on_timer_timeout():
 
 func _on_timer_2_timeout():
 	$AnimationPlayer2.play("playEndtext")
+	$Timer3.start()
+
+
+func _on_timer_3_timeout():
+	MainTheme._start_main_theme()
+	get_tree().change_scene_to_file("res://credits.tscn")
