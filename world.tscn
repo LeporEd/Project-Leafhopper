@@ -1,7 +1,6 @@
-[gd_scene load_steps=38 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=39 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
-[ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
 [ext_resource type="PackedScene" uid="uid://cxr8mc8gcixg5" path="res://beetle_enemy.tscn" id="3_mfm75"]
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="4_r7kfi"]
@@ -25,9 +24,11 @@
 [ext_resource type="PackedScene" uid="uid://4alx3his7h8p" path="res://scenes/level_templates/platform_right_edge.tscn" id="22_orbjg"]
 [ext_resource type="PackedScene" uid="uid://exa8e0dk0n5o" path="res://scenes/frog.tscn" id="23_aap66"]
 [ext_resource type="PackedScene" uid="uid://dudsgc047icdq" path="res://scenes/ending_trigger.tscn" id="24_v2vps"]
+[ext_resource type="Texture2D" uid="uid://ynmq8ypbdyjd" path="res://assets/background_grass.png" id="25_l1dbj"]
+[ext_resource type="Texture2D" uid="uid://dmj86de3j1a05" path="res://assets/background_sky.png" id="26_ec6c6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
-size = Vector2(78, 256.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8sicy"]
+size = Vector2(60, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vxoig"]
 size = Vector2(14, 24)
@@ -70,21 +71,8 @@ size = Vector2(31, 42)
 [node name="World" type="Node2D"]
 script = ExtResource("1_1ssj1")
 
-[node name="Background_TEMP" type="Sprite2D" parent="."]
-position = Vector2(196, 112.305)
-scale = Vector2(4.9, 1.25915)
-texture = ExtResource("1_2sdmk")
-metadata/_edit_lock_ = true
-
 [node name="Maggot_enemy" parent="." instance=ExtResource("2_uko7g")]
 position = Vector2(297, 160)
-
-[node name="Walls_TEMP" type="StaticBody2D" parent="."]
-collision_mask = 0
-
-[node name="LeftWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
-position = Vector2(-39, 109)
-shape = SubResource("RectangleShape2D_kyx4y")
 
 [node name="Player" parent="." instance=ExtResource("7_trce4")]
 position = Vector2(68, 155)
@@ -99,6 +87,14 @@ position = Vector2(430, 127)
 [node name="Dirtblock_large" parent="." instance=ExtResource("11_uorw8")]
 z_index = 1
 position = Vector2(-83, 175)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large/StaticBody2D"]
+position = Vector2(-28, -26)
+shape = SubResource("RectangleShape2D_8sicy")
 
 [node name="Dirtblock_large2" parent="." instance=ExtResource("11_uorw8")]
 z_index = 1
@@ -396,7 +392,7 @@ position = Vector2(4234, 251)
 position = Vector2(4216, 61)
 
 [node name="Maggot_enemy11" parent="." instance=ExtResource("2_uko7g")]
-position = Vector2(4236, 51)
+position = Vector2(4446, 221)
 
 [node name="OneWayPlatform6" parent="." instance=ExtResource("15_8onha")]
 position = Vector2(4391, 91)
@@ -555,3 +551,79 @@ position = Vector2(7109, 310)
 
 [node name="MiniLevel" parent="." instance=ExtResource("17_387ik")]
 position = Vector2(3560, -993)
+
+[node name="sprite_background" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(600, 114.5)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+
+[node name="sprite_background6" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(-1176, 107)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+offset = Vector2(1, 2)
+
+[node name="sprite_background2" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(2372, 115)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+metadata/_edit_lock_ = true
+
+[node name="sprite_background3" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(4148, 116)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+offset = Vector2(-1, -1)
+metadata/_edit_lock_ = true
+
+[node name="sprite_background4" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(5918, 115)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+metadata/_edit_lock_ = true
+
+[node name="sprite_background5" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(7692, 116)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(1898.88, -786.875)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(-48.9999, -779)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(4855, -783)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(7651, -775)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
