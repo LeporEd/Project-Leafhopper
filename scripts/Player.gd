@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const INITIAL_POSITION = {
-	X = 60,
-	Y = 100
+	X = 3300,
+	Y = 250
 }
 
 const MAX_HEALTH = 100
@@ -10,7 +10,7 @@ const DEFAULT_RECEIVING_DAMAGE = 25
 
 const MOVEMENT_SMALL = { SPEED = 100.0, JUMP_VELOCITY = -225.0, ALLOWED_JUMPS = 3 }
 const MOVEMENT_NORMAL = { SPEED = 175.0, JUMP_VELOCITY = -275.0, ALLOWED_JUMPS = 2 }
-const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 }
+const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1 }
 
 
 @onready var sprite_2d = $Sprite2D

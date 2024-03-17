@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var hurtbox_2_shape = $Giant_spider_hurtbox_2/Hurtbox_2_shape
 @onready var giant_spider_hurtbox_1 = $Giant_spider_hurtbox_1
 @onready var giant_spider_hurtbox_2 = $Giant_spider_hurtbox_2
+@onready var ouchie_area = $Ouchie_area
 
 const DeathParticles = preload("res://death_explosion.tscn")
 
@@ -15,23 +16,24 @@ func _ready():
 	hurtbox_2_shape.set_deferred("disabled", true)
 	giant_spider_hurtbox_1.body_entered.connect(_on_giant_spider_hitbox_body_entered)
 	giant_spider_hurtbox_2.body_entered.connect(_on_giant_spider_hitbox_body_entered)
+	ouchie_area.body_entered.connect(_on_giant_spider_hitbox_body_entered)
 
 func _physics_process(delta):
-	if position.y > starty + 500:
+	if position.y > starty + 150:
 		hurtbox_2_shape.set_deferred("disabled", false)
 		$Giant_spider_animations.animation = "Eat"
 		await get_tree().create_timer(3).timeout
 		hurtbox_2_shape.set_deferred("disabled", true)
 		$Giant_spider_animations.animation = "Standstill"
 		speed = -25
-	if position.y <= starty + 300:
+	if position.y <= starty + 50:
 		await get_tree().create_timer(3).timeout
 		speed = 35
 	velocity.y = speed
 	move_and_slide()
 
 func _on_giant_spider_hitbox_body_entered():
-	###Damage calc goes here
+	health = health - 1
 	if health > 0:
 		var temp = speed
 		speed = 0

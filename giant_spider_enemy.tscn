@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://08ai5wpiybru"]
+[gd_scene load_steps=18 format=3 uid="uid://08ai5wpiybru"]
 
 [ext_resource type="Script" path="res://giant_spider_enemy.gd" id="1_pves6"]
 [ext_resource type="Texture2D" uid="uid://uc1gyriycrb2" path="res://assets/Enemies/Raccoontruck_Giant_Spider/Arigopeaurantia2.png" id="1_y7bdw"]
@@ -97,6 +97,10 @@ height = 24.0
 radius = 18.0
 height = 36.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fk0qj"]
+radius = 23.0
+height = 84.0
+
 [node name="Giant_spider_enemy" type="CharacterBody2D"]
 collision_layer = 8
 collision_mask = 33
@@ -114,7 +118,7 @@ shape = SubResource("CapsuleShape2D_7yvgk")
 
 [node name="Giant_spider_hurtbox_1" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 4
+collision_mask = 0
 
 [node name="Hurtbox_1_shape" type="CollisionShape2D" parent="Giant_spider_hurtbox_1"]
 position = Vector2(-1, 33)
@@ -123,9 +127,18 @@ debug_color = Color(0.85098, 0.356863, 0.282353, 0.419608)
 
 [node name="Giant_spider_hurtbox_2" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 4
+collision_mask = 2
 
 [node name="Hurtbox_2_shape" type="CollisionShape2D" parent="Giant_spider_hurtbox_2"]
-position = Vector2(-2, 35)
+position = Vector2(1, 36)
 shape = SubResource("CapsuleShape2D_awyqq")
 debug_color = Color(0.662745, 0.509804, 0.12549, 0.419608)
+
+[node name="Ouchie_area" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="Ouchiebox" type="CollisionShape2D" parent="Ouchie_area"]
+position = Vector2(2, -8)
+shape = SubResource("CapsuleShape2D_fk0qj")
+debug_color = Color(0.737255, 0.305882, 0.882353, 0.419608)
