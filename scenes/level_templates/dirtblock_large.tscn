@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlgmtxn20jtpu"]
+
+[ext_resource type="Texture2D" uid="uid://dfm300qm3ip54" path="res://assets/Forest Tileset/Templates/dirtblock_large.png" id="1_ruxuc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5b28d"]
+size = Vector2(162, 135)
+
+[node name="Dirtblock_large" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="Dirtblock_collision" type="CollisionShape2D" parent="."]
+z_index = 2
+position = Vector2(81, 68.5)
+shape = SubResource("RectangleShape2D_5b28d")
+
+[node name="Dirtblock_sprite" type="Sprite2D" parent="."]
+position = Vector2(81, 68.75)
+scale = Vector2(3.375, 2.90426)
+texture = ExtResource("1_ruxuc")

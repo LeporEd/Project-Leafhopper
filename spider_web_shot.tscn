@@ -6,10 +6,10 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7if7u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yxt7d"]
-radius = 16.0312
+radius = 11.1803
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ovai"]
-radius = 16.0
+radius = 12.1655
 
 [node name="Spider_web_shot" type="RigidBody2D"]
 collision_layer = 8
@@ -18,12 +18,12 @@ gravity_scale = 0.0
 script = ExtResource("1_wi1ji")
 
 [node name="Web_sprite" type="Sprite2D" parent="."]
-position = Vector2(-9, 4)
-scale = Vector2(0.676471, 0.664706)
+position = Vector2(-3, 1)
+scale = Vector2(0.479412, 0.555882)
 texture = ExtResource("1_spf0x")
 
 [node name="Web_shape" type="CollisionShape2D" parent="."]
-position = Vector2(-8, 4)
+position = Vector2(-2, 1)
 shape = SubResource("CircleShape2D_yxt7d")
 
 [node name="Web_hitbox" type="Area2D" parent="."]
@@ -31,6 +31,6 @@ collision_layer = 8
 collision_mask = 7
 
 [node name="web_collisions" type="CollisionShape2D" parent="Web_hitbox"]
-position = Vector2(-8, 4)
+position = Vector2(-3, 1)
 shape = SubResource("CircleShape2D_4ovai")
 debug_color = Color(0.843137, 0.364706, 0.290196, 0.419608)
