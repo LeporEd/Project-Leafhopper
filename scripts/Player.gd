@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const INITIAL_POSITION = {
-	X = 60,
-	Y = 100
+	X = 6900,
+	Y = 0
 }
 
 const BOUNDARY_BOTTOM_Y = 600
@@ -234,6 +234,8 @@ func _physics_process(delta):
 
 func _run_cicle(delta):
 	if deactivate_player:
+		velocity.x = 0.0
+		velocity.y = 0.0
 		return
 	
 	if state.is_dead:
