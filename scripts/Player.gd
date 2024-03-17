@@ -454,7 +454,7 @@ func _play_audio():
 	if state.sound_hit:
 		audio_hit.play(0.0)
 	if state.sound_jump:
-		audio_jump.play(0.0)
+		audio_jump.play(0.04)
 	if state.sound_land:
 		audio_land.play(0.0)
 	if state.sound_sword:
