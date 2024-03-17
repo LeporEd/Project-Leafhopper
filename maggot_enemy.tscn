@@ -80,6 +80,7 @@ size = Vector2(20, 10)
 
 [node name="Maggot_enemy" type="CharacterBody2D"]
 collision_layer = 8
+collision_mask = 33
 script = ExtResource("1_bugcs")
 
 [node name="Maggot_walk" type="AnimatedSprite2D" parent="."]

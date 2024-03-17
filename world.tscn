@@ -1,24 +1,40 @@
-[gd_scene load_steps=14 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=22 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
 [ext_resource type="PackedScene" uid="uid://cxr8mc8gcixg5" path="res://beetle_enemy.tscn" id="3_mfm75"]
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="4_r7kfi"]
-[ext_resource type="PackedScene" uid="uid://08ai5wpiybru" path="res://giant_spider_enemy.tscn" id="5_wggvh"]
 [ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="7_trce4"]
 [ext_resource type="AudioStream" uid="uid://dtn3l120ydsjy" path="res://music/Game_theme.wav" id="8_eoxof"]
 [ext_resource type="PackedScene" uid="uid://bnp3jbx170l1w" path="res://scenes/grow_power_up.tscn" id="9_wx0s3"]
 [ext_resource type="PackedScene" uid="uid://qkibtsyml0hm" path="res://scenes/save_point.tscn" id="10_0660o"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7af2p"]
-size = Vector2(523, 134)
+[ext_resource type="PackedScene" uid="uid://1onngan1x3wr" path="res://scenes/level_templates/platform_full.tscn" id="11_7abt5"]
+[ext_resource type="PackedScene" uid="uid://dlgmtxn20jtpu" path="res://scenes/level_templates/dirtblock_large.tscn" id="11_uorw8"]
+[ext_resource type="PackedScene" uid="uid://mun7wyj0ivaj" path="res://scenes/moving_platform.tscn" id="13_ff7j4"]
+[ext_resource type="PackedScene" uid="uid://dkpy3oxy1su45" path="res://scenes/level_templates/dirtblock_large_halved.tscn" id="13_xmj0y"]
+[ext_resource type="PackedScene" uid="uid://dv12ohdouhwo5" path="res://scenes/level_templates/platform_middle.tscn" id="13_yl6p3"]
+[ext_resource type="PackedScene" uid="uid://bucaslp8231jh" path="res://scenes/shrink_power_up.tscn" id="14_nnkfg"]
+[ext_resource type="PackedScene" uid="uid://cxcaifvcfgod0" path="res://scenes/one_way_plattform.tscn" id="15_8onha"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
 size = Vector2(78, 256.5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_js4dh"]
-size = Vector2(126, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vxoig"]
+size = Vector2(14, 24)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qjuw0"]
+font_size = 10
+outline_size = 2
+outline_color = Color(0.0823529, 0.0156863, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66wep"]
+size = Vector2(38, 38)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4mw0e"]
+font_size = 10
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_1ssj1")
@@ -30,44 +46,170 @@ texture = ExtResource("1_2sdmk")
 metadata/_edit_lock_ = true
 
 [node name="Maggot_enemy" parent="." instance=ExtResource("2_uko7g")]
-position = Vector2(304, 145)
+position = Vector2(297, 160)
 
 [node name="Walls_TEMP" type="StaticBody2D" parent="."]
-
-[node name="FloorTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
-position = Vector2(202, 243)
-shape = SubResource("RectangleShape2D_7af2p")
+collision_mask = 0
 
 [node name="LeftWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
 position = Vector2(-39, 109)
 shape = SubResource("RectangleShape2D_kyx4y")
 
-[node name="RightWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
-position = Vector2(431, 113)
-shape = SubResource("RectangleShape2D_kyx4y")
-
-[node name="Spider_Test_Wall" type="CollisionShape2D" parent="Walls_TEMP"]
-position = Vector2(736, 232)
-shape = SubResource("RectangleShape2D_js4dh")
-
-[node name="Beetle_enemy" parent="." instance=ExtResource("3_mfm75")]
-position = Vector2(344, 126)
-
-[node name="Shooting_spider_enemy" parent="." instance=ExtResource("4_r7kfi")]
-position = Vector2(636, 372)
-
-[node name="Giant_spider_enemy" parent="." instance=ExtResource("5_wggvh")]
-position = Vector2(728, 301)
-
 [node name="Player" parent="." instance=ExtResource("7_trce4")]
-position = Vector2(67, 99)
-
-[node name="GrowPowerUp" parent="." instance=ExtResource("9_wx0s3")]
-position = Vector2(359, 156)
+position = Vector2(68, 155)
 
 [node name="Game_theme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_eoxof")
 autoplay = true
 
+[node name="SavePoint2" parent="." instance=ExtResource("10_0660o")]
+position = Vector2(430, 127)
+
+[node name="Dirtblock_large" parent="." instance=ExtResource("11_uorw8")]
+z_index = 1
+position = Vector2(-83, 175)
+
+[node name="Dirtblock_large2" parent="." instance=ExtResource("11_uorw8")]
+z_index = 1
+position = Vector2(157, 176)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large2"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large2/StaticBody2D"]
+position = Vector2(164, -9)
+shape = SubResource("RectangleShape2D_vxoig")
+
+[node name="Platform_middle" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(64, 173)
+
+[node name="Platform_middle2" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(115, 173)
+
+[node name="Platform_full" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(383, 150)
+
+[node name="Maggot_enemy2" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(582, 139)
+
+[node name="Dirtblock_large3" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(654, 200)
+
+[node name="Platform_full2" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(645, 100)
+
+[node name="Shooting_spider_enemy" parent="." instance=ExtResource("4_r7kfi")]
+position = Vector2(826, 88)
+
+[node name="Double_jump_tutorial" type="Label" parent="."]
+offset_left = 519.0
+offset_top = 99.0
+offset_right = 656.0
+offset_bottom = 148.0
+text = "Press Space twice
+to Double-Jump!"
+label_settings = SubResource("LabelSettings_qjuw0")
+
+[node name="Node2D" parent="." instance=ExtResource("13_ff7j4")]
+position = Vector2(874, 217)
+
+[node name="Dirtblock_large4" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(1103, 197)
+
+[node name="Platform_middle3" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(1253, 194)
+
+[node name="Platform_middle4" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(1304, 194)
+
+[node name="Platform_middle5" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(1358, 194)
+
+[node name="Platform_middle6" parent="." instance=ExtResource("13_yl6p3")]
+position = Vector2(1408, 194)
+
+[node name="Maggot_enemy3" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(1335, 181)
+
+[node name="Maggot_enemy4" parent="." instance=ExtResource("2_uko7g")]
+position = Vector2(1385, 182)
+
+[node name="Platform_full3" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(906, 65)
+
+[node name="Node2D2" parent="." instance=ExtResource("9_wx0s3")]
+position = Vector2(1024, 53)
+
+[node name="dirtblock_large_halved" parent="." instance=ExtResource("13_xmj0y")]
+z_index = -1
+position = Vector2(1171, 172)
+
+[node name="dirtblock_large_halved2" parent="." instance=ExtResource("13_xmj0y")]
+z_index = -1
+position = Vector2(1460, 170)
+
+[node name="Dirtblock_large5" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(1449, 197)
+
+[node name="Platform_full4" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(1641, 168)
+
+[node name="Platform_full5" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(1911, 214)
+
+[node name="Node2D3" parent="." instance=ExtResource("14_nnkfg")]
+position = Vector2(2034, 200)
+
+[node name="Shooting_spider_enemy2" parent="." instance=ExtResource("4_r7kfi")]
+position = Vector2(1720, 155)
+
+[node name="Node2D4" parent="." instance=ExtResource("13_ff7j4")]
+position = Vector2(2185, 233)
+
+[node name="Dirtblock_large6" parent="." instance=ExtResource("11_uorw8")]
+position = Vector2(2408, 216)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large6"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large6/StaticBody2D"]
+position = Vector2(-17, -11)
+shape = SubResource("RectangleShape2D_66wep")
+
+[node name="OneWayPlatform" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(1190, 118)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 1150.0
+offset_top = 66.0
+offset_right = 1280.0
+offset_bottom = 115.0
+text = "Press Down to
+Fall Through this Platform!"
+label_settings = SubResource("LabelSettings_4mw0e")
+
+[node name="Beetle_enemy" parent="." instance=ExtResource("3_mfm75")]
+position = Vector2(2422, 205)
+
+[node name="Dirtblock_large7" parent="." instance=ExtResource("11_uorw8")]
+z_index = -1
+position = Vector2(2554, 216)
+
+[node name="Dirtblock_large8" parent="." instance=ExtResource("11_uorw8")]
+z_index = -3
+position = Vector2(2693, 216)
+
+[node name="Node2D5" parent="." instance=ExtResource("9_wx0s3")]
+position = Vector2(2638, 195)
+
 [node name="SavePoint" parent="." instance=ExtResource("10_0660o")]
-position = Vector2(140, 152)
+position = Vector2(2829, 173)
+
+[node name="dirtblock_large_halved3" parent="." instance=ExtResource("13_xmj0y")]
+z_index = -5
+position = Vector2(2758, 198)
+
+[node name="Platform_full6" parent="." instance=ExtResource("11_7abt5")]
+position = Vector2(2866, 218)

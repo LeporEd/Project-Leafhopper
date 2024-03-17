@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkpy3oxy1su45"]
+
+[ext_resource type="Texture2D" uid="uid://vi0mysjeravy" path="res://assets/Forest Tileset/Templates/dirtblock_large_halved.png" id="1_d38ix"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eo04m"]
+size = Vector2(102.5, 37.5)
+
+[node name="dirtblock_large_halved" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="dirtblock_sprite" type="Sprite2D" parent="."]
+position = Vector2(50.5, 18.5)
+scale = Vector2(2.14583, 1.625)
+texture = ExtResource("1_d38ix")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(50.75, 18.25)
+shape = SubResource("RectangleShape2D_eo04m")

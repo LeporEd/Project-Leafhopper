@@ -104,6 +104,7 @@ height = 14.0
 
 [node name="Beetle_enemy" type="CharacterBody2D"]
 collision_layer = 8
+collision_mask = 33
 script = ExtResource("1_j8kmb")
 
 [node name="Beetle_charge" type="AnimatedSprite2D" parent="."]

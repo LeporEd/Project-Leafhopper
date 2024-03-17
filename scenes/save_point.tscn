@@ -50,14 +50,14 @@ gradient = SubResource("Gradient_csfe5")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_l63jw"]
-radius = 3.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rsq74"]
+height = 152.0
 
 [node name="SavePoint" type="Node2D"]
 
 [node name="SavePoint" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 32
+collision_layer = 32
+collision_mask = 2
 script = ExtResource("1_xti8n")
 metadata/_edit_group_ = true
 
@@ -77,6 +77,19 @@ color = Color(0.768627, 0.34902, 0.152941, 1)
 texture = SubResource("GradientTexture2D_3ikbd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SavePoint"]
-shape = SubResource("CircleShape2D_l63jw")
+shape = SubResource("CapsuleShape2D_rsq74")
+
+[node name="SavedTextTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="SavedText" type="Label" parent="."]
+visible = false
+offset_left = -48.0
+offset_top = -76.0
+offset_right = 48.0
+offset_bottom = -53.0
+text = "Game Saved"
 
 [connection signal="body_entered" from="SavePoint" to="SavePoint" method="_on_body_entered"]
+[connection signal="timeout" from="SavedTextTimer" to="SavePoint" method="_on_timer_timeout"]

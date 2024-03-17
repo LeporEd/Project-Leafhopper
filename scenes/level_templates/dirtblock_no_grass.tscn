@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://72ll0nvsxvul"]
+
+[ext_resource type="Texture2D" uid="uid://csg5foewjlq0j" path="res://assets/Forest Tileset/Templates/dirtblock_no_grass.png" id="1_fijsu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6b00"]
+size = Vector2(51, 55)
+
+[node name="dirtblock_no_grass" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="dirtblock_sprite" type="Sprite2D" parent="."]
+position = Vector2(26.5, 28.25)
+scale = Vector2(1.65625, 1.62121)
+texture = ExtResource("1_fijsu")
+
+[node name="dirtblock_collision" type="CollisionShape2D" parent="."]
+position = Vector2(25.5, 26.5)
+shape = SubResource("RectangleShape2D_u6b00")
