@@ -1,7 +1,6 @@
-[gd_scene load_steps=37 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=40 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
-[ext_resource type="Texture2D" uid="uid://dqaj1blpi8e0y" path="res://assets/Forest Tileset/BG/NonParallax.png" id="1_2sdmk"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
 [ext_resource type="PackedScene" uid="uid://cxr8mc8gcixg5" path="res://beetle_enemy.tscn" id="3_mfm75"]
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="4_r7kfi"]
@@ -16,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dv12ohdouhwo5" path="res://scenes/level_templates/platform_middle.tscn" id="13_yl6p3"]
 [ext_resource type="PackedScene" uid="uid://bucaslp8231jh" path="res://scenes/shrink_power_up.tscn" id="14_nnkfg"]
 [ext_resource type="PackedScene" uid="uid://cxcaifvcfgod0" path="res://scenes/one_way_plattform.tscn" id="15_8onha"]
+[ext_resource type="PackedScene" uid="uid://ctetuqflhk2vp" path="res://scenes/mini_level.tscn" id="17_387ik"]
 [ext_resource type="PackedScene" uid="uid://dctv6cmwp1vbu" path="res://scenes/level_templates/platform_left_edge.tscn" id="17_gr3p7"]
 [ext_resource type="PackedScene" uid="uid://bdj8g0woflh1q" path="res://scenes/dungeonteleport.tscn" id="18_lmk8d"]
 [ext_resource type="PackedScene" uid="uid://72ll0nvsxvul" path="res://scenes/level_templates/dirtblock_no_grass.tscn" id="19_n4dga"]
@@ -24,9 +24,11 @@
 [ext_resource type="PackedScene" uid="uid://4alx3his7h8p" path="res://scenes/level_templates/platform_right_edge.tscn" id="22_orbjg"]
 [ext_resource type="PackedScene" uid="uid://exa8e0dk0n5o" path="res://scenes/frog.tscn" id="23_aap66"]
 [ext_resource type="PackedScene" uid="uid://dudsgc047icdq" path="res://scenes/ending_trigger.tscn" id="24_v2vps"]
+[ext_resource type="Texture2D" uid="uid://ynmq8ypbdyjd" path="res://assets/background_grass.png" id="25_l1dbj"]
+[ext_resource type="Texture2D" uid="uid://dmj86de3j1a05" path="res://assets/background_sky.png" id="26_ec6c6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kyx4y"]
-size = Vector2(78, 256.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8sicy"]
+size = Vector2(60, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vxoig"]
 size = Vector2(14, 24)
@@ -66,27 +68,16 @@ size = Vector2(26, 46)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_73f40"]
 size = Vector2(31, 42)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_adq67"]
+size = Vector2(166, 36.5)
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_1ssj1")
-
-[node name="Background_TEMP" type="Sprite2D" parent="."]
-position = Vector2(196, 112.305)
-scale = Vector2(4.9, 1.25915)
-texture = ExtResource("1_2sdmk")
-metadata/_edit_lock_ = true
 
 [node name="Maggot_enemy" parent="." instance=ExtResource("2_uko7g")]
 position = Vector2(297, 160)
 
-[node name="Walls_TEMP" type="StaticBody2D" parent="."]
-collision_mask = 0
-
-[node name="LeftWallTEMP" type="CollisionShape2D" parent="Walls_TEMP"]
-position = Vector2(-39, 109)
-shape = SubResource("RectangleShape2D_kyx4y")
-
 [node name="Player" parent="." instance=ExtResource("7_trce4")]
-position = Vector2(68, 155)
 
 [node name="Game_theme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_eoxof")
@@ -98,6 +89,14 @@ position = Vector2(430, 127)
 [node name="Dirtblock_large" parent="." instance=ExtResource("11_uorw8")]
 z_index = 1
 position = Vector2(-83, 175)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Dirtblock_large"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dirtblock_large/StaticBody2D"]
+position = Vector2(-28, -26)
+shape = SubResource("RectangleShape2D_8sicy")
 
 [node name="Dirtblock_large2" parent="." instance=ExtResource("11_uorw8")]
 z_index = 1
@@ -270,10 +269,11 @@ position = Vector2(3162, 241)
 position = Vector2(3309, 254)
 
 [node name="dirtblock_large_halved4" parent="." instance=ExtResource("13_xmj0y")]
-position = Vector2(3428, 243)
+z_index = -2
+position = Vector2(3432, 242)
 
 [node name="dungeonteleport" parent="." instance=ExtResource("18_lmk8d")]
-position = Vector2(3521, -370)
+position = Vector2(3515, -966)
 
 [node name="dirtblock_no_grass" parent="." instance=ExtResource("19_n4dga")]
 z_index = -10
@@ -359,7 +359,8 @@ position = Vector2(4182, 112)
 position = Vector2(4240, 65)
 
 [node name="dirtblock_grassy2" parent="." instance=ExtResource("21_me6l2")]
-position = Vector2(4241, -8)
+z_index = -2
+position = Vector2(4241, 12)
 
 [node name="Node2D7" parent="." instance=ExtResource("9_wx0s3")]
 position = Vector2(4158, 97)
@@ -395,7 +396,7 @@ position = Vector2(4234, 251)
 position = Vector2(4216, 61)
 
 [node name="Maggot_enemy11" parent="." instance=ExtResource("2_uko7g")]
-position = Vector2(4236, 51)
+position = Vector2(4446, 221)
 
 [node name="OneWayPlatform6" parent="." instance=ExtResource("15_8onha")]
 position = Vector2(4391, 91)
@@ -487,28 +488,30 @@ position = Vector2(6046, 255)
 position = Vector2(6194, 257)
 
 [node name="Node2D10" parent="." instance=ExtResource("13_ff7j4")]
-position = Vector2(6084, 194)
+position = Vector2(6124, 151)
+scale = Vector2(0.962933, 0.940625)
 
 [node name="Node2D11" parent="." instance=ExtResource("9_wx0s3")]
-position = Vector2(6208, 156)
+position = Vector2(6148, 119)
 
 [node name="Platform_full11" parent="." instance=ExtResource("11_7abt5")]
 position = Vector2(6291, 299)
 
 [node name="OneWayPlatform7" parent="." instance=ExtResource("15_8onha")]
-position = Vector2(6604, 354)
+position = Vector2(6591, 351)
+scale = Vector2(0.987103, 1.03136)
 
 [node name="OneWayPlatform8" parent="." instance=ExtResource("15_8onha")]
-position = Vector2(6746, 352)
+position = Vector2(6781, 345)
 
 [node name="Platform_left_Edge5" parent="." instance=ExtResource("17_gr3p7")]
-position = Vector2(6621, 269)
+position = Vector2(6621, 295)
 
 [node name="Platform_right_edge" parent="." instance=ExtResource("22_orbjg")]
-position = Vector2(6676, 270)
+position = Vector2(6668, 296)
 
 [node name="Shooting_spider_enemy8" parent="." instance=ExtResource("4_r7kfi")]
-position = Vector2(6654, 258)
+position = Vector2(6653, 281)
 
 [node name="Dirtblock_large18" parent="." instance=ExtResource("11_uorw8")]
 position = Vector2(6829, 294)
@@ -551,3 +554,111 @@ position = Vector2(7880, 255)
 
 [node name="EndingTrigger" parent="." instance=ExtResource("24_v2vps")]
 position = Vector2(7109, 310)
+
+[node name="MiniLevel" parent="." instance=ExtResource("17_387ik")]
+position = Vector2(3560, -993)
+
+[node name="sprite_background" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(600, 114.5)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+
+[node name="sprite_background6" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(-1176, 107)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+offset = Vector2(1, 2)
+
+[node name="sprite_background2" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(2372, 115)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+metadata/_edit_lock_ = true
+
+[node name="sprite_background3" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(4148, 116)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+offset = Vector2(-1, -1)
+metadata/_edit_lock_ = true
+
+[node name="sprite_background4" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(5918, 115)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+metadata/_edit_lock_ = true
+
+[node name="sprite_background5" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -1000
+position = Vector2(7692, 116)
+scale = Vector2(1.73242, 3.23047)
+texture = ExtResource("25_l1dbj")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(1898.88, -786.875)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(-48.9999, -779)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(4855, -783)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+self_modulate = Color(0.854902, 0.854902, 0.854902, 1)
+z_index = -100
+position = Vector2(7651, -775)
+scale = Vector2(12.8509, 43.0543)
+texture = ExtResource("26_ec6c6")
+
+[node name="dirtblock_no_grass3" parent="." instance=ExtResource("19_n4dga")]
+z_index = -30
+position = Vector2(3490, 297)
+
+[node name="dirtblock_no_grass4" parent="." instance=ExtResource("19_n4dga")]
+z_index = -2
+position = Vector2(3452, 311)
+
+[node name="dirtblock_no_grass5" parent="." instance=ExtResource("19_n4dga")]
+z_index = -2
+position = Vector2(3452, 260)
+
+[node name="dirtblock_no_grass6" parent="." instance=ExtResource("19_n4dga")]
+z_index = -1
+position = Vector2(3498, 251)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(807, 153)
+shape = SubResource("RectangleShape2D_adq67")
+
+[node name="OneWayPlatform9" parent="." instance=ExtResource("15_8onha")]
+position = Vector2(6005, 216)

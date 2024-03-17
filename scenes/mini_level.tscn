@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ctetuqflhk2vp"]
+[gd_scene load_steps=13 format=3 uid="uid://ctetuqflhk2vp"]
 
 [ext_resource type="PackedScene" uid="uid://4alx3his7h8p" path="res://scenes/level_templates/platform_right_edge.tscn" id="2_gt0kb"]
 [ext_resource type="PackedScene" uid="uid://dctv6cmwp1vbu" path="res://scenes/level_templates/platform_left_edge.tscn" id="4_wbkic"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cxcaifvcfgod0" path="res://scenes/one_way_plattform.tscn" id="10_ahnft"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="11_2nx1r"]
 [ext_resource type="PackedScene" uid="uid://mun7wyj0ivaj" path="res://scenes/moving_platform.tscn" id="11_i6o1m"]
+[ext_resource type="PackedScene" uid="uid://b31ud7i8v4hf6" path="res://scenes/add_time.tscn" id="12_ekhns"]
 [ext_resource type="PackedScene" uid="uid://nql7xxjsv11f" path="res://shooting_spider_enemy.tscn" id="12_fjes5"]
 [ext_resource type="PackedScene" uid="uid://bucaslp8231jh" path="res://scenes/shrink_power_up.tscn" id="12_uiuii"]
 
@@ -34,9 +35,6 @@ position = Vector2(187, 166)
 
 [node name="Node2D" parent="." instance=ExtResource("11_i6o1m")]
 position = Vector2(311, 227)
-
-[node name="Node2D2" parent="." instance=ExtResource("12_uiuii")]
-position = Vector2(36, 18)
 
 [node name="OneWayPlatform3" parent="." instance=ExtResource("10_ahnft")]
 position = Vector2(186, 208)
@@ -76,3 +74,30 @@ position = Vector2(2194, 109)
 
 [node name="Platform_full3" parent="." instance=ExtResource("5_mvtva")]
 position = Vector2(2431, 84)
+
+[node name="addTime" parent="." instance=ExtResource("12_ekhns")]
+position = Vector2(2502, 41)
+
+[node name="OneWayPlatform8" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2809, 115)
+
+[node name="OneWayPlatform9" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2809, 246)
+
+[node name="OneWayPlatform10" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2814, 372)
+
+[node name="OneWayPlatform11" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2816, 496)
+
+[node name="OneWayPlatform13" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2813, 723)
+
+[node name="OneWayPlatform14" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2808, 860)
+
+[node name="OneWayPlatform15" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2809, 1002)
+
+[node name="OneWayPlatform12" parent="." instance=ExtResource("10_ahnft")]
+position = Vector2(2814, 609)

@@ -109,9 +109,8 @@ script = ExtResource("1_j8kmb")
 
 [node name="Beetle_charge" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k5mai")
-animation = &"DamageRight"
+animation = &"DamageLeft"
 autoplay = "ChargeLeft"
-frame_progress = 0.0284152
 
 [node name="Beetle_Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
@@ -125,3 +124,9 @@ collision_mask = 4
 position = Vector2(-1, 2)
 shape = SubResource("CapsuleShape2D_g2lgy")
 debug_color = Color(0.843137, 0.345098, 0.439216, 0.419608)
+
+[node name="Dazed_Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Dazed_Timer" to="." method="_on_dazed_timer_timeout"]

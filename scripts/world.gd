@@ -9,12 +9,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# Debug
-	if Input.is_action_just_pressed("ui_text_backspace"):
-		PlayerEvents.player_take_hit.emit()
-	if Input.is_action_just_pressed("ui_undo"):
-		PlayerEvents.player_save.emit()
-		
 	pass
 
 func _on_loop_sound():

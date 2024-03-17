@@ -1,6 +1,9 @@
 extends Area2D
 
-
+var endingTriggered = false
 
 func _on_body_entered(body):
-	WorldEvents.on_game_ending.emit()
+	if !endingTriggered:
+		endingTriggered = true
+		WorldEvents.on_game_ending.emit()
+		PlayerEvents.player_start_endgame_animation.emit()
