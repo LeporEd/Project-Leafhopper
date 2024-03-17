@@ -10,9 +10,11 @@ const BOUNDARY_BOTTOM_Y = 600
 const MAX_HEALTH = 3
 const DEFAULT_RECEIVING_DAMAGE = 1
 
-const MOVEMENT_SMALL = { SPEED = 100.0, JUMP_VELOCITY = -225.0, ALLOWED_JUMPS = 3 }
-const MOVEMENT_NORMAL = { SPEED = 175.0, JUMP_VELOCITY = -275.0, ALLOWED_JUMPS = 2 }
-const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1 }
+# If you change the SCALE and CAMERA_ZOOM, don't forget to change that in the
+# grow and shrink animations too
+const MOVEMENT_SMALL = { SPEED = 100.0, JUMP_VELOCITY = -225.0, ALLOWED_JUMPS = 3, SCALE = 0.35, CAMERA_ZOOM = 1.1 }
+const MOVEMENT_NORMAL = { SPEED = 175.0, JUMP_VELOCITY = -275.0, ALLOWED_JUMPS = 2, SCALE = 1.0, CAMERA_ZOOM = 0.8 }
+const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1, SCALE = 2.0, CAMERA_ZOOM = 0.5 }
 
 
 @onready var sprite_2d = $Sprite2D
@@ -37,6 +39,8 @@ const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1 
 @onready var time_min = $PlayerUI/GameTime/TimeMin
 @onready var time_sec = $PlayerUI/GameTime/TimeSec
 @onready var time_milli_sec = $PlayerUI/GameTime/TimeMilliSec
+@onready var camera_2d = $Camera2D
+
 
 
 var arrow_up_icon = preload("res://assets/UI/arrow_up.png")
@@ -194,6 +198,27 @@ func _reset():
 	growth_texture_rect.texture = box_icon
 	weapon_texture_rect.texture = weapon1_icon
 	death_texture_rect.visible = false
+	
+	_set_scale_and_zoom()
+
+
+func _set_scale_and_zoom():
+	match state.growth:
+		Growth.SMALL:
+			scale.x = MOVEMENT_SMALL.SCALE
+			scale.y = MOVEMENT_SMALL.SCALE
+			camera_2d.zoom.x = MOVEMENT_SMALL.CAMERA_ZOOM
+			camera_2d.zoom.y = MOVEMENT_SMALL.CAMERA_ZOOM
+		Growth.NORMAL:
+			scale.x = MOVEMENT_NORMAL.SCALE
+			scale.y = MOVEMENT_NORMAL.SCALE
+			camera_2d.zoom.x = MOVEMENT_NORMAL.CAMERA_ZOOM
+			camera_2d.zoom.y = MOVEMENT_NORMAL.CAMERA_ZOOM
+		Growth.BIG:
+			scale.x = MOVEMENT_BIG.SCALE
+			scale.y = MOVEMENT_BIG.SCALE
+			camera_2d.zoom.x = MOVEMENT_BIG.CAMERA_ZOOM
+			camera_2d.zoom.y = MOVEMENT_BIG.CAMERA_ZOOM
 
 
 func _on_hurtbox_body_entered(argument):
@@ -289,7 +314,8 @@ func _load_last_checkpoint():
 		position.y = checkpoint.y
 		state = State.from(checkpoint.state)
 		health_bar.value = state.health
-		print("Health", state.health)
+		state.next_animation = PlayerAnimation.idle
+		_set_scale_and_zoom()
 
 
 func _take_hit(damage: int):
