@@ -262,34 +262,43 @@ func _execute_async_changes():
 	if async_changes.should_heal:
 		state.health = MAX_HEALTH
 		async_changes.should_heal = false
+	
 	if async_changes.should_die:
 		state.health = 0
 		async_changes.should_die = false
 		_on_user_death()
+	
 	if async_changes.should_reset:
 		_reset()
 		async_changes.should_reset = false
+	
 	if async_changes.should_grow || async_changes.should_shrink:
 		state.growth = _get_new_growth_and_suggest_animation(async_changes.should_grow, async_changes.should_shrink)
 		async_changes.should_grow = false
 		async_changes.should_shrink = false
+	
 	if async_changes.should_save:
 		_save_checkpoint()
 		async_changes.should_save = false
+	
 	if async_changes.should_load:
 		_load_last_checkpoint()
 		async_changes.should_load = false
+	
 	if async_changes.should_take_hit:
 		_take_hit(DEFAULT_RECEIVING_DAMAGE)
 		async_changes.should_take_hit = false
+	
 	if async_changes.should_teleport != null:
 		print("Teleport:", async_changes.should_teleport)
 		position.x = async_changes.should_teleport.x
 		position.y = async_changes.should_teleport.y
 		async_changes.should_teleport = null
+	
 	if async_changes.should_stop_timer:
 		_stop_time()
 		async_changes.should_stop_timer = false
+	
 	if async_changes.should_substract_sec_from_time > 0:
 		_substract_seconds_from_time(async_changes.should_substract_sec_from_time)
 		async_changes.should_substract_sec_from_time = 0
@@ -594,7 +603,7 @@ func _update_velocity(delta):
 
 
 func _play_animation():
-	if animation_cooldown_timer.time_left > 0:
+	if animation_cooldown_timer.time_left > 0 and (not state.next_animation == PlayerAnimation.death):
 		return
 	
 	var next_animation = PlayerAnimation.keys()[state.next_animation]
