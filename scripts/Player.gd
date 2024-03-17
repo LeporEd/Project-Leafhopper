@@ -27,7 +27,7 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 
 @onready var audio_land = $AudioLand
 @onready var audio_hit = $AudioHit
 @onready var audio_sword = $AudioSword
-
+@onready var pause_menu = $Camera2D/Pause_menu
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -81,6 +81,8 @@ var async_changes = {
 	should_save = false,
 	should_load = false
 }
+
+var paused = false
 
 class State:
 	var move_x = MoveX.NONE
@@ -260,17 +262,18 @@ func _on_user_death():
 
 
 func _update_state_with_user_input():
-	var user_input = _get_user_input()
-	state.move_x = _convert_to_move_x(user_input.x)
-	state.move_y = _convert_to_move_y()
-	state.should_jump = user_input.jump
-	state.should_go_down = user_input.go_down
-	state.jump_count = 0 if is_on_floor() else state.jump_count
-	state.should_attack = _convert_to_attack(user_input)
-	state.growth = _get_new_growth_and_suggest_animation(user_input.grow, user_input.shrink)
-	state.movement_profile = _get_movement_profile()
-	state.sound_land = is_on_floor() && state.in_air
-	state.in_air = not is_on_floor()
+	if paused == false:
+		var user_input = _get_user_input()
+		state.move_x = _convert_to_move_x(user_input.x)
+		state.move_y = _convert_to_move_y()
+		state.should_jump = user_input.jump
+		state.should_go_down = user_input.go_down
+		state.jump_count = 0 if is_on_floor() else state.jump_count
+		state.should_attack = _convert_to_attack(user_input)
+		state.growth = _get_new_growth_and_suggest_animation(user_input.grow, user_input.shrink)
+		state.movement_profile = _get_movement_profile()
+		state.sound_land = is_on_floor() && state.in_air
+		state.in_air = not is_on_floor()
 
 
 func _get_user_input():
@@ -286,6 +289,18 @@ func _get_user_input():
 		attack4 = Input.is_action_just_pressed("attack4")
 	}
 
+func _process(delta):
+	if Input.is_action_just_pressed("pause"):
+		_pause_menu()
+
+func _pause_menu():
+	if paused:
+		pause_menu.hide()
+		Engine.time_scale = 1
+	else:
+		pause_menu.show()
+		Engine.time_scale = 0
+	paused = !paused
 
 func _convert_to_move_x(input_axis: int) -> MoveX:
 	match input_axis:
