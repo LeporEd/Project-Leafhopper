@@ -503,13 +503,13 @@ position = Vector2(6604, 354)
 position = Vector2(6746, 352)
 
 [node name="Platform_left_Edge5" parent="." instance=ExtResource("17_gr3p7")]
-position = Vector2(6621, 269)
+position = Vector2(6622, 292)
 
 [node name="Platform_right_edge" parent="." instance=ExtResource("22_orbjg")]
-position = Vector2(6676, 270)
+position = Vector2(6668, 293)
 
 [node name="Shooting_spider_enemy8" parent="." instance=ExtResource("4_r7kfi")]
-position = Vector2(6654, 258)
+position = Vector2(6654, 281)
 
 [node name="Dirtblock_large18" parent="." instance=ExtResource("11_uorw8")]
 position = Vector2(6829, 294)
