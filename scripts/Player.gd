@@ -106,12 +106,11 @@ class State:
 		var clone = State.new()
 		clone.move_x = self.move_x
 		clone.move_y = self.move_y
-		clone.growth = self.growth
+#		clone.growth = self.growth
 		clone.jump_count = self.jump_count
 		clone.health = self.health
 		clone.is_dead = self.is_dead
-		clone.movement_profile = self.movement_profile
-		clone.is_dead = self.is_dead
+#		clone.movement_profile = self.movement_profile
 
 		return clone
 
@@ -169,6 +168,8 @@ func _physics_process(delta):
 func _run_cicle(delta):
 	if state.is_dead:
 		if game_over_timer.time_left > 0:
+			_clean_state()
+			_update_velocity(delta)
 			return
 		else:
 			print("RESTART")
@@ -192,9 +193,6 @@ func _reset_next_animation():
 
 
 func _execute_async_changes():
-	if async_changes.should_take_hit:
-		_take_hit(DEFAULT_RECEIVING_DAMAGE)
-		async_changes.should_take_hit = false
 	if async_changes.should_pickup_item:
 		pass
 	if async_changes.should_heal:
@@ -215,6 +213,9 @@ func _execute_async_changes():
 	if async_changes.should_load:
 		_load_last_checkpoint()
 		async_changes.should_load = false
+	if async_changes.should_take_hit:
+		_take_hit(DEFAULT_RECEIVING_DAMAGE)
+		async_changes.should_take_hit = false
 
 
 func _reset():
@@ -466,6 +467,8 @@ func _play_audio():
 
 
 func _clean_state():
+	state.move_x = MoveX.NONE
+	state.move_y = MoveY.NONE
 	state.should_jump = false
 	state.should_attack = PlayerAttack.NONE
 	state.should_start_animation_cooldown_timer = 0.0
