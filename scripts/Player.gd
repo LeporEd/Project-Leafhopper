@@ -5,6 +5,8 @@ const INITIAL_POSITION = {
 	Y = 100
 }
 
+const BOUNDARY_BOTTOM_Y = 600
+
 const MAX_HEALTH = 3
 const DEFAULT_RECEIVING_DAMAGE = 1
 
@@ -196,6 +198,7 @@ func _run_cicle(delta):
 	
 	_reset_next_animation()
 	_execute_async_changes()
+	_check_player_boundaries()
 	_update_state_with_user_input()
 	_update_next_animation_and_sound()
 	_update_ui()
@@ -281,6 +284,13 @@ func _on_user_death():
 	PlayerEvents.on_player_died.emit()
 	game_over_timer.start()
 	print("Player died")
+
+
+func _check_player_boundaries():
+	if position.y > BOUNDARY_BOTTOM_Y:
+		state.health = 0
+		health_bar.value = state.health
+		_on_user_death()
 
 
 func _update_state_with_user_input():
