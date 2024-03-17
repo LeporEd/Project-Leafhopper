@@ -297,7 +297,7 @@ func _execute_async_changes():
 		async_changes.should_take_hit = false
 	
 	if async_changes.should_teleport != null:
-		print("Teleport:", async_changes.should_teleport)
+#		print("Teleport:", async_changes.should_teleport)
 		position.x = async_changes.should_teleport.x
 		position.y = async_changes.should_teleport.y
 		async_changes.should_teleport = null
@@ -323,7 +323,7 @@ func _save_checkpoint():
 
 
 func _load_last_checkpoint():
-	print("Player reset")
+#	print("Player reset")
 	_reset()
 	
 	if checkpoints.size() > 0:
@@ -339,7 +339,7 @@ func _load_last_checkpoint():
 
 
 func _take_hit(damage: int):
-	print("User was hit")
+#	print("User was hit")
 	state.health -= damage
 	PlayerEvents.on_player_took_hit.emit(state.health)
 	health_bar.value = state.health
@@ -359,7 +359,7 @@ func _on_user_death():
 	death_texture_rect.visible = true
 	PlayerEvents.on_player_died.emit()
 	game_over_timer.start()
-	print("Player died")
+#	print("Player died")
 
 
 func _stop_time():
@@ -425,12 +425,16 @@ func _update_state_with_user_input():
 
 
 func _get_user_input():
+# Debug
+#	grow = Input.is_action_just_pressed("grow"),
+#	shrink = Input.is_action_just_pressed("shrink"),
+
 	return {
 		x = Input.get_axis("move_left", "move_right"),
 		jump = Input.is_action_just_pressed("jump"),
 		go_down = Input.is_action_just_pressed("go_down"),
-		grow = Input.is_action_just_pressed("grow"),
-		shrink = Input.is_action_just_pressed("shrink"),
+		grow = false,
+		shrink = false,
 		attack = Input.is_action_just_pressed("attack"),
 		weapon1 = Input.is_action_just_pressed("weapon1"),
 		weapon2 = Input.is_action_just_pressed("weapon2"),
