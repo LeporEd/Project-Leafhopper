@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://deuiyd33gr4ex"]
+[gd_scene load_steps=40 format=3 uid="uid://deuiyd33gr4ex"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_1ssj1"]
 [ext_resource type="PackedScene" uid="uid://bwburnc1m5nsx" path="res://maggot_enemy.tscn" id="2_uko7g"]
@@ -67,6 +67,9 @@ size = Vector2(26, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_73f40"]
 size = Vector2(31, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_adq67"]
+size = Vector2(166, 36.5)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_1ssj1")
@@ -645,3 +648,11 @@ position = Vector2(3452, 260)
 [node name="dirtblock_no_grass6" parent="." instance=ExtResource("19_n4dga")]
 z_index = -1
 position = Vector2(3498, 251)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(807, 153)
+shape = SubResource("RectangleShape2D_adq67")
