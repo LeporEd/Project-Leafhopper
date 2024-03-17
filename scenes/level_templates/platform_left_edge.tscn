@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dctv6cmwp1vbu"]
+
+[ext_resource type="Texture2D" uid="uid://dvboiymvx1uil" path="res://assets/Forest Tileset/Templates/Platform_left_edge.png" id="1_nv7r8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_inrcp"]
+size = Vector2(56, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sh8g0"]
+size = Vector2(20, 44)
+
+[node name="Platform_left_Edge" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="Platform_sprite" type="Sprite2D" parent="."]
+position = Vector2(32.25, 16.25)
+scale = Vector2(3.41667, 2.45833)
+texture = ExtResource("1_nv7r8")
+
+[node name="Platform_collision" type="CollisionShape2D" parent="."]
+position = Vector2(35, 16.5)
+shape = SubResource("RectangleShape2D_inrcp")
+
+[node name="platform_enemy_detection" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platform_enemy_detection"]
+position = Vector2(2, -13)
+shape = SubResource("RectangleShape2D_sh8g0")
