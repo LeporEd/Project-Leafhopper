@@ -19,7 +19,8 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 
 @onready var game_over_timer: Timer = $GameOverTimer
 @onready var hurtbox = $Hurtbox
 @onready var item_pickup = $ItemPickup
-@onready var weapon_shape = $WeaponShape
+@onready var weapon = $Weapon
+@onready var weapon_shape = $Weapon/WeaponShape
 @onready var audio_running = $AudioRunning
 @onready var audio_death = $AudioDeath
 @onready var audio_jump = $AudioJump
@@ -77,7 +78,6 @@ var async_changes = {
 	should_die = false,
 	should_grow = false,
 	should_shrink = false,
-	should_pickup_item = false,
 	should_save = false,
 	should_load = false
 }
@@ -85,6 +85,7 @@ var async_changes = {
 class State:
 	var move_x = MoveX.NONE
 	var move_y = MoveY.NONE
+	var in_air = false
 	var should_jump = false
 	var should_go_down = false
 	var should_attack = PlayerAttack
@@ -136,7 +137,6 @@ func _ready():
 	weapon_shape.disabled = true
 	
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
-	item_pickup.body_entered.connect(_on_item_pickup_body_entered)
 	
 	PlayerEvents.player_reset.connect(func(): async_changes.should_reset = true)
 	PlayerEvents.player_take_hit.connect(func(): async_changes.should_take_hit = true)
@@ -154,10 +154,6 @@ func _ready():
 func _on_hurtbox_body_entered(argument):
 	print(argument)
 	async_changes.should_take_hit = true
-
-
-func _on_item_pickup_body_entered():
-	async_changes.should_pickup_item = true
 
 
 func _physics_process(delta):	
@@ -193,8 +189,6 @@ func _reset_next_animation():
 
 
 func _execute_async_changes():
-	if async_changes.should_pickup_item:
-		pass
 	if async_changes.should_heal:
 		state.health = MAX_HEALTH
 		async_changes.should_heal = false
@@ -253,7 +247,6 @@ func _take_hit(damage: int):
 	else:
 		_suggest_next_animation(PlayerAnimation.take_hit)
 		state.sound_hit = true
-		print(state.sound_hit)
 		state.should_start_animation_cooldown_timer = 0.4
 	
 
@@ -276,6 +269,8 @@ func _update_state_with_user_input():
 	state.should_attack = _convert_to_attack(user_input)
 	state.growth = _get_new_growth_and_suggest_animation(user_input.grow, user_input.shrink)
 	state.movement_profile = _get_movement_profile()
+	state.sound_land = is_on_floor() && state.in_air
+	state.in_air = not is_on_floor()
 
 
 func _get_user_input():
@@ -420,7 +415,7 @@ func _perform_side_change():
 	
 	if (scale_direction != state.move_x):
 		sprite_2d.scale.x *= -1
-		weapon_shape.position.x *= -1
+		weapon.scale.x *= -1
 
 
 func _update_velocity(delta):
@@ -455,15 +450,15 @@ func _play_audio():
 		audio_running.play()
 	
 	if not audio_death.playing and state.sound_death:
-		audio_death.play()
-	if not audio_hit.playing and state.sound_hit:
-		audio_hit.play()
-	if not audio_jump.playing and state.sound_jump:
-		audio_jump.play()
-	if not audio_land.playing and state.sound_land:
-		audio_land.play()
-	if not audio_sword.playing and state.sound_sword:
-		audio_sword.play()
+		audio_death.play(0.0)
+	if state.sound_hit:
+		audio_hit.play(0.0)
+	if state.sound_jump:
+		audio_jump.play(0.04)
+	if state.sound_land:
+		audio_land.play(0.0)
+	if state.sound_sword:
+		audio_sword.play(0.0)
 
 
 func _clean_state():

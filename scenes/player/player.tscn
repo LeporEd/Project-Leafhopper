@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://r2yfefufj03w"]
+[gd_scene load_steps=37 format=3 uid="uid://r2yfefufj03w"]
 
 [ext_resource type="Texture2D" uid="uid://cpph7pq5weusb" path="res://assets/Player/Sprites/Idle.png" id="1_7dx7d"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_u2in5"]
@@ -11,19 +11,16 @@
 [ext_resource type="Texture2D" uid="uid://bhl2c7covvt38" path="res://assets/Player/Sprites/Attack4.png" id="9_jb18w"]
 [ext_resource type="Texture2D" uid="uid://ccyv5jr36xpht" path="res://assets/Player/Sprites/Fall.png" id="10_axajh"]
 [ext_resource type="Texture2D" uid="uid://dn04w6j5jtsgk" path="res://assets/Player/Sprites/Take Hit - white silhouette.png" id="11_u0kgm"]
-[ext_resource type="AudioStream" uid="uid://pnlfkp42gc61" path="res://sounds/running.mp3" id="12_t7cg4"]
+[ext_resource type="AudioStream" uid="uid://dedwk5c14pd1k" path="res://sounds/running.mp3" id="12_t7cg4"]
 [ext_resource type="AudioStream" uid="uid://f0mmpryv8744" path="res://sounds/jump.mp3" id="13_a6rcj"]
-[ext_resource type="AudioStream" uid="uid://uf25to8qbvmg" path="res://sounds/death.mp3" id="13_kn6cs"]
-[ext_resource type="AudioStream" uid="uid://cfdab8caw5ogv" path="res://sounds/land.mp3" id="15_lvphb"]
-[ext_resource type="AudioStream" uid="uid://cg8pyumgkkdec" path="res://sounds/hit.mp3" id="16_7w01d"]
-[ext_resource type="AudioStream" uid="uid://bcsh1dm4g7n7d" path="res://sounds/sword.mp3" id="17_uiv6l"]
+[ext_resource type="AudioStream" uid="uid://dt3b6xsby5v3x" path="res://sounds/death.mp3" id="13_kn6cs"]
+[ext_resource type="AudioStream" uid="uid://bpdvbha8iaucy" path="res://sounds/land.mp3" id="15_lvphb"]
+[ext_resource type="AudioStream" uid="uid://cdshvsom4xc8b" path="res://sounds/hit.mp3" id="16_7w01d"]
+[ext_resource type="AudioStream" uid="uid://pqws2fbjaub4" path="res://sounds/sword.mp3" id="17_uiv6l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
 radius = 6.0
 height = 40.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_bljbi"]
-radius = 30.0
 
 [sub_resource type="Animation" id="Animation_ucfe5"]
 length = 0.001
@@ -90,7 +87,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("WeaponShape:position")
+tracks/5/path = NodePath("Weapon/WeaponShape:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -102,7 +99,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("WeaponShape:disabled")
+tracks/6/path = NodePath("Weapon/WeaponShape:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -167,7 +164,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("WeaponShape:position")
+tracks/3/path = NodePath("Weapon/WeaponShape:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -179,7 +176,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("WeaponShape:disabled")
+tracks/4/path = NodePath("Weapon/WeaponShape:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -232,7 +229,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("WeaponShape:disabled")
+tracks/3/path = NodePath("Weapon/WeaponShape:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -244,7 +241,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("WeaponShape:position")
+tracks/4/path = NodePath("Weapon/WeaponShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -297,7 +294,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("WeaponShape:disabled")
+tracks/3/path = NodePath("Weapon/WeaponShape:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -309,7 +306,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("WeaponShape:position")
+tracks/4/path = NodePath("Weapon/WeaponShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -362,7 +359,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("WeaponShape:disabled")
+tracks/3/path = NodePath("Weapon/WeaponShape:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -374,7 +371,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("WeaponShape:position")
+tracks/4/path = NodePath("Weapon/WeaponShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -811,17 +808,16 @@ _data = {
 "take_hit": SubResource("Animation_fib4p")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4aegj"]
-radius = 7.0
-height = 40.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_bljbi"]
+radius = 30.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4523e"]
-radius = 16.0
-height = 48.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4aegj"]
+radius = 5.0
+height = 36.0
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(1, -40)
-collision_layer = 6
+collision_layer = 2
 script = ExtResource("1_u2in5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -831,24 +827,20 @@ hframes = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_w7ysk")
 
-[node name="WeaponShape" type="CollisionShape2D" parent="."]
-position = Vector2(-27, -21)
-shape = SubResource("CircleShape2D_bljbi")
-debug_color = Color(0.470588, 0.443137, 1, 0.419608)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_nbs5t")
 }
 autoplay = "idle"
 
-[node name="AnimationCooldownTimer" type="Timer" parent="."]
-wait_time = 0.4
-one_shot = true
+[node name="Weapon" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
 
-[node name="GameOverTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
+[node name="WeaponShape" type="CollisionShape2D" parent="Weapon"]
+position = Vector2(-27, -21)
+shape = SubResource("CircleShape2D_bljbi")
+debug_color = Color(0.470588, 0.443137, 1, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 0
@@ -858,33 +850,42 @@ collision_mask = 8
 shape = SubResource("CapsuleShape2D_4aegj")
 debug_color = Color(0.945098, 0.262745, 0.572549, 0.419608)
 
-[node name="ItemPickup" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickup"]
-shape = SubResource("CapsuleShape2D_4523e")
-debug_color = Color(0.552941, 0.560784, 0.0470588, 0.419608)
-
 [node name="AudioRunning" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_t7cg4")
+pitch_scale = 1.14
 
 [node name="AudioDeath" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_kn6cs")
-
-[node name="AudioJump" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_a6rcj")
+pitch_scale = 0.9
 
 [node name="AudioLand" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_lvphb")
+volume_db = -12.181
+pitch_scale = 1.29
+
+[node name="AudioJump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_a6rcj")
+volume_db = -5.0
+pitch_scale = 1.14
 
 [node name="AudioHit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_7w01d")
+volume_db = -8.917
+pitch_scale = 0.85
 
 [node name="AudioSword" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_uiv6l")
+pitch_scale = 1.25
 
 [node name="Camera2D" type="Camera2D" parent="."]
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.5
+
+[node name="GameOverTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="AnimationCooldownTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
