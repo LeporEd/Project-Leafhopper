@@ -1,61 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://exa8e0dk0n5o"]
+[gd_scene load_steps=8 format=3 uid="uid://exa8e0dk0n5o"]
 
+[ext_resource type="Script" path="res://scripts/frog.gd" id="1_fn2rl"]
 [ext_resource type="Texture2D" uid="uid://dlb57k5tpipbq" path="res://assets/Frog/frog.png" id="1_nkvx4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5mpen"]
 size = Vector2(16, 12)
-
-[sub_resource type="Animation" id="Animation_0gf2o"]
-resource_name = "frogWalking"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(-1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-50, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-50, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:region_rect")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Rect2(0, 131, 16, 13), Rect2(16, 132, 16, 12), Rect2(32, 129, 16, 15), Rect2(48, 128, 16, 16), Rect2(64, 128, 16, 16), Rect2(80, 128, 16, 16), Rect2(97, 128, 14, 16), Rect2(112, 128, 16, 16), Rect2(0, 131, 16, 13), Rect2(16, 132, 16, 12), Rect2(32, 129, 16, 15), Rect2(48, 128, 16, 16), Rect2(64, 128, 16, 16), Rect2(80, 128, 16, 16), Rect2(97, 128, 14, 16), Rect2(112, 128, 16, 16)]
-}
 
 [sub_resource type="Animation" id="Animation_5aqbw"]
 length = 0.001
@@ -120,6 +69,70 @@ tracks/4/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_0gf2o"]
+resource_name = "frogWalking"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-50, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-50, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 131, 16, 13), Rect2(16, 132, 16, 12), Rect2(32, 129, 16, 15), Rect2(48, 128, 16, 16), Rect2(64, 128, 16, 16), Rect2(80, 128, 16, 16), Rect2(97, 128, 14, 16), Rect2(112, 128, 16, 16), Rect2(0, 131, 16, 13), Rect2(16, 132, 16, 12), Rect2(32, 129, 16, 15), Rect2(48, 128, 16, 16), Rect2(64, 128, 16, 16), Rect2(80, 128, 16, 16), Rect2(97, 128, 14, 16), Rect2(112, 128, 16, 16)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 10)]
+}
+
 [sub_resource type="Animation" id="Animation_1g3sm"]
 resource_name = "frogeating"
 length = 1.2
@@ -133,7 +146,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -50)]
+"values": [Vector2(-50, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -157,7 +170,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -50)]
+"values": [Vector2(-50, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -183,6 +196,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [Vector2(0, 0), Vector2(15, 0), Vector2(0, 0)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 10)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tqq41"]
 _data = {
@@ -192,6 +217,8 @@ _data = {
 }
 
 [node name="Frog" type="AnimatableBody2D"]
+scale = Vector2(10, 10)
+script = ExtResource("1_fn2rl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5mpen")
@@ -206,3 +233,9 @@ scale = Vector2(-1, 1)
 texture = ExtResource("1_nkvx4")
 region_enabled = true
 region_rect = Rect2(0, 131, 16, 13)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
