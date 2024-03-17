@@ -36,9 +36,6 @@ position = Vector2(187, 166)
 [node name="Node2D" parent="." instance=ExtResource("11_i6o1m")]
 position = Vector2(311, 227)
 
-[node name="Node2D2" parent="." instance=ExtResource("12_uiuii")]
-position = Vector2(36, 18)
-
 [node name="OneWayPlatform3" parent="." instance=ExtResource("10_ahnft")]
 position = Vector2(186, 208)
 
