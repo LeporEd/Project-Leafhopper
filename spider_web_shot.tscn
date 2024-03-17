@@ -9,7 +9,7 @@
 radius = 11.1803
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ovai"]
-radius = 12.1655
+radius = 14.0
 
 [node name="Spider_web_shot" type="RigidBody2D"]
 collision_layer = 8
@@ -34,3 +34,9 @@ collision_mask = 7
 position = Vector2(-3, 1)
 shape = SubResource("CircleShape2D_4ovai")
 debug_color = Color(0.843137, 0.364706, 0.290196, 0.419608)
+
+[node name="Death_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Death_timer" to="." method="_on_timer_timeout"]
