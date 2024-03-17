@@ -69,5 +69,5 @@ position = Vector2(359, 156)
 stream = ExtResource("8_eoxof")
 autoplay = true
 
-[node name="SavePoint" parent="." instance=ExtResource("10_0660o")]
-position = Vector2(140, 152)
+[node name="SavePoint2" parent="." instance=ExtResource("10_0660o")]
+position = Vector2(270, 149)
