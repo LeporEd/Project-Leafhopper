@@ -35,11 +35,11 @@ const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1,
 @onready var weapon_texture_rect = $PlayerUI/WeaponTextureRect
 @onready var health_bar = $PlayerUI/HealthBar
 @onready var death_texture_rect = $PlayerUI/DeathTextureRect
+@onready var jumps_label = $PlayerUI/JumpsLabel
 @onready var time_min = $PlayerUI/GameTime/TimeMin
 @onready var time_sec = $PlayerUI/GameTime/TimeSec
 @onready var time_milli_sec = $PlayerUI/GameTime/TimeMilliSec
 @onready var camera_2d = $Camera2D
-
 
 
 var arrow_up_icon = preload("res://assets/UI/arrow_up.png")
@@ -241,6 +241,7 @@ func _run_cicle(delta):
 	_execute_async_changes()
 	_check_player_boundaries()
 	_update_time(delta)
+	_update_ui_remaining_jumps()
 	_update_state_with_user_input()
 	_update_next_animation_and_sound()
 	_update_ui()
@@ -370,6 +371,20 @@ func _update_time(delta: float):
 	time_min.text = "%02d:" % minutes
 	time_sec.text = "%02d." % seconds
 	time_milli_sec.text = "%03d" % milli_seconds
+
+
+func _update_ui_remaining_jumps():
+	var allowed_jumps = 0
+	match state.growth:
+		Growth.SMALL:
+			allowed_jumps = MOVEMENT_SMALL.ALLOWED_JUMPS
+		Growth.NORMAL:
+			allowed_jumps = MOVEMENT_NORMAL.ALLOWED_JUMPS
+		Growth.BIG:
+			allowed_jumps = MOVEMENT_BIG.ALLOWED_JUMPS 
+	
+	var remaining_jumps = -1 * (state.jump_count - allowed_jumps)
+	jumps_label.text = "Jumps: " + str(remaining_jumps)
 
 
 func _update_state_with_user_input():
