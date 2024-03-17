@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://1onngan1x3wr"]
+
+[ext_resource type="Texture2D" uid="uid://cvqsc8ose8fqc" path="res://assets/Forest Tileset/Templates/Platform_full.png" id="1_kry5a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o74ko"]
+size = Vector2(209, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ropkm"]
+size = Vector2(27, 59)
+
+[node name="Platform_full" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="Platform_collision" type="CollisionShape2D" parent="."]
+position = Vector2(115.5, 20.5)
+shape = SubResource("RectangleShape2D_o74ko")
+
+[node name="Platform_sprite" type="Sprite2D" parent="."]
+position = Vector2(116, 20)
+scale = Vector2(4.45192, 2.95833)
+texture = ExtResource("1_kry5a")
+
+[node name="Enemy_boundaries" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="boundaries_shape" type="CollisionShape2D" parent="Enemy_boundaries"]
+position = Vector2(-1, -23)
+shape = SubResource("RectangleShape2D_ropkm")
+
+[node name="boundaries_shape2" type="CollisionShape2D" parent="Enemy_boundaries"]
+position = Vector2(231, -25)
+shape = SubResource("RectangleShape2D_ropkm")

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv12ohdouhwo5"]
+
+[ext_resource type="Texture2D" uid="uid://r0dxr6apxrxc" path="res://assets/Forest Tileset/Templates/Platform_middle.png" id="1_i3ruc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vluhd"]
+size = Vector2(55, 20)
+
+[node name="Platform_middle" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="platform_sprite" type="Sprite2D" parent="."]
+position = Vector2(33.5, 14)
+scale = Vector2(3.5625, 2)
+texture = ExtResource("1_i3ruc")
+
+[node name="platform_collision" type="CollisionShape2D" parent="."]
+position = Vector2(33.5, 14)
+shape = SubResource("RectangleShape2D_vluhd")

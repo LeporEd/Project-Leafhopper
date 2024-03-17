@@ -99,6 +99,7 @@ height = 36.0
 
 [node name="Giant_spider_enemy" type="CharacterBody2D"]
 collision_layer = 8
+collision_mask = 33
 script = ExtResource("1_pves6")
 
 [node name="Giant_spider_animations" type="AnimatedSprite2D" parent="."]
