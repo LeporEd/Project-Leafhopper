@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdj8g0woflh1q"]
+[gd_scene load_steps=12 format=3 uid="uid://sv2jejna8sf4"]
 
 [ext_resource type="Script" path="res://scripts/dungeonteleport.gd" id="1_qtb6e"]
 [ext_resource type="PackedScene" uid="uid://qkibtsyml0hm" path="res://scenes/save_point.tscn" id="2_um2np"]

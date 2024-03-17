@@ -5,8 +5,10 @@ const INITIAL_POSITION = {
 	Y = 250
 }
 
-const MAX_HEALTH = 100
-const DEFAULT_RECEIVING_DAMAGE = 25
+const BOUNDARY_BOTTOM_Y = 600
+
+const MAX_HEALTH = 3
+const DEFAULT_RECEIVING_DAMAGE = 1
 
 const MOVEMENT_SMALL = { SPEED = 100.0, JUMP_VELOCITY = -225.0, ALLOWED_JUMPS = 3 }
 const MOVEMENT_NORMAL = { SPEED = 175.0, JUMP_VELOCITY = -275.0, ALLOWED_JUMPS = 2 }
@@ -18,7 +20,6 @@ const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1 
 @onready var animation_cooldown_timer: Timer = $AnimationCooldownTimer
 @onready var game_over_timer: Timer = $GameOverTimer
 @onready var hurtbox = $Hurtbox
-@onready var item_pickup = $ItemPickup
 @onready var weapon = $Weapon
 @onready var weapon_shape = $Weapon/WeaponShape
 @onready var audio_running = $AudioRunning
@@ -28,6 +29,20 @@ const MOVEMENT_BIG = { SPEED = 130.0, JUMP_VELOCITY = -260.0, ALLOWED_JUMPS = 1 
 @onready var audio_hit = $AudioHit
 @onready var audio_sword = $AudioSword
 @onready var pause_menu = $Camera2D/Pause_menu
+
+@onready var growth_texture_rect = $PlayerUI/GrowthTextureRect
+@onready var weapon_texture_rect = $PlayerUI/WeaponTextureRect
+@onready var health_bar = $PlayerUI/HealthBar
+@onready var death_texture_rect = $PlayerUI/DeathTextureRect
+
+var arrow_up_icon = preload("res://assets/UI/arrow_up.png")
+var arrow_down_icon = preload("res://assets/UI/arrow_down.png")
+var box_icon = preload("res://assets/UI/box.png")
+
+var weapon1_icon = preload("res://assets/UI/weapon1.png")
+var weapon2_icon = preload("res://assets/UI/weapon2.png")
+var weapon3_icon = preload("res://assets/UI/weapon3.png")
+var weapon4_icon = preload("res://assets/UI/weapon4.png")
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -45,11 +60,10 @@ enum GrowthTransition {
 }
 
 enum PlayerAttack {
-	NONE = 0,
-	attack1 = 1,
-	attack2 = 2,
-	attack3 = 3,
-	attack4 = 4
+	attack1,
+	attack2,
+	attack3,
+	attack4
 }
 
 # number = priority
@@ -79,7 +93,8 @@ var async_changes = {
 	should_grow = false,
 	should_shrink = false,
 	should_save = false,
-	should_load = false
+	should_load = false,
+	should_teleport = null
 }
 
 var paused = false
@@ -88,13 +103,14 @@ class State:
 	var move_x = MoveX.NONE
 	var move_y = MoveY.NONE
 	var in_air = false
+	var selected_weapon = PlayerAttack.attack1
 	var should_jump = false
 	var should_go_down = false
-	var should_attack = PlayerAttack
+	var should_attack = false
 	var should_start_animation_cooldown_timer = 0.0
 	var growth = Growth.NORMAL
 	var jump_count = 0
-	var health = 100
+	var health: int = MAX_HEALTH
 	var next_animation = PlayerAnimation.idle
 	var is_dead = false
 	var movement_profile = MOVEMENT_NORMAL
@@ -105,15 +121,16 @@ class State:
 	var sound_hit = false
 	var sound_sword = false
 	
-	func clone() -> State:
+	static func from(prev_state: State) -> State:
 		var clone = State.new()
-		clone.move_x = self.move_x
-		clone.move_y = self.move_y
-#		clone.growth = self.growth
-		clone.jump_count = self.jump_count
-		clone.health = self.health
-		clone.is_dead = self.is_dead
-#		clone.movement_profile = self.movement_profile
+		clone.move_x = prev_state.move_x
+		clone.move_y = prev_state.move_y
+		clone.selected_weapon = prev_state.selected_weapon
+		clone.growth = prev_state.growth
+		clone.jump_count = prev_state.jump_count
+		clone.health = prev_state.health
+		clone.is_dead = prev_state.is_dead
+		clone.movement_profile = prev_state.movement_profile
 
 		return clone
 
@@ -136,7 +153,7 @@ var checkpoints = []
 
 
 func _ready():
-	weapon_shape.disabled = true
+	_reset()
 	
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 	
@@ -148,9 +165,20 @@ func _ready():
 	PlayerEvents.player_shrink.connect(func(): async_changes.should_shrink = true)
 	PlayerEvents.player_save.connect(func(): async_changes.should_save = true)
 	PlayerEvents.player_load.connect(func(): async_changes.should_load = true)
-	
+	PlayerEvents.player_teleport.connect(func(position): async_changes.should_teleport = position)
+
+
+func _reset():
+	state = State.new()
 	position.x = INITIAL_POSITION.X
 	position.y = INITIAL_POSITION.Y
+	
+	weapon_shape.disabled = true
+	health_bar.value = state.health
+	growth_texture_rect.texture = box_icon
+	weapon_texture_rect.texture = weapon1_icon
+	death_texture_rect.visible = false
+	
 
 
 func _on_hurtbox_body_entered(argument):
@@ -169,14 +197,13 @@ func _run_cicle(delta):
 			_clean_state()
 			_update_velocity(delta)
 			return
-		else:
-			print("RESTART")
-			_reset()
 	
 	_reset_next_animation()
 	_execute_async_changes()
+	_check_player_boundaries()
 	_update_state_with_user_input()
 	_update_next_animation_and_sound()
+	_update_ui()
 	_perform_go_down()
 	_perform_attack()
 	_perform_side_change()
@@ -203,6 +230,8 @@ func _execute_async_changes():
 		async_changes.should_reset = false
 	if async_changes.should_grow || async_changes.should_shrink:
 		state.growth = _get_new_growth_and_suggest_animation(async_changes.should_grow, async_changes.should_shrink)
+		async_changes.should_grow = false
+		async_changes.should_shrink = false
 	if async_changes.should_save:
 		_save_checkpoint()
 		async_changes.should_save = false
@@ -212,21 +241,23 @@ func _execute_async_changes():
 	if async_changes.should_take_hit:
 		_take_hit(DEFAULT_RECEIVING_DAMAGE)
 		async_changes.should_take_hit = false
-
-
-func _reset():
-	state = State.new()
-	position.x = INITIAL_POSITION.X
-	position.y = INITIAL_POSITION.Y
+	if async_changes.should_teleport != null:
+		print("Teleport:", async_changes.should_teleport)
+		position.x = async_changes.should_teleport.x
+		position.y = async_changes.should_teleport.y
+		async_changes.should_teleport = null
 
 
 func _save_checkpoint():
-	var checkpoint = Checkpoint.new(position.x, position.y, state.clone())
+	var checkpoint = Checkpoint.new(position.x, position.y, State.from(state))
 	checkpoints.append(checkpoint)
 	print("Checkpoint created:", checkpoint)
 
 
 func _load_last_checkpoint():
+	print("Player reset")
+	_reset()
+	
 	if checkpoints.size() > 0:
 		var checkpoint = checkpoints[checkpoints.size() - 1]
 		print("Load checkpoint:", checkpoint)
@@ -234,15 +265,15 @@ func _load_last_checkpoint():
 		position.x = checkpoint.x
 		position.y = checkpoint.y
 		state = checkpoint.state
-	else:
-		print("Player reset")
-		_reset()
+		health_bar.value = state.health
+		print("Health", state.health)
 
 
 func _take_hit(damage: int):
 	print("User was hit")
 	state.health -= damage
 	PlayerEvents.on_player_took_hit.emit(state.health)
+	health_bar.value = state.health
 	
 	if state.health <= 0:
 		_on_user_death()
@@ -256,9 +287,17 @@ func _on_user_death():
 	_suggest_next_animation(PlayerAnimation.death)
 	state.sound_death = true
 	state.is_dead = true
+	death_texture_rect.visible = true
 	PlayerEvents.on_player_died.emit()
 	game_over_timer.start()
 	print("Player died")
+
+
+func _check_player_boundaries():
+	if position.y > BOUNDARY_BOTTOM_Y:
+		state.health = 0
+		health_bar.value = state.health
+		_on_user_death()
 
 
 func _update_state_with_user_input():
@@ -269,11 +308,13 @@ func _update_state_with_user_input():
 		state.should_jump = user_input.jump
 		state.should_go_down = user_input.go_down
 		state.jump_count = 0 if is_on_floor() else state.jump_count
-		state.should_attack = _convert_to_attack(user_input)
+		state.should_attack = user_input.attack
 		state.growth = _get_new_growth_and_suggest_animation(user_input.grow, user_input.shrink)
 		state.movement_profile = _get_movement_profile()
 		state.sound_land = is_on_floor() && state.in_air
 		state.in_air = not is_on_floor()
+		
+		_update_selected_weapon(user_input)
 
 
 func _get_user_input():
@@ -283,10 +324,11 @@ func _get_user_input():
 		go_down = Input.is_action_just_pressed("go_down"),
 		grow = Input.is_action_just_pressed("grow"),
 		shrink = Input.is_action_just_pressed("shrink"),
-		attack1 = Input.is_action_just_pressed("attack1"),
-		attack2 = Input.is_action_just_pressed("attack2"),
-		attack3 = Input.is_action_just_pressed("attack3"),
-		attack4 = Input.is_action_just_pressed("attack4")
+		attack = Input.is_action_just_pressed("attack"),
+		weapon1 = Input.is_action_just_pressed("weapon1"),
+		weapon2 = Input.is_action_just_pressed("weapon2"),
+		weapon3 = Input.is_action_just_pressed("weapon3"),
+		weapon4 = Input.is_action_just_pressed("weapon4")
 	}
 
 func _process(delta):
@@ -323,16 +365,15 @@ func _convert_to_move_y() -> MoveY:
 		return MoveY.NONE
 
 
-func _convert_to_attack(user_input) -> PlayerAttack:
-	if user_input.attack1:
-		return PlayerAttack.attack1
-	if user_input.attack2:
-		return PlayerAttack.attack2
-	if user_input.attack3:
-		return PlayerAttack.attack3
-	if user_input.attack4:
-		return PlayerAttack.attack4
-	return PlayerAttack.NONE
+func _update_selected_weapon(user_input):
+	if user_input.weapon1:
+		state.selected_weapon = PlayerAttack.attack1
+	if user_input.weapon2:
+		state.selected_weapon = PlayerAttack.attack2
+	if user_input.weapon3:
+		state.selected_weapon = PlayerAttack.attack3
+	if user_input.weapon4:
+		state.selected_weapon = PlayerAttack.attack4
 
 
 func _get_new_growth_and_suggest_animation(grow: bool, shrink: bool) -> Growth:
@@ -395,8 +436,8 @@ func _update_next_animation_and_sound():
 		state.sound_jump = true
 	if state.move_y == MoveY.FALL:
 		_suggest_next_animation(PlayerAnimation.fall)
-	if state.should_attack != PlayerAttack.NONE:
-		var attack = PlayerAttack.keys()[state.should_attack]
+	if state.should_attack:
+		var attack = PlayerAttack.keys()[state.selected_weapon]
 		var attack_animation = PlayerAnimation[attack]
 		_suggest_next_animation(attack_animation)
 		state.sound_sword = true
@@ -407,19 +448,37 @@ func _suggest_next_animation(animation: PlayerAnimation):
 		state.next_animation = animation
 
 
+func _update_ui():
+	match state.growth:
+		Growth.SMALL:
+			growth_texture_rect.texture = arrow_down_icon
+		Growth.NORMAL:
+			growth_texture_rect.texture = box_icon
+		Growth.BIG:
+			growth_texture_rect.texture = arrow_up_icon
+	
+	match state.selected_weapon:
+		PlayerAttack.attack1:
+			weapon_texture_rect.texture = weapon1_icon
+		PlayerAttack.attack2:
+			weapon_texture_rect.texture = weapon2_icon
+		PlayerAttack.attack3:
+			weapon_texture_rect.texture = weapon3_icon
+		PlayerAttack.attack4:
+			weapon_texture_rect.texture = weapon4_icon
+
+
 func _perform_go_down():
 	if state.should_go_down:
 		position.y += 1
 
 
 func _perform_attack():
-	if state.should_attack == PlayerAttack.NONE:
+	if not state.should_attack:
 		return
 	
 	state.should_start_animation_cooldown_timer = 0.5
 	PlayerEvents.on_player_attack.emit()
-	
-	#todo waffen hitboxen prüfen
 
 
 func _perform_side_change():
@@ -480,7 +539,7 @@ func _clean_state():
 	state.move_x = MoveX.NONE
 	state.move_y = MoveY.NONE
 	state.should_jump = false
-	state.should_attack = PlayerAttack.NONE
+	state.should_attack = false
 	state.should_start_animation_cooldown_timer = 0.0
 	state.sound_running = false
 	state.sound_death = false
