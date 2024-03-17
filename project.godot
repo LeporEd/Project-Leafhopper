@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 PlayerEvents="*res://events/player_events.gd"
 MainTheme="*res://main_theme.tscn"
+WorldEvents="*res://events/world_events.gd"
 
 [display]
 
