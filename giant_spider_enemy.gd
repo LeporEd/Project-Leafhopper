@@ -4,7 +4,6 @@ extends CharacterBody2D
 @onready var hurtbox_2_shape = $Giant_spider_hurtbox_2/Hurtbox_2_shape
 @onready var giant_spider_hurtbox_1 = $Giant_spider_hurtbox_1
 @onready var giant_spider_hurtbox_2 = $Giant_spider_hurtbox_2
-@onready var timer_eating = $Timer_eating
 
 const DeathParticles = preload("res://death_explosion.tscn")
 
@@ -15,7 +14,7 @@ var hurt = false
 
 func _ready():
 	hurtbox_2_shape.set_deferred("disabled", true)
-	pass
+	PlayerEvents.player_load.connect(_respawn_enemy)
 
 func _physics_process(delta):
 	if position.y > starty + 150 && hurt == false:
@@ -52,4 +51,9 @@ func _die():
 	particles.position = position
 	particles.restart()
 	get_tree().current_scene.add_child(particles)
+	
+	
 	queue_free()
+
+func _respawn_enemy():
+	health = 10

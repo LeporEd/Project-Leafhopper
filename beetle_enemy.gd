@@ -10,7 +10,7 @@ var health = 2
 
 func _ready():
 	beetle_hitbox.body_entered.connect(_on_beetle_hitbox_body_entered)
-	pass
+	PlayerEvents.player_load.connect(_respawn_enemy)
 
 func _physics_process(delta):
 	if is_on_wall ():
@@ -49,3 +49,6 @@ func _die():
 	particles.restart()
 	get_tree().current_scene.add_child(particles)
 	queue_free()
+
+func _respawn_enemy():
+	health = 2
