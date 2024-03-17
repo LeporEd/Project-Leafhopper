@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://r2yfefufj03w" path="res://scenes/player/player.tscn" id="7_trce4"]
 [ext_resource type="AudioStream" uid="uid://dtn3l120ydsjy" path="res://music/Game_theme.wav" id="8_eoxof"]
 [ext_resource type="PackedScene" path="res://scenes/grow_power_up.tscn" id="9_wx0s3"]
-[ext_resource type="PackedScene" path="res://scenes/save_point.tscn" id="10_0660o"]
+[ext_resource type="PackedScene" uid="uid://qkibtsyml0hm" path="res://scenes/save_point.tscn" id="10_0660o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7af2p"]
 size = Vector2(523, 134)
