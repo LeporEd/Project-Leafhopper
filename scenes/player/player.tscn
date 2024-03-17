@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://r2yfefufj03w"]
+[gd_scene load_steps=42 format=3 uid="uid://r2yfefufj03w"]
 
 [ext_resource type="Texture2D" uid="uid://cpph7pq5weusb" path="res://assets/Player/Sprites/Idle.png" id="1_7dx7d"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_u2in5"]
@@ -18,7 +18,10 @@
 [ext_resource type="AudioStream" uid="uid://cdshvsom4xc8b" path="res://sounds/hit.mp3" id="16_7w01d"]
 [ext_resource type="AudioStream" uid="uid://pqws2fbjaub4" path="res://sounds/sword.mp3" id="17_uiv6l"]
 [ext_resource type="PackedScene" uid="uid://bcps4alydtv5k" path="res://scenes/pause_menu.tscn" id="18_48t64"]
+[ext_resource type="Texture2D" uid="uid://cgv3ocfbpiycw" path="res://assets/UI/weapon1.png" id="19_7deuo"]
+[ext_resource type="Texture2D" uid="uid://bgp24tljtukgt" path="res://assets/UI/box.png" id="19_32eqo"]
 [ext_resource type="Texture2D" uid="uid://b8p75dt01aaqr" path="res://assets/UI/hearths.png" id="19_ywcxy"]
+[ext_resource type="Texture2D" uid="uid://cfw6g63njc5v1" path="res://assets/UI/death_icon.png" id="21_6yean"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7ysk"]
 radius = 6.0
@@ -818,6 +821,7 @@ radius = 5.0
 height = 36.0
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 100
 position = Vector2(1, -40)
 collision_layer = 2
 script = ExtResource("1_u2in5")
@@ -901,13 +905,50 @@ wait_time = 0.4
 one_shot = true
 
 [node name="PlayerUI" type="CanvasLayer" parent="."]
+scale = Vector2(0.3, 0.3)
+transform = Transform2D(0.3, 0, 0, 0.3, 0, 0)
+
+[node name="GrowthIcon" type="TextureRect" parent="PlayerUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -206.667
+offset_right = -130.0
+offset_bottom = -166.667
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("19_32eqo")
+
+[node name="WeaponIcon" type="TextureRect" parent="PlayerUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -206.667
+offset_right = -180.0
+offset_bottom = -166.667
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("19_7deuo")
 
 [node name="HealthBar" type="TextureProgressBar" parent="PlayerUI"]
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 108.0
-offset_bottom = 36.0
-scale = Vector2(0.4, 0.4)
+offset_left = 13.3333
+offset_top = 13.3333
+offset_right = 117.333
+offset_bottom = 45.3333
+scale = Vector2(1.25, 1.25)
 max_value = 3.0
 value = 3.0
 texture_progress = ExtResource("19_ywcxy")
+
+[node name="DeathIcon" type="TextureRect" parent="PlayerUI"]
+offset_left = 13.3333
+offset_top = 13.3333
+offset_right = 53.3333
+offset_bottom = 53.3333
+texture = ExtResource("21_6yean")

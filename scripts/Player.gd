@@ -28,8 +28,18 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 
 @onready var audio_sword = $AudioSword
 @onready var pause_menu = $Camera2D/Pause_menu
 @onready var health_bar = $PlayerUI/HealthBar
+@onready var growth_icon = $PlayerUI/GrowthIcon
+@onready var weapon_icon = $PlayerUI/WeaponIcon
+@onready var death_icon = $PlayerUI/DeathIcon
 
+var arrow_up_icon = preload("res://assets/UI/arrow_up.png")
+var arrow_down_icon = preload("res://assets/UI/arrow_down.png")
+var box_icon = preload("res://assets/UI/box.png")
 
+var weapon1_icon = preload("res://assets/UI/weapon1.png")
+var weapon2_icon = preload("res://assets/UI/weapon2.png")
+var weapon3_icon = preload("res://assets/UI/weapon3.png")
+var weapon4_icon = preload("res://assets/UI/weapon4.png")
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -96,7 +106,7 @@ class State:
 	var should_start_animation_cooldown_timer = 0.0
 	var growth = Growth.NORMAL
 	var jump_count = 0
-	var health = MAX_HEALTH
+	var health: int = MAX_HEALTH
 	var next_animation = PlayerAnimation.idle
 	var is_dead = false
 	var movement_profile = MOVEMENT_NORMAL
@@ -107,15 +117,15 @@ class State:
 	var sound_hit = false
 	var sound_sword = false
 	
-	func clone() -> State:
+	static func from(prev_state: State) -> State:
 		var clone = State.new()
-		clone.move_x = self.move_x
-		clone.move_y = self.move_y
-#		clone.growth = self.growth
-		clone.jump_count = self.jump_count
-		clone.health = self.health
-		clone.is_dead = self.is_dead
-#		clone.movement_profile = self.movement_profile
+		clone.move_x = prev_state.move_x
+		clone.move_y = prev_state.move_y
+		clone.growth = prev_state.growth
+		clone.jump_count = prev_state.jump_count
+		clone.health = prev_state.health
+		clone.is_dead = prev_state.is_dead
+		clone.movement_profile = prev_state.movement_profile
 
 		return clone
 
@@ -138,7 +148,7 @@ var checkpoints = []
 
 
 func _ready():
-	weapon_shape.disabled = true
+	_reset()
 	
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
 	
@@ -150,9 +160,19 @@ func _ready():
 	PlayerEvents.player_shrink.connect(func(): async_changes.should_shrink = true)
 	PlayerEvents.player_save.connect(func(): async_changes.should_save = true)
 	PlayerEvents.player_load.connect(func(): async_changes.should_load = true)
-	
+
+
+func _reset():
+	state = State.new()
 	position.x = INITIAL_POSITION.X
 	position.y = INITIAL_POSITION.Y
+	
+	weapon_shape.disabled = true
+	health_bar.value = state.health
+	growth_icon.texture = box_icon
+	weapon_icon.texture = weapon1_icon
+	death_icon.visible = false
+	
 
 
 func _on_hurtbox_body_entered(argument):
@@ -171,14 +191,12 @@ func _run_cicle(delta):
 			_clean_state()
 			_update_velocity(delta)
 			return
-		else:
-			print("RESTART")
-			_reset()
 	
 	_reset_next_animation()
 	_execute_async_changes()
 	_update_state_with_user_input()
 	_update_next_animation_and_sound()
+	_update_ui()
 	_perform_go_down()
 	_perform_attack()
 	_perform_side_change()
@@ -218,19 +236,16 @@ func _execute_async_changes():
 		async_changes.should_take_hit = false
 
 
-func _reset():
-	state = State.new()
-	position.x = INITIAL_POSITION.X
-	position.y = INITIAL_POSITION.Y
-
-
 func _save_checkpoint():
-	var checkpoint = Checkpoint.new(position.x, position.y, state.clone())
+	var checkpoint = Checkpoint.new(position.x, position.y, State.from(state))
 	checkpoints.append(checkpoint)
 	print("Checkpoint created:", checkpoint)
 
 
 func _load_last_checkpoint():
+	print("Player reset")
+	_reset()
+	
 	if checkpoints.size() > 0:
 		var checkpoint = checkpoints[checkpoints.size() - 1]
 		print("Load checkpoint:", checkpoint)
@@ -238,9 +253,8 @@ func _load_last_checkpoint():
 		position.x = checkpoint.x
 		position.y = checkpoint.y
 		state = checkpoint.state
-	else:
-		print("Player reset")
-		_reset()
+		health_bar.value = state.health
+		print("Health", state.health)
 
 
 func _take_hit(damage: int):
@@ -261,6 +275,7 @@ func _on_user_death():
 	_suggest_next_animation(PlayerAnimation.death)
 	state.sound_death = true
 	state.is_dead = true
+	death_icon.visible = true
 	PlayerEvents.on_player_died.emit()
 	game_over_timer.start()
 	print("Player died")
@@ -410,6 +425,16 @@ func _update_next_animation_and_sound():
 func _suggest_next_animation(animation: PlayerAnimation):
 	if animation < state.next_animation:
 		state.next_animation = animation
+
+
+func _update_ui():
+	match state.growth:
+		Growth.SMALL:
+			growth_icon.texture = arrow_down_icon
+		Growth.NORMAL:
+			growth_icon.texture = box_icon
+		Growth.BIG:
+			growth_icon.texture = arrow_up_icon
 
 
 func _perform_go_down():
