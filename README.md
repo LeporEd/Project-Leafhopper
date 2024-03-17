@@ -8,9 +8,9 @@ Alternativey, you can download the game for Linux and Windows from the newest re
 
 ## Collaborators
 
-@LeporEd
-@DerEherneRaecher
-@Handprint3436
+[@LeporEd](https://github.com/LeporEd)
+[@DerEherneRaecher](https://github.com/DerEherneRaecher)
+[@Handprint3436](https://github.com/Handprint3436)
 
 Special thanks to [tiimo](https://tiimo.itch.io/), [AcidBurritos](https://acidburritos.itch.io/), [AmiableVegetable](https://amiablevegetable.itch.io/), [mantis roja](https://raaiido.itch.io/) and [FranklyFied](https://franklyfied.itch.io/) for hosting #JameGam, as well as to all the people and organizations who provide amazing game assets for free.
 
