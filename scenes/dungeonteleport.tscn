@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://sv2jejna8sf4"]
+[gd_scene load_steps=12 format=3 uid="uid://bdj8g0woflh1q"]
 
 [ext_resource type="Script" path="res://scripts/dungeonteleport.gd" id="1_qtb6e"]
 [ext_resource type="PackedScene" uid="uid://qkibtsyml0hm" path="res://scenes/save_point.tscn" id="2_um2np"]
@@ -204,7 +204,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 2000)]
+"values": [Vector2(0, 4000)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xu5u8"]
@@ -235,11 +235,11 @@ script = ExtResource("1_qtb6e")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2000)
+position = Vector2(0, 4000)
 shape = SubResource("CapsuleShape2D_luugt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 2000)
+position = Vector2(0, 4000)
 texture = SubResource("GradientTexture2D_w7elw")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
