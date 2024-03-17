@@ -29,12 +29,15 @@ const MOVEMENT_BIG = { SPEED = 125.0, JUMP_VELOCITY = -230.0, ALLOWED_JUMPS = 1 
 @onready var audio_hit = $AudioHit
 @onready var audio_sword = $AudioSword
 @onready var pause_menu = $Menu/Pause_menu
-
-
+@onready var game_timer = $GameTimer
 @onready var growth_texture_rect = $PlayerUI/GrowthTextureRect
 @onready var weapon_texture_rect = $PlayerUI/WeaponTextureRect
 @onready var health_bar = $PlayerUI/HealthBar
 @onready var death_texture_rect = $PlayerUI/DeathTextureRect
+@onready var time_min = $PlayerUI/GameTime/TimeMin
+@onready var time_sec = $PlayerUI/GameTime/TimeSec
+@onready var time_milli_sec = $PlayerUI/GameTime/TimeMilliSec
+
 
 var arrow_up_icon = preload("res://assets/UI/arrow_up.png")
 var arrow_down_icon = preload("res://assets/UI/arrow_down.png")
@@ -99,6 +102,7 @@ var async_changes = {
 }
 
 var paused = false
+var time: float = 0.0
 
 class State:
 	var move_x = MoveX.NONE
@@ -124,6 +128,7 @@ class State:
 	
 	static func from(prev_state: State) -> State:
 		var clone = State.new()
+		
 		clone.move_x = prev_state.move_x
 		clone.move_y = prev_state.move_y
 		clone.selected_weapon = prev_state.selected_weapon
@@ -143,11 +148,13 @@ class Checkpoint:
 	var x: float
 	var y: float
 	var state: State
+	var timestamp: float
 	
-	func _init(x: float, y: float, state: State):
+	func _init(x: float, y: float, state: State, timestamp: float):
 		self.x = x
 		self.y = y
 		self.state = state
+		self.timestamp = timestamp
 
 
 var checkpoints = []
@@ -202,6 +209,7 @@ func _run_cicle(delta):
 	_reset_next_animation()
 	_execute_async_changes()
 	_check_player_boundaries()
+	_update_time(delta)
 	_update_state_with_user_input()
 	_update_next_animation_and_sound()
 	_update_ui()
@@ -250,7 +258,7 @@ func _execute_async_changes():
 
 
 func _save_checkpoint():
-	var checkpoint = Checkpoint.new(position.x, position.y, State.from(state))
+	var checkpoint = Checkpoint.new(position.x, position.y, State.from(state), time)
 	checkpoints.append(checkpoint)
 	print("Checkpoint created:", checkpoint)
 
@@ -265,7 +273,7 @@ func _load_last_checkpoint():
 		
 		position.x = checkpoint.x
 		position.y = checkpoint.y
-		state = checkpoint.state
+		state = State.from(checkpoint.state)
 		health_bar.value = state.health
 		print("Health", state.health)
 
@@ -299,6 +307,18 @@ func _check_player_boundaries():
 		state.health = 0
 		health_bar.value = state.health
 		_on_user_death()
+
+
+func _update_time(delta: float):
+	time += delta
+	
+	var minutes = fmod(time, 3600) / 60
+	var seconds = fmod(time, 60)
+	var milli_seconds = fmod(time, 1) * 100
+	
+	time_min.text = "%02d:" % minutes
+	time_sec.text = "%02d." % seconds
+	time_milli_sec.text = "%03d" % milli_seconds
 
 
 func _update_state_with_user_input():

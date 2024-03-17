@@ -905,6 +905,34 @@ offset_right = 53.3333
 offset_bottom = 53.3333
 texture = ExtResource("21_6yean")
 
+[node name="GameTime" type="Panel" parent="PlayerUI"]
+offset_left = 1063.0
+offset_top = 20.0
+offset_right = 1184.0
+offset_bottom = 60.0
+
+[node name="TimeMilliSec" type="Label" parent="PlayerUI/GameTime"]
+offset_left = 83.0
+offset_right = 116.0
+offset_bottom = 23.0
+text = "000"
+horizontal_alignment = 2
+
+[node name="TimeSec" type="Label" parent="PlayerUI/GameTime"]
+offset_left = 56.0
+offset_right = 83.0
+offset_bottom = 23.0
+text = "00."
+horizontal_alignment = 2
+
+[node name="TimeMin" type="Label" parent="PlayerUI/GameTime"]
+layout_mode = 0
+offset_left = 16.0
+offset_right = 53.0
+offset_bottom = 23.0
+text = "00:"
+horizontal_alignment = 2
+
 [node name="Menu" type="CanvasLayer" parent="."]
 
 [node name="Pause_menu" parent="Menu" instance=ExtResource("18_48t64")]
